@@ -1,0 +1,111 @@
+.title-check {
+    position: relative;
+    padding: 20px 0;
+    font-size: 1.3rem;
+    line-height: 18px;
+    color: #000;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 25px;
+}
+
+.title-check:after {
+    position: absolute;
+    content: '';
+    height: 2px;
+    width: 95px;
+    left: 0;
+    bottom: 0;
+    background-color: #c0392b;
+}
+
+form {
+    font-size: 1rem;
+    line-height: 18px;
+}
+
+.form-group input:focus,
+#province:focus, #district:focus, #ward:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: var(--bg-main);
+}
+
+.item-check {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.item-check:first-child {
+    padding-top: 0;
+}
+
+.item-check .item-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-check .item-image img {
+    width: 100px;
+    height: 100px;
+    display: block;
+}
+
+.item-check .item-detail-infor {
+    padding: 10px 0 0 10px;
+    flex-grow: 1;
+}
+
+.item-check .item-detail-infor p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    line-height: 18px;
+}
+
+.item-check .item-detail-infor .box-quantity {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.box-total {
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-size: 1.3rem;
+    line-height: 22px;
+    font-weight: 500;
+}
+
+.type-checkout {
+    padding-left: 10px;
+    padding-top: 20px;
+}
+
+.btn-order {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.btn-order button {
+    background-color: var(--bg-main);
+    padding: 10px 25px;
+    border-radius: 25px;
+    color: white;
+    font-size: .9rem;
+    line-height: 18px;
+    text-transform: uppercase;
+    transition: all 0.4s ease;
+    border: none;
+}
+
+.btn-order button:hover {
+    background-color: var(--color-text-hover);
+    color: #000;
+    transition: all 0.4s ease;
+}

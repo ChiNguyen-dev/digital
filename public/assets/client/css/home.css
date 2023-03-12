@@ -1,0 +1,449 @@
+.box-shipment,
+.box-support,
+.box-services {
+    text-align: center;
+    padding: 10px 36px;
+}
+
+.box-shipment .thumbnail-ship,
+.box-support .thumbnail-supp {
+    width: 100%;
+    max-width: 50px;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.box-shipment .thumbnail-ship img,
+.box-support .thumbnail-supp img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.box-shipment .ship-content,
+.box-support .supp-content,
+.box-services .services-content {
+    padding-top: 14px;
+}
+
+.box-shipment .ship-content p,
+.box-support .supp-content p,
+.box-services .services-content p {
+    color: #666;
+    line-height: 26px;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+}
+
+.box-shipment .ship-content h6,
+.box-support .supp-content h6,
+.box-services .services-content h6 {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    transition: .5s all;
+    text-transform: uppercase;
+}
+
+.box-shipment:hover h6,
+.box-support:hover h6,
+.box-services:hover h6 {
+    color: var(--bg-main);
+    transition: all 0.4s ease;
+}
+
+.box-shipment:hover img,
+.box-support:hover img,
+.box-services:hover img {
+    transform: rotateY(-360deg);
+    transition: all .4s linear;
+}
+
+.wp-slider,
+.wp-service,
+.Banner-with-SideText,
+.slick-list {
+    padding-bottom: 60px;
+}
+
+.box-support {
+    border-right: 1px solid #e5e5e5;
+    border-left: 1px solid #e5e5e5;
+}
+
+/*BANNER*/
+.Banner-with-SideText {
+    width: 100%;
+    max-width: 1230px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.btn-block-text {
+    outline: none;
+    box-shadow: none;
+    color: #fff;
+    background-color: var(--bg-main);
+    border: 1px solid var(--bg-main);
+    font-size: 14px;
+    font-family: Poppins, sans-serif;
+    padding: 0 29px;
+    height: 45px;
+    transition: all .3s;
+    letter-spacing: 0;
+    line-height: 42px;
+    border-radius: 25px;
+}
+
+.btn-block-text:hover {
+    box-shadow: none;
+    color: #000;
+    background-color: var(--color-text-hover);
+    border-color: var(--color-text-hover);
+}
+
+.block-text-wrapper .deals {
+    color: #5a4bde !important;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-family: FontDrop, sans-serif;
+}
+
+.block-text-wrapper h2 {
+    font-weight: bold;
+    letter-spacing: 0.1px;
+    font-size: 2.5rem;
+    line-height: 50px;
+    margin-bottom: 34px !important;
+    margin-top: 0;
+    font-family: Oswald, sans-serif;
+}
+
+.block-text-wrapper h2:before {
+    position: absolute;
+    content: "";
+    left: 18px;
+    right: auto;
+    width: 36px;
+    height: 2px;
+    bottom: 150px;
+    background: #e5e5e5;
+}
+
+.block-text-wrapper p {
+    color: #666;
+    font-style: italic;
+    font-weight: bold;
+    letter-spacing: 1.3px;
+    line-height: 24px;
+    font-size: .9rem;
+    margin-bottom: 20px;
+}
+
+.banner-item {
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.banner-item .banner-item__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all .4s linear;
+}
+
+.banner-item.banner-item__image--position {
+    right: -50px;
+    transition: .5s all;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.banner-item.effect-scale:hover .banner-item__image img {
+    scale: 1.1;
+    transition: all .4s linear;
+}
+
+.banner-item.effect-hover {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.banner-item.effect-hover::before {
+    background: rgba(255, 255, 255, .41) none repeat scroll 0 0;
+    content: "";
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+}
+
+.banner-item.effect-hover::after {
+    background: rgba(255, 255, 255, .41) none repeat scroll 0 0;
+    content: "";
+    height: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 0;
+    width: 0;
+}
+
+.banner-item.effect-hover:hover:before,
+.banner-item.effect-hover:hover:after {
+    height: 100%;
+    width: 100%;
+    transition-duration: 1.3s;
+    opacity: 0;
+}
+
+.slick-list .slick-list__banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.slick-list__items {
+    display: flex;
+    align-items: center;
+}
+
+ul.slick-list__items {
+    overflow: hidden;
+}
+
+.slick-list__item {
+    width: 304px;
+    position: relative;
+}
+
+.slick-list__item:hover img {
+    scale: 1.1;
+    transition: all .4s linear;
+}
+
+.slick-list__item:hover .collection-list-grid__title h6 {
+    color: var(--bg-main);
+    transition: all .4s linear;
+}
+
+.slick-list__item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all .5s ease;
+}
+
+.collection-list-grid__title {
+    position: absolute;
+    text-align: center;
+    bottom: 35px;
+    background: transparent;
+    left: 0;
+    right: 0;
+}
+
+.collection-list-grid__title h6 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: Poppins, sans-serif;
+    margin-bottom: 8px;
+    transition: all .5s ease;
+    color: #000;
+}
+
+.collection-list-grid__title p {
+    font-size: 1rem;
+    font-weight: bold;
+    font-style: italic;
+    color: #666;
+    letter-spacing: .8px;
+}
+
+.wp-products .item-header {
+    position: relative;
+    background: url(https://cdn.shopify.com/s/files/1/0099/8739/1539/t/7/assets/Divider.png) no-repeat 50% 100%;
+    padding: 0 0 24px;
+    margin-bottom: 25px;
+}
+
+.wp-products .item-header h2 {
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    font-size: 2.1rem;
+    text-transform: uppercase;
+    text-align: center;
+    font-family: Oswald, sans-serif;
+}
+
+.wp-products ul.list-items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.wp-products ul.list-items li.item-link {
+    width: 308px;
+    padding: 0 15px;
+    margin-bottom: 30px;
+}
+
+.wp-products ul.list-items li.item-link.catalog {
+    width: 285px;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid {
+    position: relative;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid a {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 250px;
+    height: 250px;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .image {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .image img {
+    width: 100%;
+    height: 198px;
+    display: block;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .product-item-details {
+    padding: 8px 18px;
+    text-align: left;
+    font-family: Poppins, sans-serif;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .product-item-details .evaluates i {
+    font-size: .8rem;
+    color: var(--bg-main);
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .product-item-details .title a,
+.name-box a {
+    display: block;
+    font-size: .95rem;
+    line-height: 22px;
+    font-weight: 400;
+    color: #666;
+    margin: 6px 0;
+    height: 44px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .product-item-details .title a:hover,
+.wp-products ul.list-items li.item-link .item-card-grid .product-buttons a:hover i {
+    color: var(--bg-main);
+    transition: all 0.4s ease;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .product-item-details .price {
+    display: flex;
+    align-items: center;
+    font-size: .97rem;
+    font-weight: 500;
+    text-align: left;
+    line-height: 24px;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .product-buttons {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 20;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .product-buttons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4px 0;
+    width: 38px;
+    height: 38px;
+    padding: 10px 0;
+    color: #000;
+    background-color: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    border-radius: 4px;
+    font-size: .9rem;
+    opacity: 0;
+    visibility: visible;
+    transition: all 0.5s linear;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid:hover .product-buttons a {
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.5s linear;
+}
+
+
+.wp-products ul.list-items li.item-link .item-card-grid .product-labels {
+    position: absolute;
+    top: 24px;
+    left: 0;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .product-labels span {
+    border-radius: 0 25px 25px 0;
+    font-size: .8rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    padding: 3px 20px;
+    display: block;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .product-labels .sale {
+    background-color: var(--color-text-hover);
+    color: #000;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid .product-labels .new {
+    background-color: var(--bg-main);
+    color: white;
+    transform: translate(-205%);
+    transition: all .5s ease;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid:hover .product-labels .new {
+    transform: translate(-107%);
+    transition: all .5s ease;
+}
+
+.wp-products ul.list-items li.item-link .item-card-grid:hover .product-labels .sale {
+    transform: translate(-100%);
+    transition: all .5s ease;
+}

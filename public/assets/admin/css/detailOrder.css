@@ -1,0 +1,80 @@
+.card-body p {
+    font-size: 1rem;
+    line-height: 18px;
+}
+
+table#table-cart {
+    color: #1d1d1f;
+}
+
+table#table-cart tr th {
+    font-size: 1rem;
+    line-height: 20px;
+    text-align: center;
+}
+
+table#table-cart tr td, table#table-cart tr th {
+    font-size: 1rem;
+    line-height: 20px;
+    vertical-align: middle !important;
+    overflow: hidden;
+}
+
+
+table#table-cart td select {
+    padding: 5px 8px;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+}
+
+table#table-cart td select:focus-visible {
+    box-shadow: none;
+    outline: none;
+}
+
+table#table-cart tr td {
+    line-height: 22px;
+    font-weight: 400;
+    color: #1d1d1f;
+}
+
+table#table-cart tr td img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.col-stt {
+    width: 73px;
+    max-width: 73px;
+}
+
+.col-img {
+    width: 130px;
+    max-width: 130px;
+}
+
+.col-name {
+    width: 400px;
+    max-width: 400px;
+}
+
+.col-qty {
+    width: 90px;
+    max-width: 90px;
+}
+
+.col-remove {
+    width: 60px;
+    max-width: 60px;
+}
+
+.col-remove i:hover {
+    color: var(--bg-main);
+    cursor: pointer;
+}
+
+.amount-item, .total-order {
+    font-size: 1.1rem !important;
+    font-weight: 500;
+}

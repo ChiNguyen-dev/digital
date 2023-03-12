@@ -1,0 +1,51 @@
+.pagination {
+    display: flex;
+    justify-content: right;
+    padding-right: 22px;
+    font-size: 1rem;
+    font-weight: 400;
+}
+.pagination .page-item {
+    margin: 0 10px 10px 0 !important;
+}
+
+.pagination .page-item .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    min-width: 40px;
+    line-height: 40px;
+    border-radius: 40px;
+    padding: 0 5px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--bg-main);
+    border: none;
+}
+
+.pagination .page-item a.page-link:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.pagination .page-item.active .page-link {
+    color: #fff;
+    background: black;
+}
+
+.pagination .page-item .page-link:hover,
+nav > ul.pagination > li.page-item:first-child > a.page-link:hover,
+nav > ul.pagination > li.page-item:last-child > a.page-link:hover {
+    color: #fff !important;
+    background-color: black;
+    transition: all 0.3s ease;
+}
+
+nav > ul.pagination > li.page-item:first-child > .page-link,
+nav > ul.pagination > li.page-item:last-child > .page-link {
+    font-size: 1.5rem;
+    color: black;
+}

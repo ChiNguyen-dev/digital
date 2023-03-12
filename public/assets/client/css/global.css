@@ -1,0 +1,159 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 62.5%;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-main: #5a4bde;
+    --color-text-hover: #ffca0d;
+}
+
+.wp-container {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.wp-container--bg {
+    position: relative;
+    background-color: var(--bg-main);
+}
+
+#wp-content {
+    padding-top: 152px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.owl-carousel {
+    position: relative;
+}
+
+.owl-carousel .owl-nav button.owl-prev span {
+    left: 20px;
+    padding: 0 2px 3px 0;
+}
+
+.owl-carousel .owl-nav button.owl-next span {
+    right: 20px;
+    padding: 0 0 3px 2px;
+}
+
+.owl-carousel .owl-nav {
+    margin-top: 0;
+}
+
+.owl-carousel .owl-nav button.owl-prev span,
+.owl-carousel .owl-nav button.owl-next span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: calc(50% - 20px);
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    background-color: var(--bg-main);
+    opacity: 0;
+    visibility: visible;
+    transition: all 0.4s ease;
+}
+
+.owl-carousel:hover .owl-nav button.owl-prev span,
+.owl-carousel:hover .owl-nav button.owl-next span {
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.4s ease;
+}
+
+button:focus {
+    outline: none;
+}
+
+.owl-theme .owl-dots .owl-dot span {
+    background-color: #000 !important;
+    width: 13px;
+    height: 13px;
+}
+
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+    background-color: var(--bg-main) !important;
+}
+
+.owl-carousel .owl-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.scroll-to-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 48px;
+    right: 30px;
+    width: 38px;
+    height: 38px;
+    font-size: .9rem;
+    font-weight: bold;
+    background: var(--bg-main);
+    color: #fff;
+    border-radius: 100%;
+    z-index: 10;
+    opacity: 0;
+    visibility: visible;
+}
+
+.scroll-to-top:hover {
+    background-color: var(--color-text-hover);
+    color: #000;
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.text-decoration-underline {
+    text-decoration: underline;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    background-color: #000;
+    opacity: 0.5;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 99;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+

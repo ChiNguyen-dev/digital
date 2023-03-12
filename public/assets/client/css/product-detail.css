@@ -1,0 +1,523 @@
+@media screen and (max-width: 768px) {
+    .trace {
+        display: none !important;
+    }
+
+}
+
+.trace {
+    background-color: #f5f5f7;
+    padding: 12px 0;
+    z-index: 102;
+}
+
+.trace ul.trace-list {
+    display: flex;
+    align-items: center;
+}
+
+.trace ul.trace-list li.trace-item {
+    color: #515154;
+    font-size: 0.9rem;
+    line-height: 20px;
+}
+
+.trace ul.trace-list li.trace-item:last-child {
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 50%;
+}
+
+.trace ul.trace-list li.trace-item a,
+.trace ul.trace-list li.trace-item span {
+    position: relative;
+    color: #515154;
+    font-size: 1rem;
+    line-height: 20px;
+    padding-right: 10px;
+    margin-right: 18px;
+}
+
+.trace ul.trace-list li.trace-item a:hover {
+    text-decoration: underline;
+}
+
+.trace ul.trace-list li.trace-item .trace-item__link:after {
+    position: absolute;
+    width: 8px;
+    height: 20px;
+    right: -10px;
+    top: 1px;
+    content: '';
+    background-repeat: no-repeat;
+    background-image: url(https://macone.vn/wp-content/themes/macone/images/separator.svg);
+}
+
+.product-album {
+    padding-top: 48px;
+}
+
+.slider__detail {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 460px;
+    height: auto;
+    overflow: hidden;
+}
+
+.slider__detail .thumbnail-item {
+    width: 100%;
+}
+
+.slider__detail .thumbnail-item img {
+    width: auto;
+    display: block;
+    margin: 0 auto;
+    height: 306px;
+}
+
+.slider__detail .next-prev {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+}
+
+.slider__detail .next-prev a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: white;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background-color: var(--bg-main);
+    transition: all 0.3s ease-in-out;
+    border-radius: 3px;
+    opacity: 0.8;
+    z-index: 1000;
+}
+
+.slider__detail .next-prev a:hover {
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+}
+
+.slider__detail .next-prev {
+    opacity: 0;
+    visibility: visible;
+    transition: all 0.7s ease-in-out;
+}
+
+.slider__detail:hover .next-prev {
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.7s ease-in-out;
+}
+
+.carousel-detail {
+    width: 460px;
+    margin: 20px auto;
+}
+
+.carousel-detail ul.thumbnail-main {
+    display: flex;
+    align-items: center;
+}
+
+.carousel-detail ul.thumbnail-main li.carousel__thumbnail-item {
+    width: 88px;
+    border: 1px solid rgba(202, 202, 202, .8);
+    border-radius: 5px;
+    display: block;
+    padding: 8px;
+    margin-right: 11px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.carousel-detail ul.thumbnail-main li.carousel__thumbnail-item.active {
+    border-color: var(--bg-main);
+}
+
+.carousel-detail ul.thumbnail-main li.carousel__thumbnail-item:hover {
+    border-color: var(--bg-main);
+    transition: all 0.4s ease;
+}
+
+.carousel-detail ul.thumbnail-main li.carousel__thumbnail-item img {
+    width: 100%;
+    height: 65px;
+    display: block;
+}
+
+.intro-text {
+    padding: 0 15px;
+    font-size: .8rem;
+    margin-top: 35px;
+    text-align: center
+}
+
+.intro-text p:first-child {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.items-same {
+    margin: 50px 0 20px;
+    width: 460px;
+}
+
+.items-same p {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1d1d1f;
+    margin-bottom: 10px;
+}
+
+.items-same .list-item {
+    display: flex;
+    align-items: center;
+}
+
+.items-same .list-item li {
+    width: 100%;
+    max-width: 230px;
+}
+
+.items-same .list-item li .item-box {
+    padding: 14px;
+    border: 1px solid #eee;
+}
+
+.items-same .list-item li:first-child {
+    padding-right: 14px;
+}
+
+.items-same .list-item li .img-box {
+    width: 100%;
+    max-width: 180px;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+
+.items-same .list-item li .img-box img {
+    width: auto;
+    height: 120px;
+    display: block;
+    margin: 0 auto;
+}
+
+.price-box {
+    color: #f83015;
+    font-size: .9rem;
+    margin: 10px 0 5px;
+}
+
+
+.name-box a:hover {
+    color: var(--bg-main);
+    transition: all 0.4s ease;
+}
+
+.product-infor {
+    width: 100%;
+    padding-top: 18px;
+}
+
+.product-infor .product-name {
+    color: #1F1F1D;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 400;
+    padding: 0;
+    margin: 0;
+}
+
+.product-infor .price-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    height: 40px;
+}
+
+.product-infor .price-box .installment {
+    color: #1F1F1D;
+    font-size: .9rem;
+    line-height: 40px;
+    width: 100%;
+    max-width: 250px;
+    text-align: right;
+}
+
+.product-infor .price-box .installment span {
+    padding-right: 3px;
+}
+
+.product-infor .price-box .installment strong {
+    color: var(--bg-main);
+
+}
+
+.color-box {
+    margin-top: 5px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    font-size: .9rem;
+
+}
+
+.color-box span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    position: relative;
+    border-radius: 15px;
+}
+
+.color-box span i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 30%) inset;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.color-box span.active_color::after {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 26px;
+    height: 26px;
+    right: -3px;
+    border: 1px solid var(--bg-main);
+    border-radius: 15px;
+}
+
+ul.list-infor {
+    display: flex;
+    flex-direction: column;
+    margin: 16px 0;
+}
+
+ul.list-infor li {
+    font-size: .8rem;
+    line-height: 16px;
+    margin-bottom: 5px;
+}
+
+ul.list-infor li i {
+    color: var(--bg-main);
+    padding-right: 5px;
+}
+
+.short_desc {
+    border-radius: 5px;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 15px;
+}
+
+.short_desc .desc-title {
+    color: #1d1d1f;
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.short_desc .desc_content {
+    font-size: .8rem;
+    line-height: 20px;
+    padding: 0 15px 15px;
+}
+
+.short_desc .desc_content li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.short_desc .desc_content.middle li:before {
+    position: absolute;
+    content: "\f013";
+    font-family: 'Fontawesome', serif;
+    color: #db0000;
+    left: 0;
+}
+
+.policy-sale__content.right li:before {
+    position: absolute;
+    content: "\f058";
+    font-family: 'Fontawesome', serif;
+    color: var(--bg-main);
+    left: 0;
+}
+
+
+.btn-group-detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.btn-group-detail a {
+    text-align: center;
+    display: block;
+    color: #fff;
+    background-color: #5a4bde;
+    padding: 15px;
+    font-size: 1rem;
+    line-height: 18px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    transition: all 0.4s ease;
+}
+
+.btn-group-detail a:first-child {
+    margin-right: 12px;
+}
+
+.btn-group-detail a:hover {
+    background-color: var(--color-text-hover);
+    color: #000;
+    transition: all 0.4s ease;
+}
+
+.call-order {
+    text-align: center;
+    margin-top: 16px;
+    font-size: .9rem;
+    line-height: 18px;
+}
+
+.call-order span {
+    color: var(--bg-main);
+    font-weight: 500;
+}
+
+.sale-box {
+    margin-top: 18px;
+    padding: 0 24px 10px;
+    height: 108px;
+    border: 1px solid #dadada;
+    border-radius: 6px;
+    background: url("https://macone.vn/wp-content/themes/macone/images/qua-tang2.png") center center no-repeat;
+}
+
+.sale-box p {
+    font-size: .8rem;
+    padding-top: 30px;
+    width: 120px;
+    margin-left: -10px;
+    line-height: 18px;
+}
+
+.policy-sale {
+    margin-top: 16px;
+    border: #dadada solid 1px;
+    background-color: #f3f3f3;
+    border-radius: 6px;
+}
+
+.policy-sale .title {
+    color: #1d1d1f;
+    padding: 13px 13px 15px;
+    font-size: .9rem;
+    font-weight: 500;
+}
+
+.policy-sale__content {
+    padding: 0 13px;
+}
+
+.policy-sale__content ul li {
+    position: relative;
+    padding-left: 20px;
+    font-size: .8rem;
+    line-height: 18px;
+    padding-bottom: 14px;
+}
+
+#desc-product {
+    position: relative;
+    margin-bottom: 40px;
+    border: #d8d8d8 solid 1px;
+    padding: 0 20px;
+    max-height: 1620px;
+    border-top-width: 3px;
+    overflow: hidden;
+}
+
+.content-full {
+    padding: 25px 0 10px;
+    margin-bottom: 40px;
+}
+
+.content-full .cat-new-title {
+    height: 38px;
+    border: 1px solid #dee2e6;
+    color: #232323;
+    font-size: 1.1rem;
+    padding-top: 8px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+}
+
+.the_content {
+    text-align: justify;
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+
+
+.view-more {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 20px 0;
+    height: 62px;
+    background-image: url("https://macone.vn/wp-content/themes/macone/images/bg2.png");
+    background-repeat: repeat-x;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.view-more .more {
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: .8rem;
+    font-weight: 500;
+    line-height: 18px;
+    margin-bottom: 18px;
+    border: 1px solid var(--bg-main);
+    color: var(--bg-main);
+    transition: all .4s ease;
+}
+
+.view-more .more span {
+    padding-right: 5px;
+}
+
+.view-more .more:hover {
+    background-color: var(--bg-main);
+    color: white;
+    transition: all .4s ease;
+}

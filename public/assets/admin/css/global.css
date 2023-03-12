@@ -1,0 +1,269 @@
+:root {
+    --bg-main: #5a4bde;
+    --color-hover: #5a4bde;
+    --color-table: #212529;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 62.5%;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    color: #787272;
+}
+
+a:hover {
+    color: var(--color-hover) !important;
+    text-decoration: none;
+    transition: all 0.4s ease;
+}
+
+.nav-fixed .topnav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    padding: 10px 0;
+}
+
+.nav-fixed .topnav .navbar-brand {
+    padding-left: 20px;
+    padding-right: 40px;
+}
+
+.nav-fixed .topnav .navbar-brand img {
+    display: block;
+    height: 35px;
+}
+
+
+#sidebar-toggle {
+    outline: none;
+    border: 0;
+    background-color: transparent;
+}
+
+.plus-icon {
+    font-size: 1.4rem;
+    color: #8f8f8f;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+#sidebar {
+    width: 280px;
+    height: 100vh;
+    z-index: 500;
+    padding-top: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 1.1rem;
+}
+
+#wp-content {
+    flex-grow: 1;
+    min-height: 100vh;
+    padding-top: 70px;
+    padding-left: 280px;
+}
+
+ul#sidebar-menu * {
+    list-style: none;
+    padding-left: 0;
+}
+
+#sidebar-menu {
+    padding: 20px 10px 20px 24px;
+}
+
+.nav-link {
+    display: block;
+}
+
+.nav-link:hover > div > i, .nav-link:hover > div > a {
+    color: var(--color-hover);
+    transition: all 0.4s ease;
+}
+
+.nav-link > div > i {
+    color: #787272;
+    font-size: 1.1rem;
+}
+
+.nav-link .arrow {
+    cursor: pointer;
+    transition: all 0.4s linear;
+}
+
+.nav-link .arrow.active {
+    transform: rotate(90deg);
+    transition: all 0.4s linear;
+}
+
+#sidebar-menu .sub-menu {
+    display: none;
+    padding-left: 22px;
+    border-left: 1px dashed #b8b8b8;
+    margin-left: 6px;
+    font-size: 1.04rem;
+}
+
+#sidebar-menu .sub-menu li a {
+    display: block;
+    padding: 5px 0;
+}
+
+#page-body {
+    background-color: #e5e9f0;
+}
+
+.form-search {
+    width: 300px;
+}
+
+.table {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.table tr td {
+    vertical-align: middle;
+}
+
+.table-checkall input[type='checkbox'] {
+    cursor: pointer;
+}
+
+.analytic {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.analytic .analytic__status a {
+    font-size: .9rem;
+    position: relative;
+    padding: 0 5px;
+    margin: 0 5px;
+}
+
+.analytic .analytic__status a:first-child {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.analytic .analytic__status a:hover {
+    color: var(--color-hover) !important;
+}
+
+.analytic .analytic__add a:hover {
+    color: white !important;
+}
+
+.analytic a:not(:last-child):after {
+    position: absolute;
+    content: '|';
+    top: -1px;
+    right: -5px;
+    color: #8c8c8c;
+}
+
+.btn-delete i, .btn-edit i {
+    font-size: 17px;
+    padding: 0 3px 0 0;
+}
+
+.card-header {
+    font-size: 1.07rem;
+    font-weight: 500;
+}
+
+.card-header--bg {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.card-text {
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.btn-group > .btn.dropdown {
+    box-shadow: none;
+}
+
+form label, form input {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+form select {
+    padding: 5px 20px !important;
+}
+
+.text-validate {
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 12px;
+}
+
+.image-item {
+    width: 100%;
+    max-width: 80px;
+    height: 80px;
+}
+
+.image-slider {
+    width: 100%;
+    max-width: 150px;
+    height: 80px;
+}
+
+.image-item img, .image-slider img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+table td a {
+    color: #212529;
+}
+
+table td a.text-item {
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+a.text-success:hover, a.text-danger:hover {
+    color: var(--color-hover) !important;
+}
+
+.col-style {
+    width: 30px;
+    border-radius: 50%;
+    color: transparent;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 30%) inset;
+}
+
+.dropdown-menu .dropdown-item:active {
+    background: white;
+}
+
+

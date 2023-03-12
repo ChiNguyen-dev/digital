@@ -1,0 +1,407 @@
+.wp__header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: #fff;
+}
+
+.wp__header .header-over {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 15px;
+    padding: 16px 0;
+    color: #666;
+}
+
+.wp__header .header-over .header-over__left {
+    display: flex;
+    align-items: center;
+}
+
+.wp__header .header-over .header-over__left .header-over__left-time,
+.wp__header .header-over .header-over__right .header-over__right-shopping {
+    position: relative;
+    padding-right: 16px;
+}
+
+.wp__header .header-over .header-over__left .header-over__left-time:before,
+.wp__header .header-over .header-over__right .header-over__right-shopping:before {
+    position: absolute;
+    content: '';
+    height: 30px;
+    width: 2px;
+    right: 0;
+    top: -5px;
+    background-color: #ddd;
+}
+
+.wp__header .header-over .header-over__left .header-over__left-mail,
+.wp__header .header-over .header-over__right .header-over__right-socials {
+    padding-left: 16px;
+}
+
+.wp__header .header-over .header-over__left .header-over__left-time i:hover,
+.wp__header .header-over .header-over__left .header-over__left-mail i:hover,
+.wp__header .header-over .header-over__right .header-over__right-socials i:hover,
+.wp__header .header-over .header-over__right .header-over__right-shopping i:hover {
+    color: var(--color-text-hover);
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.wp__header .header-over .header-over__right {
+    display: flex;
+    align-items: center;
+}
+
+.wp__header .header-over .header-over__right .header-over__right-socials i {
+    padding: 0 8px;
+}
+
+/* END HEADER OVER*/
+.wp__header .header-under {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wp__header .header-under .logo {
+    width: 100%;
+    max-width: 160px;
+    padding: 35px 0;
+}
+
+.wp__header .header-under .logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.wp__header .header-under .mega-menu {
+    flex-basis: 70%;
+    padding-left: 20px;
+}
+
+.mega-menu ul.list-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: white;
+}
+
+.mega-menu .list-menu > li {
+    padding: 0 28px;
+    position: relative;
+}
+
+.mega-menu .list-menu > li > a {
+    display: block;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: .3px;
+}
+
+.mega-menu > .list-menu > li > ul.sub-menu,
+.mega-menu > .list-menu > li > ul.sub-menu > li ul.sub-menu {
+    position: absolute;
+    width: 250px;
+    font-size: 1rem;
+    font-weight: 400;
+    background-color: white;
+    padding: 5px 0 5px 15px;
+    border: 1px solid #eeeeee;
+    border-top: 2px solid #000;
+    z-index: 100;
+    display: none;
+}
+
+.mega-menu > .list-menu > li > ul.sub-menu {
+    left: 24px;
+    top: 63px;
+}
+
+.mega-menu ul.list-menu li ul.sub-menu li {
+    position: relative;
+    padding-right: 15px;
+}
+
+.mega-menu > ul.list-menu > li > ul.sub-menu li > a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: #666;
+    padding: 8px 0;
+    letter-spacing: .3px;
+}
+
+.mega-menu ul.list-menu li:before {
+    position: absolute;
+    content: '';
+    top: 100%;
+    width: 77px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.wp__header .header-under .mega-menu ul.list-menu li:hover > a {
+    color: var(--color-text-hover);
+    transition: all 0.4s ease;
+}
+
+.wp__header .header-under .mega-menu ul.list-menu li > .sub-menu li:hover > a {
+    color: var(--bg-main);
+    transition: all 0.4s ease;
+}
+
+.mega-menu .list-menu ul.sub-menu ul.sub-menu {
+    top: -6px;
+    left: 234px;
+}
+
+.mega-menu .list-menu ul.sub-menu ul.sub-menu ul.sub-menu {
+    top: -6px;
+}
+
+.mega-menu > ul.list-menu > li:hover > ul.sub-menu {
+    display: block;
+}
+
+.mega-menu > ul.list-menu > li > ul.sub-menu li:hover > ul.sub-menu {
+    display: block;
+}
+
+.wp__header .header-under .child-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-basis: 20%;
+    position: relative;
+}
+
+.wp__header .header-under .child-content .header-search {
+    width: 100%;
+    max-width: 50px;
+    height: 50px;
+    padding: 13px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+}
+
+.wp__header .header-under .child-content .header-search img {
+    width: 100%;
+    max-width: 28px;
+    height: auto;
+    display: block;
+}
+
+.wp__header .header-under .child-content .my-account,
+.wp__header .header-under .child-content .header-cart {
+    position: relative;
+    width: 100%;
+    max-width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 50px;
+    font-size: 1.2rem;
+}
+
+.wp__header .header-under .child-content .my-account:before {
+    position: absolute;
+    content: '';
+    top: calc(100% - 10px);
+    left: -10px;
+    width: 100%;
+    height: 40px;
+}
+
+.wp__header .header-under .child-content .header-search:hover,
+.wp__header .header-under .child-content .header-cart:hover,
+.wp__header .header-under .child-content .my-account:hover {
+    cursor: pointer;
+    background-color: var(--color-text-hover);
+    transition: all 0.5s ease;
+}
+
+.wp__header .header-under .child-content .header-cart a i,
+.wp__header .header-under .child-content .my-account a {
+    color: #000;
+}
+
+.wp__header .header-under .child-content .header-cart:hover .num-cart {
+    color: white;
+    background-color: #000;
+    transition: all 0.5s ease;
+}
+
+.wp__header .header-under .child-content .my-account .list-infor {
+    display: none;
+    position: absolute;
+    top: 76px;
+    right: 0;
+    border: 1px solid #eeeeee;
+    border-top: 2px solid #000;
+    padding: 5px 15px;
+    background-color: white;
+}
+
+.wp__header .header-under .child-content .my-account .list-infor .infor-menu {
+    width: 150px;
+    font-size: 1rem;
+    font-weight: 400;
+    background-color: white;
+}
+
+.wp__header .header-under .child-content .my-account .list-infor .infor-menu li {
+    border-bottom: 1px solid #eeeeee;
+}
+
+.wp__header .header-under .child-content .my-account .list-infor .infor-menu .infor-item a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: #666;
+    padding: 8px 0;
+    letter-spacing: 0.3px;
+}
+
+.wp__header .header-under .child-content .my-account .list-infor .infor-menu li:last-child {
+    border-bottom: 0;
+}
+
+.wp__header .header-under .child-content .my-account:hover .list-infor {
+    display: block;
+}
+
+.wp__header .header-under .child-content .my-account .list-infor .infor-menu li:hover > a {
+    color: var(--bg-main);
+    transition: all .5s ease;
+}
+
+.wp__header .header-under .child-content .header-cart .num-cart {
+    position: absolute;
+    right: -7px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 15px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50px;
+    display: flex;
+    padding: 1px 0 0 1px;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-text-hover);
+}
+
+.icon-respon {
+    display: none;
+}
+
+.mega-menu--responsive {
+    display: none;
+}
+
+.block-search {
+    display: none;
+    position: absolute;
+    background-color: #fff !important;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 101;
+}
+
+.block-search > form {
+    position: relative;
+    max-width: 900px;
+    width: calc(100% - 30px);
+    margin: 0 auto;
+    height: 100%;
+}
+
+.block-search > form > input {
+    width: 100%;
+    height: 100%;
+    font-size: 1.2rem;
+    line-height: 18px;
+    border: none;
+    border-bottom: 2px solid #000;
+    outline: none;
+    padding: 0 17px;
+    font-family: Poppins, sans-serif;
+}
+
+.block-search > form > .btn-close {
+    position: absolute;
+    top: 37%;
+    right: 20px;
+    cursor: pointer;
+}
+
+.block-search > form > .btn-close > i {
+    font-size: 1.5rem;
+}
+
+#search-result-print {
+    display: none;
+    position: absolute;
+    width: 100%;
+    max-height: 400px;
+    overflow-y: scroll;
+    background-color: #fff;
+}
+
+.list-item-search li a {
+    display: flex;
+    justify-content: left;
+}
+
+.list-item-search li {
+    margin: 0 20px;
+    padding: 12px 0;
+}
+
+.list-item-search li a .thumbnail {
+    margin-right: 20px;
+    border: 1px solid #eee;
+}
+
+.list-item-search li a .thumbnail img {
+    width: 100%;
+    max-width: 90px;
+    height: 90px;
+    display: block;
+}
+
+.list-item-search li .infor {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    padding: 20px 0;
+    color: #000;
+}
+
+.list-item-search li .infor h6 {
+    font-size: 1.1rem;
+    line-height: 20px;
+    font-family: Oswald, sans-serif;
+}

@@ -1,0 +1,185 @@
+@media screen and (max-width: 768px) {
+    .sidebar-filter,
+    .banner-item,
+    .product-count {
+        display: none !important;
+    }
+
+    .wp-products ul.list-items > .row {
+        justify-content: center;
+    }
+
+    .top-filler .sort-by-select {
+        margin-left: 20px;
+    }
+}
+
+.sidebar-filter {
+    font-family: Poppins, sans-serif;
+}
+
+.sidebar-filter .filter-list {
+    border: 1px solid #e5e5e5;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar-filter .filter-list h5 {
+    position: relative;
+    font-family: Oswald, sans-serif;
+    font-size: 1.2rem;
+    line-height: 32px;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 10px 25px 10px 0;
+    color: #000;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.sidebar-filter .filter-list h5::before {
+    position: absolute;
+    content: "";
+    left: 0;
+    right: auto;
+    background: #fdbe00;
+    width: 40px;
+    height: 2px;
+    bottom: 0;
+}
+
+.sidebar-filter .filter-list span {
+    cursor: pointer;
+}
+
+.sidebar-filter > .filter-list > h5::after {
+    display: block;
+    position: absolute;
+    content: "\f068";
+    font-family: 'fontAwesome';
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    transition: all 0.6s linear;
+}
+
+.sidebar-filter > .filter-list > h5.has-toggle::after {
+    content: "\f067";
+    transition: all 0.6s linear;
+}
+
+.sidebar-filter .filter-list h5 + div {
+    padding: 15px 0 20px;
+}
+
+.sidebar-filter .filter-list ul li {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.sidebar-filter > .filter-list > div > ul > li:hover > div > a,
+.sidebar-filter > .filter-list > div > ul > li:hover > div > span,
+.sidebar-filter > .filter-list > div > ul > li ul > li:hover > div > a,
+.sidebar-filter > .filter-list > div > ul > li ul > li:hover > div > span {
+    color: #5a4bde;
+    transition: all 0.5s ease;
+}
+
+.sidebar-filter .filter-list ul li a,
+.sidebar-filter .filter-list ul li span {
+    color: #666;
+    letter-spacing: 1px;
+}
+
+.sidebar-filter .filter-list ul li:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar-filter .filter-list ul li ul {
+    padding-left: 15px;
+    margin-top: 10px;
+}
+
+.sidebar-filter .filter-list ul.sub-menu {
+    display: none;
+}
+
+.sidebar-filter .filter-list ul li ul.sub-menu li {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.sidebar-filter .filter-list ul li.item-link {
+    margin-bottom: 18px;
+}
+
+.sidebar-filter .filter-list ul li.item-link:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar-filter .filter-list ul li.item-link a {
+    background: #f7f7f7;
+    line-height: 38px;
+    min-width: 38px;
+    border-radius: 32px;
+    text-align: center;
+    padding: 10px 18px;
+    text-transform: lowercase;
+}
+
+.sidebar-filter .filter-list ul li.item-link a:hover {
+    background-color: var(--bg-main);
+    color: white;
+    transition: all 0.5s ease;
+}
+
+.banner-item {
+
+}
+
+.banner-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.top-filler {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8f8f8;
+    padding: 10px 20px;
+    margin-bottom: 30px;
+    font-family: Poppins, sans-serif;
+}
+
+.top-filler .product-count {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: .9px;
+}
+
+.top-filler .sort-by-select select {
+    border: 1px solid #e5e5e5;
+    color: #000;
+    font-size: 14px;
+    background: #f7f7f7 url(https://cdn.shopify.com/s/files/1/0099/8739/1539/t/7/assets/icon-select.png) no-repeat right 19px center;
+    border-radius: 0;
+    margin: 0;
+    padding: 0 35px 0 17px;
+    height: 40px;
+    letter-spacing: .5px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    z-index: 100;
+    font-family: Poppins, sans-serif;
+}
+
+.top-filler .sort-by-select select:focus-visible {
+    outline: none;
+}
