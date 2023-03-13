@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/')->group(function () {
 
+    Route::get('/login', [
+        'as' => 'Client.login',
+        'uses' => 'Authen\Client\AuthenController@index'
+    ]);
+
+    Route::get('/register', [
+        'as' => 'Client.register',
+        'uses' => 'Authen\Client\AuthenController@register'
+    ]);
+
     Route::get('/', [
         'as' => 'client.home',
         'uses' => 'HomeController@index'
@@ -42,7 +52,8 @@ Route::prefix('/')->group(function () {
     Route::prefix('/gio-hang')->group(function () {
         Route::get('/', [
             'as' => 'carts.index',
-            'uses' => 'CartController@index'
+            'uses' => 'CartController@index',
+            'middleware' => 'isLogin'
         ]);
         Route::get('/add/{id}', [
             'as' => 'carts.add',

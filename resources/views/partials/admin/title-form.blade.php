@@ -1,1 +1,1 @@
-<div class="card-header font-weight-bold">{{$name}}</div>
+<div class="card-header font-weight-bold">{{ $name }}</div>

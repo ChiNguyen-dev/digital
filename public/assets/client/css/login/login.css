@@ -1,0 +1,206 @@
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #212121;
+}
+
+:root {
+    --color-blue: #2962ff;
+    --color-white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.wp-left {
+    flex-basis: 50%;
+    height: 100%;
+    background: #eaf0fa;
+}
+
+.left-thumbnail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 0 20px;
+}
+
+.left-thumbnail img {
+    width: 557px;
+    height: 440px;
+}
+
+
+.wp-right {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-form {
+    padding: 50px 100px;
+}
+
+.name-powered {
+    text-align: right;
+    color: #a6aebb;
+    font-size: 13px;
+    margin-bottom: 30px;
+}
+
+.name-powered i {
+    font-size: 18px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.name-powered span {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.form {
+    width: 100%;
+    max-width: 350px;
+}
+
+.form > h2 {
+    text-align: center;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.content {
+    text-align: center;
+    margin: 12px 0 24px;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+input {
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 14px 12px;
+    width: 100%;
+    box-shadow: none;
+    outline: none;
+    font-family: "Roboto", sans-serif;
+    margin-bottom: 20px;
+}
+
+form input:last-child {
+    margin-bottom: 0;
+}
+
+.phone-number {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.phone-number:focus-within {
+    border: 1px solid var(--color-blue);
+}
+
+.phone-number input {
+    border: none;
+    margin-bottom: 0;
+}
+
+.before {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80px;
+    padding-left: 10px;
+}
+
+.before img {
+    height: 20px;
+    width: 20px;
+    display: block;
+    margin-right: 5px;
+}
+
+button {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid var(--color-blue);
+    padding: 10px 0;
+    box-shadow: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #FFFFFF;
+}
+
+form > button {
+    margin-top: 20px;
+    background: var(--color-blue);
+    color: #fff;
+}
+
+form > input:focus {
+    border: 1px solid var(--color-blue);
+}
+
+.forgot-pass {
+    display: block;
+    margin: 10px 0;
+    color: var(--color-blue);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+p.separator {
+    font-size: 12px;
+    color: #a6aebb;
+    margin: 15px 0;
+}
+
+.login-google {
+    position: relative;
+    color: var(--color-blue);
+}
+
+.icon-gg {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 10px;
+    top: 8px;
+}
+
+.icon-gg img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+p.register {
+    text-align: center;
+    color: #a6aebb;
+    padding: 20px 0 0;
+    font-size: 14px;
+}
+
+.register a {
+    text-decoration: none;
+    color: var(--color-blue);
+}

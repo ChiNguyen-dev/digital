@@ -48,12 +48,12 @@
                         <i class="fa-solid fa-user"></i>
                         <div class="list-infor">
                             <ul class="infor-menu">
-                                {{--                                <li class="infor-item">--}}
-                                {{--                                    <a href="">Đăng nhập <i class="fa-solid fa-key"></i></a>--}}
-                                {{--                                </li>--}}
-                                {{--                                <li class="infor-item">--}}
-                                {{--                                    <a href="">Đăng ký <i class="fa-solid fa-user-plus"></i></a>--}}
-                                {{--                                </li>--}}
+                                <li class="infor-item">
+                                    <a href="{{ route('Client.login') }}">Đăng nhập <i class="fa-solid fa-key"></i></a>
+                                </li>
+                                <li class="infor-item">
+                                    <a href="{{ route('Client.register') }}">Đăng ký <i class="fa-solid fa-user-plus"></i></a>
+                                </li>
                                 <li class="infor-item">
                                     <a href="">Yêu thích <i class="fa-regular fa-heart"></i></a>
                                 </li>
