@@ -5,10 +5,18 @@
     <div class="content">
         Xin chào, vui lòng nhập thông tin đăng nhập
     </div>
-    <form action="">
-        <input type="email" name="email" placeholder="Địa chỉ email">
+    <form action="{{ route('Client.login') }}" method="POST">
+        @csrf
+        <input type="email" name="email" placeholder="Địa chỉ email" value=" {{ old('email') }}">
         <input type="password" name="password" placeholder="Mật khẩu">
-        <a href="#" class="forgot-pass">Quên mật khẩu</a>
+        @if($errors->any())
+            <div class="box-error">
+                <small class="d-block text-validate text-danger">*Sai thông tin đăng nhập</small>
+                <a href="#" class="forgot-pass">Quên mật khẩu</a>
+            </div>
+        @else
+            <a href="#" class="forgot-pass">Quên mật khẩu</a>
+        @endif
         <button type="submit" name="btn-submit">Đăng nhập</button>
     </form>
     <p class="separator">Hoặc</p>

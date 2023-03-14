@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\component\CategoryRecursive;
+use App\services\imp\ProvinceDistrictWardImp;
 use App\services\ProvinceDistrictWard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -11,15 +12,13 @@ use Illuminate\Support\Facades\Log;
 class CheckoutController extends Controller
 {
     private $categoryRecursive;
-    private $provinceDistrictWard;
 
-    public function __construct(
-        CategoryRecursive    $categoryRecursive,
-        ProvinceDistrictWard $provinceDistrictWard
-    )
+    private $IProvinceDistrictWardService;
+
+    public function __construct(CategoryRecursive $categoryRecursive)
     {
         $this->categoryRecursive = $categoryRecursive;
-        $this->provinceDistrictWard = $provinceDistrictWard;
+        $this->IProvinceDistrictWardService = new ProvinceDistrictWardImp();
     }
 
     public function index()
@@ -27,7 +26,7 @@ class CheckoutController extends Controller
         [
             'megaMenuHeader' => $megaMenuHeader, 'menuResponse' => $menuResponse
         ] = $this->categoryRecursive->menu('megaMenuHeader', 'menuResponse');
-        $provinces = $this->provinceDistrictWard->getAllProvince();
+        $provinces = $this->IProvinceDistrictWardService->getAllProvince();
         return view('client.checkouts.index', compact('megaMenuHeader', 'provinces', 'menuResponse'));
     }
 
@@ -35,13 +34,13 @@ class CheckoutController extends Controller
     {
         try {
             $data = $request->type == 1 ?
-                $this->provinceDistrictWard->findDistrictBymatp($request->id) :
-                $this->provinceDistrictWard->findWardBymaqh($request->id);
+                $this->IProvinceDistrictWardService->findDistrictBymatp($request->id) :
+                $this->IProvinceDistrictWardService->findWardBymaqh($request->id);
             return response()->json([
                 'code' => 200,
                 'status' => 'Success',
                 'data' => $data
-            ], 200);
+            ]);
         } catch (\Exception $exception) {
             Log::error('message: ' . $exception->getMessage() . ' Line: ' . $exception->getLine());
             return response()->json([

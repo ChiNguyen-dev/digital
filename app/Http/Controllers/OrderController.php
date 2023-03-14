@@ -7,6 +7,7 @@ use App\Mail\ConfirmOrder;
 use App\Models\Customer;
 use App\Models\Order;
 use App\services\CartService;
+use App\services\imp\ProvinceDistrictWardImp;
 use App\services\ProvinceDistrictWard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,14 +19,13 @@ class OrderController extends Controller
     private $customer;
     private $cartService;
 
-    private $provinceDistrictWard;
+    private $provinceDistrictWardService;
 
     private $order;
 
-    public function __construct(ProvinceDistrictWard $provinceDistrictWard,
-                                CartService          $cartService, Customer $customer, Order $order)
+    public function __construct(CartService $cartService, Customer $customer, Order $order)
     {
-        $this->provinceDistrictWard = $provinceDistrictWard;
+        $this->provinceDistrictWardService = new ProvinceDistrictWardImp();
         $this->cartService = $cartService;
         $this->customer = $customer;
         $this->order = $order;
@@ -35,7 +35,7 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
-            $address = $this->provinceDistrictWard->getAddress($request->province, $request->district, $request->ward);
+            $address = $this->provinceDistrictWardService->getAddress($request->province, $request->district, $request->ward);
             $customer = $this->customer->create([
                 'name' => $request->name,
                 'email' => $request->email,

@@ -17,7 +17,7 @@ class isLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
+        if (session()->exists('user')) {
             return $next($request);
         }
         return redirect()->route('Client.login');

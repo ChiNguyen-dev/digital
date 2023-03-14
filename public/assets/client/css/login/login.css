@@ -162,6 +162,7 @@ form > input:focus {
 
 .forgot-pass {
     display: block;
+    text-align: right;
     margin: 10px 0;
     color: var(--color-blue);
     text-decoration: none;
@@ -203,4 +204,18 @@ p.register {
 .register a {
     text-decoration: none;
     color: var(--color-blue);
+}
+
+.text-danger {
+    color: red;
+}
+
+.d-block {
+    display: block;
+}
+
+.box-error {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

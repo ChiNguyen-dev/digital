@@ -19,6 +19,15 @@ Route::prefix('/')->group(function () {
         'as' => 'Client.login',
         'uses' => 'Authen\Client\AuthenController@index'
     ]);
+    Route::post('/login', [
+        'as' => 'Client.login',
+        'uses' => 'Authen\Client\AuthenController@store'
+    ]);
+    Route::get('/logout', [
+        'as' => 'Client.logout',
+        'uses' => 'Authen\Client\AuthenController@logout'
+    ]);
+
 
     Route::get('/register', [
         'as' => 'Client.register',
