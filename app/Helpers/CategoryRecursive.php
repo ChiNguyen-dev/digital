@@ -1,19 +1,20 @@
 <?php
 
-namespace App\component;
+namespace App\Helpers;
 
-use App\Models\Category;
+use App\Repositories\Interfaces\ICategoryRepository;
 
 class CategoryRecursive
 {
-    private $category;
+    private $categoryRepo;
     private $ids;
     private $index;
     private $categories;
     private $htmlOption;
 
-    public function __construct()
+    public function __construct(ICategoryRepository $ICategoryRepository)
     {
+        $this->categoryRepo = $ICategoryRepository;
         $this->init();
     }
 
@@ -22,10 +23,10 @@ class CategoryRecursive
         $this->ids = [];
         $this->index = 0;
         $this->htmlOption = '';
-        $this->category = new Category();
-        $this->categories = $this->category->all();
+        $this->categories = $this->categoryRepo->getAll();
     }
 
+    // ADMIN
     public function categoryRecursive($parent_id = null, $id = 0, $text = '|--'): string
     {
         foreach ($this->categories as $value) {
@@ -112,13 +113,23 @@ class CategoryRecursive
         return $listMenu;
     }
 
-    public function cateIds($slug): array
+    public function getIdBySlug(...$data): array
     {
-        $category = $this->category->where('slug', $slug)->first();
-        if (!empty($category)) {
-            $this->ids[] = $category->id;
-            $this->findCategoryChildrent($category->id);
+        $listId = [];
+        $categories = $this->categoryRepo->findMultipleBySlug($data);
+        if (!empty($categories)) {
+            foreach ($categories as $v) {
+                $listId[$v->slug] = $this->cateIds($v->id);
+                $this->resetIds();
+            }
         }
+        return $listId;
+    }
+
+    public function cateIds($id): array
+    {
+        $this->ids[] = $id;
+        $this->findCategoryChildrent($id);
         return $this->ids;
     }
 
@@ -134,17 +145,6 @@ class CategoryRecursive
         }
     }
 
-    public function getIdBySlug(...$data): array
-    {
-        $listId = [];
-        if (!empty($data)) {
-            foreach ($data as $v) {
-                $listId[$v] = $this->cateIds($v);
-                $this->resetIds();
-            }
-        }
-        return $listId;
-    }
 
     public function resetHtmlOption(): void
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\component;
+namespace App\Helpers;
 
 
 use App\Models\Permission;

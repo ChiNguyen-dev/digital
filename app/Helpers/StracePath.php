@@ -1,24 +1,24 @@
 <?php
 
-namespace App\component;
+namespace App\Helpers;
 
-use App\Models\Category;
+use App\Repositories\Interfaces\ICategoryRepository;
 
 class StracePath
 {
-    private $category;
+    private $categoryRepo;
     private $anyArray;
 
-    public function __construct(Category $category)
+    public function __construct(ICategoryRepository $ICategoryRepository)
     {
         $this->anyArray = [];
-        $this->category = $category;
+        $this->categoryRepo = $ICategoryRepository;
     }
 
     public function stracePath($id, $nameItem): string
     {
-        $listCategory = $this->category->all();
-        $category = $this->category->find($id);
+        $listCategory = $this->categoryRepo->getAll();
+        $category = $this->categoryRepo->find($id);
         $this->parentCategoryRecursive($category->parent_id, $listCategory);
         $path = route('products.category', ['cateSlug' => $category->slug]);
         $this->anyArray = array_merge(array_reverse($this->anyArray), [

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\component\CategoryRecursive;
+use App\Helpers\CategoryRecursive;
 use App\Http\Requests\ProductAddRequest;
 use App\Models\Category;
 use App\Models\Color;

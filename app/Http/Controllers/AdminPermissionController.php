@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\component\Recursive;
+use App\Helpers\Recursive;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

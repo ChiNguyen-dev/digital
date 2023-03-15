@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\component\CategoryRecursive;
+use App\Helpers\CategoryRecursive;
 use App\services\imp\ProvinceDistrictWardImp;
 use App\services\ProvinceDistrictWard;
 use Illuminate\Http\JsonResponse;

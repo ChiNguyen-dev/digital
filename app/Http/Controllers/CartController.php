@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\component\CategoryRecursive;
+use App\Helpers\CategoryRecursive;
 use App\Models\Product;
 use App\services\CartService;
 use Illuminate\Http\JsonResponse;

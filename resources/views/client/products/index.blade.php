@@ -13,7 +13,8 @@
                     <div class="wp-products">
                         <div class="top-filler">
                             <div class="product-count">
-                                Kết quả tìm thấy <strong class="text-dark">{{ count($products) }} sản phẩm</strong> cho bạn.
+                                Kết quả tìm thấy <strong class="text-dark">{{ count($products) }} sản phẩm</strong> cho
+                                bạn.
                             </div>
                             <div class="sort-by-select">
                                 <select>
@@ -40,7 +41,8 @@
                                         <div class="item-card-grid">
                                             <a href="{{ route('products.detail',['slug' => $product->slug]) }}">
                                                 <div class="image">
-                                                    <img src="{{ asset($product->feature_image_path) }}" alt="{{ $product->feature_image_name }}">
+                                                    <img src="{{ asset($product->feature_image_path) }}"
+                                                         alt="{{ $product->feature_image_name }}">
                                                 </div>
                                             </a>
                                             <div class="product-item-details">
@@ -52,7 +54,8 @@
                                                     <i class="fa-regular fa-star"></i>
                                                 </div>
                                                 <div class="title">
-                                                    <a href="{{ route('products.detail',['slug' => $product->slug]) }}" title="{{ $product->name }}">
+                                                    <a href="{{ route('products.detail',['slug' => $product->slug]) }}"
+                                                       title="{{ $product->name }}">
                                                         {{ $product->name }}
                                                     </a>
                                                 </div>
@@ -65,7 +68,8 @@
                                                 <a href="#" title="yêu thích">
                                                     <i class="fa-regular fa-heart"></i>
                                                 </a>
-                                                <a href="{{ route('products.detail',['slug' => $product->slug]) }}" title="chi tiết">
+                                                <a href="{{ route('products.detail',['slug' => $product->slug]) }}"
+                                                   title="chi tiết">
                                                     <i class="fa-regular fa-eye"></i>
                                                 </a>
                                                 <a href="#" title="so sánh">
@@ -81,6 +85,9 @@
                                 @endforeach
                             </div>
                         </ul>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end">
+                        {{ $products->links() }}
                     </div>
                 </div>
             </div>
