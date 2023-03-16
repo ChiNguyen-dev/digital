@@ -11,5 +11,6 @@ interface IProductRepository extends IBaseRepository
     public function searchByName($name);
 
     public function getItemBySlug($slug);
-    
+
+    public function getItemsRelated($cateId);
 }

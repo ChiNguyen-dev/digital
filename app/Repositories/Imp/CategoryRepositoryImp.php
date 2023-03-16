@@ -16,7 +16,7 @@ class CategoryRepositoryImp extends BaseRepository implements ICategoryRepositor
     public function findMultipleBySlug(...$data)
     {
         $this->setColumn('id', 'cate_name', 'slug');
-        return $this->model->whereIn('slug', ...$data)->get($this->getColumn());
+        return $this->model->whereIn('slug', $data)->get($this->getColumn());
     }
 
     public function findBySlug($slug)

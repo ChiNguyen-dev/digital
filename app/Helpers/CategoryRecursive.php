@@ -2,29 +2,24 @@
 
 namespace App\Helpers;
 
-use App\Repositories\Interfaces\ICategoryRepository;
-
 class CategoryRecursive
 {
-    private $categoryRepo;
-    private $ids;
     private $index;
     private $categories;
     private $htmlOption;
 
-    public function __construct(ICategoryRepository $ICategoryRepository)
+    public function __construct()
     {
-        $this->categoryRepo = $ICategoryRepository;
         $this->init();
     }
 
     public function init(): void
     {
-        $this->ids = [];
         $this->index = 0;
         $this->htmlOption = '';
-        $this->categories = $this->categoryRepo->getAll();
+        $this->categories = app('shared')->get('categories');
     }
+
 
     // ADMIN
     public function categoryRecursive($parent_id = null, $id = 0, $text = '|--'): string
@@ -93,9 +88,10 @@ class CategoryRecursive
         return $this->htmlOption;
     }
 
+
     public function menu(...$data): array
     {
-        $listMenu = [];
+        $listMenu = array();
         foreach ($data as $v) {
             switch ($v) {
                 case 'megaMenuHeader':
@@ -108,52 +104,9 @@ class CategoryRecursive
                     $listMenu['menuSidebar'] = $this->menuSidebarRecursive();
                     break;
             }
-            $this->resetHtmlOption();
+            $this->htmlOption = '';
         }
         return $listMenu;
-    }
-
-    public function getIdBySlug(...$data): array
-    {
-        $listId = [];
-        $categories = $this->categoryRepo->findMultipleBySlug($data);
-        if (!empty($categories)) {
-            foreach ($categories as $v) {
-                $listId[$v->slug] = $this->cateIds($v->id);
-                $this->resetIds();
-            }
-        }
-        return $listId;
-    }
-
-    public function cateIds($id): array
-    {
-        $this->ids[] = $id;
-        $this->findCategoryChildrent($id);
-        return $this->ids;
-    }
-
-    public function findCategoryChildrent($id): void
-    {
-        foreach ($this->categories as $category) {
-            if ($category->parent_id == $id) {
-                $this->ids[] = $category->id;
-                if ($this->categories->contains('parent_id', $category->id)) {
-                    $this->findCategoryChildrent($category->id);
-                }
-            }
-        }
-    }
-
-
-    public function resetHtmlOption(): void
-    {
-        $this->htmlOption = '';
-    }
-
-    public function resetIds(): void
-    {
-        $this->ids = [];
     }
 
 }

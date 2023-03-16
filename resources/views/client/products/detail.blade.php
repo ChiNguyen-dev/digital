@@ -34,8 +34,8 @@
                             <div class="product-album">
                                 <div class="slider__detail">
                                     <div class="thumbnail-item">
-                                        <img src="{{ asset($images->first()->image_path) }}"
-                                             alt="{{ $images->first()->image_name }}">
+                                        <img src="{{ asset($product->feature_image_path) }}"
+                                             alt="{{ $product->feature_image_name }}">
                                     </div>
                                     <div class="next-prev">
                                         <a href="" class="btn-prev"><i class="fa-solid fa-angle-left"></i></a>
@@ -44,8 +44,8 @@
                                 </div>
                                 <div class="carousel-detail">
                                     <ul class="thumbnail-main">
-                                        @foreach($images as $key => $item)
-                                            <li class="carousel__thumbnail-item {{ $images->first()->id == $item->id ? 'active' : '' }}">
+                                        @foreach($product->images as $key => $item)
+                                            <li class="carousel__thumbnail-item {{ $product->feature_image_name == $item->image_name ? 'active' : '' }}">
                                                 <img src="{{ asset($item->image_path) }}" alt="{{ $item->image_name }}">
                                             </li>
                                         @endforeach
@@ -59,7 +59,7 @@
                                 <div class="items-same">
                                     <p>Sản phẩm liên quan</p>
                                     <ul class="list-item">
-                                        @foreach($correlativeItems as $item)
+                                        @foreach($itemsRelated as $item)
                                             <li>
                                                 <div class="item-box">
                                                     <a href="{{ route('products.detail',['slug' => $item->slug]) }}">
@@ -101,10 +101,10 @@
                                             @foreach($product->colors as $key => $color)
                                                 <span class="{{  $key == 0 ? 'active_color' : '' }}"
                                                       data-color="{{ $color->id }}">
-                                                    <i style="background-color: {{ $color->style }};
+                                                    <i class="fa-solid fa-circle-check"
+                                                       style="background-color: {{ $color->style }};
                                                        color: {{ $color->style }};"
-                                                       title="{{ $color->name }}"
-                                                       class="fa-solid fa-circle-check"></i>
+                                                       title="{{ $color->name }}"></i>
                                                 </span>
                                             @endforeach
                                         </div>

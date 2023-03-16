@@ -17,9 +17,9 @@ class StracePath
 
     public function stracePath($id, $nameItem): string
     {
-        $listCategory = $this->categoryRepo->getAll();
-        $category = $this->categoryRepo->find($id);
-        $this->parentCategoryRecursive($category->parent_id, $listCategory);
+        $categories = app('shared')->get('categories');
+        $category = $categories->find($id);
+        $this->parentCategoryRecursive($category->parent_id, $categories);
         $path = route('products.category', ['cateSlug' => $category->slug]);
         $this->anyArray = array_merge(array_reverse($this->anyArray), [
             '<li class="trace-item"><a href="' . $path . '"class="trace-item__link">' . $category->cate_name . '</a></li>',

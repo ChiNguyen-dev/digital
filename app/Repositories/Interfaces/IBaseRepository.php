@@ -14,7 +14,7 @@ interface IBaseRepository
 
     public function delete($id);
 
-    public function pagination($totalGroup, $numberOnPage);
+    public function pagination($data, $numberOnPage);
 
-    public function with($relations);
+    public function with(...$relations);
 }

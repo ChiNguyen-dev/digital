@@ -7,4 +7,5 @@ interface ICategoryRepository extends IBaseRepository
     public function findMultipleBySlug(...$data);
 
     public function findBySlug($slug);
+
 }

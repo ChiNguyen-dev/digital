@@ -4,23 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Helpers\CategoryRecursive;
 use App\Helpers\StracePath;
-use App\Models\Category;
-use App\Models\Product;
 use App\Repositories\Interfaces\ICategoryRepository;
 use App\Repositories\Interfaces\IProductRepository;
-use Illuminate\Http\Request;
+use App\Traits\HandleCategoryTrait;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    use HandleCategoryTrait;
+
     private $productRepo;
     private $categoryRepo;
     private $categoryRecursive;
     private $stracePath;
 
     public function __construct(
-        IProductRepository  $IProductRepository,
         StracePath          $stracePath,
+        IProductRepository  $IProductRepository,
         ICategoryRepository $ICategoryRepository,
         CategoryRecursive   $categoryRecursive
     )
@@ -33,9 +33,10 @@ class ProductController extends Controller
 
     public function index($categorySlug)
     {
+        $this->setDataCateTrait(app('shared')->get('categories'));
         ['megaMenuHeader' => $megaMenuHeader, 'menuResponse' => $menuResponse, 'menuSidebar' => $menuSidebar]
             = $this->categoryRecursive->menu('megaMenuHeader', 'menuResponse', 'menuSidebar');
-        [$categorySlug => $categoryIds] = $this->categoryRecursive->getIdBySlug($categorySlug);
+        [$categorySlug => $categoryIds] = $this->getIdBySlug($categorySlug);
         $data = $this->productRepo->getAllByCateID($categoryIds);
         if (request()->exists('gia-ban') || request()->exists('sap-xep')) {
             if (request()->exists('gia-ban')) {
@@ -76,24 +77,18 @@ class ProductController extends Controller
 
     public function detailItem($slug)
     {
-        [
-            'megaMenuHeader' => $megaMenuHeader, 'menuResponse' => $menuResponse
-        ] = $this->categoryRecursive->menu('megaMenuHeader', 'menuResponse');
+        ['megaMenuHeader' => $megaMenuHeader, 'menuResponse' => $menuResponse]
+            = $this->categoryRecursive->menu('megaMenuHeader', 'menuResponse');
         $product = $this->productRepo->getItemBySlug($slug);
-        $images = $product->images;
+        $itemsRelated = $this->productRepo->getItemsRelated($product->category_id);
         $stracePath = $this->stracePath->stracePath($product->category_id, $product->name);
-        $correlativeItems = $product->tags()->first()->products->filter(function ($value, $key) use ($product) {
-            return $value->id != $product->id;
-        });
-        $correlativeItems = $correlativeItems->take(2);
         return
             view('client.products.detail',
                 compact(
                     'megaMenuHeader',
                     'product',
                     'stracePath',
-                    'images',
-                    'correlativeItems',
+                    'itemsRelated',
                     'menuResponse',
                 )
             );

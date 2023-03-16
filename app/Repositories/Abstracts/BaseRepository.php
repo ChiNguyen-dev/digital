@@ -60,18 +60,20 @@ abstract class BaseRepository implements IBaseRepository
         $this->column = $column;
     }
 
-    public function pagination($data, $numberOnPage): ?LengthAwarePaginator
+    public function pagination($data, $numberOnPage)
     {
-        $totalGroup = count($data);
-        $perPage = $numberOnPage;
-        $page = Paginator::resolveCurrentPage('page');
-        return new LengthAwarePaginator($data->forPage($page, $perPage), $totalGroup, $perPage, $page, [
-            'path' => Paginator::resolveCurrentPath(),
-            'pageName' => 'page',
-        ]);
+        if ($data != null) {
+            $totalGroup = count($data);
+            $perPage = $numberOnPage;
+            $page = Paginator::resolveCurrentPage('page');
+            return new LengthAwarePaginator($data->forPage($page, $perPage), $totalGroup, $perPage, $page, [
+                'path' => Paginator::resolveCurrentPath(),
+                'pageName' => 'page',
+            ]);
+        }
     }
 
-    public function with($relations)
+    public function with(...$relations)
     {
         return $this->model->with($relations);
     }

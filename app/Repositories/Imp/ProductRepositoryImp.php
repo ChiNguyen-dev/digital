@@ -42,4 +42,12 @@ class ProductRepositoryImp extends BaseRepository implements IProductRepository
         return !empty($data) ? $data : null;
     }
 
+    public function getItemsRelated($cateId)
+    {
+        $data = $this->model->where('status', 1)
+                            ->where('category_id', $cateId)
+                            ->take(2)
+                            ->get();
+        return !empty($data) ? $data : null;
+    }
 }
