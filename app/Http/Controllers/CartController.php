@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\CategoryRecursive;
 use App\Models\Product;
-use App\services\CartService;
+use App\services\ICartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,11 +14,13 @@ class CartController extends Controller
 {
     private $categoryRecursive;
     private $cartService;
-
     private $product;
 
-    public function __construct(CategoryRecursive $categoryRecursive, Product $product, CartService $cartService)
-    {
+    public function __construct(
+        CategoryRecursive $categoryRecursive,
+        Product $product,
+        ICartService $cartService
+    ) {
         $this->categoryRecursive = $categoryRecursive;
         $this->product = $product;
         $this->cartService = $cartService;
@@ -28,42 +30,45 @@ class CartController extends Controller
     {
         $count = $this->cartService->count();
         $total = $this->cartService->total();
-        $shopping = $this->cartService->content();
-        [
-            'megaMenuHeader' => $megaMenuHeader, 'menuResponse' => $menuResponse
-        ] = $this->categoryRecursive->menu('megaMenuHeader', 'menuResponse');
-        return view('client.carts.index',
-            compact(
-                'megaMenuHeader',
-                'count',
-                'total',
-                'shopping',
-                'menuResponse',
-            ));
+        $shopping = $this->cartService->getCarts();
+        ['megaMenuHeader' => $megaMenuHeader, 'menuResponse' => $menuResponse]
+            = $this->categoryRecursive->menu('megaMenuHeader', 'menuResponse');
+        return
+            view(
+                'client.carts.index',
+                compact(
+                    'megaMenuHeader',
+                    'count',
+                    'total',
+                    'shopping',
+                    'menuResponse',
+                )
+            );
     }
 
     public function add(Request $request, $id): JsonResponse
     {
         try {
             $product = $this->product->find($id);
-            $count = $this->cartService->count();
-            $shopping = $this->cartService->add([
+            $shopping = $this->cartService->addToCart([
                 'id' => $product->id,
                 'name' => $product->name,
                 'qty' => 1,
                 'price' => $product->price,
-                'options' => ['image' => $product->feature_image_path, 'color' => $request->color_id]]);
+                'options' => ['image' => $product->feature_image_path, 'color' => $request->color_id]
+            ]);
+            $count = $this->cartService->count();
             return response()->json([
                 'code' => 200,
                 'quantity' => $count,
                 'data' => $shopping,
-                'statusText' => 'added to cart success'
+                'statusText' => 'ADD TO CARD SUCCESSFUL',
             ], 200);
         } catch (\Exception $exception) {
             Log::error('message:' . $exception->getMessage() . ' Line: ' . $exception->getLine());
             return response()->json([
                 'code' => 500,
-                'statusText' => 'added to cart fail'
+                'statusText' => 'ADD TO CARD ERROR',
             ], 500);
         }
     }
@@ -120,7 +125,7 @@ class CartController extends Controller
     public function updateColor(Request $request, $id): JsonResponse
     {
         try {
-            $cart = $this->cartService->findItemByid($id);
+            $cart = $this->cartService->getCartByID($id);
             $shopping = $this->cartService->updateColorById($id, ['options' => $cart->options->merge(['color' => $request->id])]);
             return response()->json([
                 'code' => 200,
@@ -134,6 +139,5 @@ class CartController extends Controller
                 'statusText' => 'Fail'
             ], 500);
         }
-
     }
 }

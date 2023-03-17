@@ -31,6 +31,6 @@ class ProvinceDistrictWardImp implements IProvinceDistrictWardService
         $province = DB::table('provinces')->where('matp', $province_id)->first('name');
         $ward = DB::table('wards')->where('xaid', $ward_id)->first('name');
         $district = DB::table('districts')->where('maqh', $district_id)->first('name');
-        return $ward . ',' . $district . ',' . $province;
+        return $ward->name . ',' . $district->name  . ',' . $province->name;
     }
 }

@@ -8,7 +8,7 @@ interface IBaseRepository
 
     public function find($id);
 
-    public function create(...$data);
+    public function create($data);
 
     public function update($id, ...$data);
 

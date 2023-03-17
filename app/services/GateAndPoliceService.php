@@ -11,7 +11,7 @@ use App\Policies\RolePolicy;
 use App\Policies\SliderPolicy;
 use Illuminate\Support\Facades\Gate;
 
-class GateAndPolice
+class GateAndPoliceService
 {
     public function __construct()
     {

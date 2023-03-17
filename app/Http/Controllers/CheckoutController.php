@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\CategoryRecursive;
-use App\services\imp\ProvinceDistrictWardImp;
-use App\services\ProvinceDistrictWard;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Helpers\CategoryRecursive;
 use Illuminate\Support\Facades\Log;
+use App\services\IProvinceDistrictWardService;
 
 class CheckoutController extends Controller
 {
@@ -15,10 +14,10 @@ class CheckoutController extends Controller
 
     private $IProvinceDistrictWardService;
 
-    public function __construct(CategoryRecursive $categoryRecursive)
+    public function __construct(CategoryRecursive $categoryRecursive, IProvinceDistrictWardService $IProvinceDistrictWardService)
     {
         $this->categoryRecursive = $categoryRecursive;
-        $this->IProvinceDistrictWardService = new ProvinceDistrictWardImp();
+        $this->IProvinceDistrictWardService = $IProvinceDistrictWardService;
     }
 
     public function index()

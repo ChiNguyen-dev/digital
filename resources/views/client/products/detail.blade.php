@@ -180,7 +180,7 @@
                 </div>
                 @if(!empty($product->content))
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 pl-0 pr-0">
                             <div id="desc-product">
                                 <div class="content-full">
                                     {!! $product->content !!}

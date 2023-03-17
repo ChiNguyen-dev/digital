@@ -2,34 +2,31 @@
 
 namespace App\services\imp;
 
-use App\Models\Cart;
-use App\Models\CartItem;
+use App\services\BaseCartService;
 use App\services\ICartService;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
-class CartServiceImp implements ICartService
+class CartServiceImp extends BaseCartService implements ICartService
 {
 
-    private $cart;
-    private $cartItem;
-
-    public function __construct()
+    public function getInstance()
     {
-        $this->cart = app(Cart::class);
-        $this->cart = app(CartItem::class);
+        return Cart::instance('shopping');
     }
 
-    public function add($data)
+    public function updateQtyById($id, $qty): void
     {
-
+        $this->instance->update($id, $qty);
     }
 
-    public function getCarts()
+    public function removeItemById($id): void
     {
-        // TODO: Implement getCarts() method.
+        $this->instance->remove($id);
     }
 
-    public function getCart()
+    public function updateColorById($id, $data)
     {
-        // TODO: Implement getCart() method.
+        $this->instance->update($id, $data);
+        return $this->instance->content();
     }
 }

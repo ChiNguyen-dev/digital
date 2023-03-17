@@ -35,7 +35,7 @@ abstract class BaseRepository implements IBaseRepository
         return $this->model->find($id);
     }
 
-    public function create(...$data)
+    public function create($data)
     {
         return $this->model->create($data);
     }

@@ -2,18 +2,10 @@
 
 namespace App\Helpers;
 
-use App\Repositories\Interfaces\ICategoryRepository;
 
 class StracePath
 {
-    private $categoryRepo;
-    private $anyArray;
-
-    public function __construct(ICategoryRepository $ICategoryRepository)
-    {
-        $this->anyArray = [];
-        $this->categoryRepo = $ICategoryRepository;
-    }
+    private $anyArray = array();
 
     public function stracePath($id, $nameItem): string
     {
@@ -23,7 +15,8 @@ class StracePath
         $path = route('products.category', ['cateSlug' => $category->slug]);
         $this->anyArray = array_merge(array_reverse($this->anyArray), [
             '<li class="trace-item"><a href="' . $path . '"class="trace-item__link">' . $category->cate_name . '</a></li>',
-            '<li class="trace-item"><span>' . $nameItem . '</span></li>']);
+            '<li class="trace-item"><span>' . $nameItem . '</span></li>'
+        ]);
         return implode('', $this->anyArray);
     }
 

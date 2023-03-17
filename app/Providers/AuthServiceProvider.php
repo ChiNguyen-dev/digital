@@ -15,10 +15,9 @@ use App\Policies\OrderPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\SliderPolicy;
-use App\services\GateAndPolice;
+use App\services\GateAndPoliceService;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -49,6 +48,6 @@ class AuthServiceProvider extends ServiceProvider
 
         $this->registerPolicies();
 
-        new GateAndPolice();
+        new GateAndPoliceService();
     }
 }
