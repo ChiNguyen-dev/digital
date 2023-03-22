@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
+use App\Repositories\Interfaces\IUserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,11 +20,13 @@ class AdminUserController extends Controller
 {
     private $user;
     private $role;
+    private $userRepo;
 
-    public function __construct(User $user, Role $role)
+    public function __construct(User $user, Role $role, IUserRepository $userRepo)
     {
         $this->user = $user;
         $this->role = $role;
+        $this->userRepo = $userRepo;
     }
 
     public function index(Request $request)

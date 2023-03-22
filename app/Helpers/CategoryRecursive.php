@@ -7,7 +7,6 @@ class CategoryRecursive
     private $index;
     private $categories;
     private $htmlOption;
-
     public function __construct()
     {
         $this->init();
@@ -20,22 +19,31 @@ class CategoryRecursive
         $this->categories = app('shared')->get('categories');
     }
 
-
     // ADMIN
-    public function categoryRecursive($parent_id = null, $id = 0, $text = '|--'): string
+    public function categoryRecursive($parent_id = 0, $id = 0, $text = '|--'): string
     {
-        foreach ($this->categories as $value) {
-            if ($value["parent_id"] == $id) {
-                if ($value["id"] == $parent_id and !empty($parent_id)) {
-                    $this->htmlOption .= '<option selected value="' . $value["id"] . '">' . $text . $value['cate_name'] . '</option>';
-                } else {
-                    $this->htmlOption .= '<option value="' . $value["id"] . '">' . $text . $value['cate_name'] . '</option>';
-                }
-                $this->categoryRecursive($parent_id, $value["id"], $text . '-');
+        foreach ($this->categories as $v) {
+            if ($v->parent_id == $id) {
+                $selected = ($v->id == $parent_id and !empty($parent_id)) ? 'selected' : '';
+                $this->htmlOption .= '<option ' . $selected . ' value="' . $v->id . '">' . $text . $v->cate_name . '</option>';
+                $this->categoryRecursive($parent_id, $v->id, $text . '--');
             }
         }
         return $this->htmlOption;
     }
+
+    public function dataMapNameCategory($data = null, $id = 0, $text = '|--')
+    {
+        foreach ($data as $v) {
+            if ($v->parent_id == $id) {
+                $v->cate_name = $text . $v->cate_name;
+                if ($data->contains('parent_id', $v->id))
+                    $this->dataMapNameCategory($data, $v->id, $text . '--');
+            }
+        }
+        return $data;
+    }
+
 
     // Menu Client
     public function megaMenuRecursive($parent_id = 0): string
@@ -108,5 +116,4 @@ class CategoryRecursive
         }
         return $listMenu;
     }
-
 }

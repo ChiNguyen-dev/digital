@@ -13,4 +13,9 @@ class OrderRepositoryImp extends BaseRepository implements IOrderRepository
     {
         return Order::class;
     }
+
+    public function orderByStatus($type = 'desc')
+    {
+        return $this->model->with('customer')->orderBy('status', $type)->get();
+    }
 }

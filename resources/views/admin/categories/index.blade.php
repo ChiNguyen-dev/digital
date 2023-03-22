@@ -9,13 +9,19 @@
         @can(config('permissions.modules.categories.add'))
             <div class="col-4">
                 <div class="card">
-                    @include('partials.admin.title-form',['name'=>'Thêm danh mục'])
+                    @include('partials.admin.title-form', ['name' => 'Thêm danh mục'])
                     <div class="card-body">
                         <form action="{{ route('categories.store') }}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <label for="name">Tên danh mục :</label>
-                                <input class="form-control" type="text" name="cate_name" id="name" placeholder="Nhập tên danh mục">
+                                <input class="form-control" type="text" name="cate_name" id="name"
+                                    placeholder="Nhập tên danh mục">
+                            </div>
+                            <div class="form-group">
+                                @error('cate_name')
+                                    <small class="text-validate form-text text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="parent_id">Danh mục cha :</label>
@@ -27,15 +33,13 @@
                             <div class="form-group">
                                 <label for="">Trạng thái</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios"
-                                           id="exampleRadios1"
-                                           value="option1" checked>
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                                        value="option1" checked>
                                     <label class="form-check-label" for="exampleRadios1">Chờ duyệt</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios"
-                                           id="exampleRadios2"
-                                           value="option2">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                        value="option2">
                                     <label class="form-check-label" for="exampleRadios2">Công khai</label>
                                 </div>
                             </div>
@@ -45,57 +49,68 @@
                 </div>
             </div>
             <div class="col-8">
-                @else
-                    <div class="col-12">
-                        @endcan
-                        <div class="card">
-                            <div class="card-header font-weight-bold">Danh mục</div>
-                            <div class="card-body pb-0">
-                                <table class="table table-striped mb-4">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Tên danh mục</th>
-                                        <th scope="col">Slug</th>
-                                        @canany([config('permissions.modules.categories.edit'),config('permissions.modules.categories.delete')])
-                                            <th scope="col">Thao tác</th>
-                                        @endcanany
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($categories as $key => $category)
+            @else
+                <div class="col-12">
+                @endcan
+                <div class="card">
+                    <div class="card-header font-weight-bold">Danh mục</div>
+                    <div class="card-body pb-0">
+                        <table class="table table-striped mb-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tên danh mục</th>
+                                    <th scope="col">Thời gian</th>
+                                    @canany([config('permissions.modules.categories.edit'),
+                                        config('permissions.modules.categories.delete')])
+                                        <th scope="col">Thao tác</th>
+                                    @endcanany
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!empty($categories))
+                                    @php
+                                        $index = 1;
+                                    @endphp
+                                    @foreach ($categories as $key => $category)
                                         <tr>
-                                            <th scope="row">{{ $key + 1 }}</th>
+                                            <th scope="row">{{ $index }}</th>
                                             <td>{{ $category->cate_name }}</td>
-                                            <td>{{ $category->slug }}</td>
+                                            <td>{{ $category->created_at->format('d-m-Y h:i') }}</td>
                                             <td class="pl-4">
                                                 @can(config('permissions.modules.categories.edit'))
-                                                    <a href="{{ route('categories.edit',['id' => $category['id']]) }}"
-                                                       class="btn-edit text-success" type="button" title="Edit">
+                                                    <a href="{{ route('categories.edit', ['id' => $category['id']]) }}"
+                                                        class="btn-edit text-success" type="button" title="Edit">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                 @endcan
                                                 @can(config('permissions.modules.categories.delete'))
                                                     <a href="#"
-                                                       data-url="{{ route('categories.delete',['id' => $category['id']]) }}"
-                                                       data-id="{{ $category->id }}"
-                                                       class="btn-delete text-danger" type="button" title="Delete">
+                                                        data-url="{{ route('categories.delete', ['id' => $category['id']]) }}"
+                                                        data-id="{{ $category->id }}" class="btn-delete text-danger"
+                                                        type="button" title="Delete">
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </a>
                                                 @endcan
                                             </td>
                                         </tr>
+                                        @php
+                                            $index++;
+                                        @endphp
                                     @endforeach
-                                    </tbody>
-                                </table>
-                                {{ $categories->links() }}
-                            </div>
-                        </div>
+                                @endif
+                            </tbody>
+                        </table>
+                        @if (!empty($categories))
+                            {{ $categories->links() }}
+                        @endif
                     </div>
+                </div>
             </div>
-            @endsection
+        </div>
+    @endsection
 
-@section('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('assets/admin/js/category/index.js') }}"></script>
-@endsection
+    @section('js')
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="{{ asset('assets/admin/js/category/index.js') }}"></script>
+    @endsection

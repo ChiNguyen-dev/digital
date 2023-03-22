@@ -40,7 +40,7 @@ abstract class BaseRepository implements IBaseRepository
         return $this->model->create($data);
     }
 
-    public function update($id, ...$data)
+    public function update($id, $data)
     {
         $this->model->find($id)->update($data);
     }
@@ -77,5 +77,4 @@ abstract class BaseRepository implements IBaseRepository
     {
         return $this->model->with($relations);
     }
-
 }

@@ -6,6 +6,7 @@ use App\services\ICartService;
 use App\services\imp\CartServiceImp;
 use Illuminate\Support\ServiceProvider;
 use App\services\Sharing\SharingService;
+use App\Repositories\Imp\UserRepositoryImp;
 use App\Repositories\Imp\OrderRepositoryImp;
 use App\Repositories\Imp\SliderRepositoryImp;
 use App\services\imp\ProvinceDistrictWardImp;
@@ -13,6 +14,7 @@ use App\Repositories\Imp\ProductRepositoryImp;
 use App\services\IProvinceDistrictWardService;
 use App\Repositories\Imp\CategoryRepositoryImp;
 use App\Repositories\Imp\CustomerRepositoryImp;
+use App\Repositories\Interfaces\IUserRepository;
 use App\Repositories\Interfaces\IOrderRepository;
 use App\Repositories\Interfaces\ISliderRepository;
 use App\Repositories\Interfaces\IProductRepository;
@@ -61,6 +63,11 @@ class AppServiceProvider extends ServiceProvider
          * Dependency Injection Order
          */
         $this->app->singleton(IOrderRepository::class, OrderRepositoryImp::class);
+
+        /**
+         * Dependency Injection User
+         */
+        $this->app->singleton(IUserRepository::class, UserRepositoryImp::class);
 
         /**
          * Dependency Injection Share Data To Global Project

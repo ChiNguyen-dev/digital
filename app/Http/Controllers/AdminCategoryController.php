@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CategoryRecursive;
-use App\Models\Category;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Repositories\Interfaces\ICategoryRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,25 +13,27 @@ use Illuminate\Support\Str;
 
 class AdminCategoryController extends Controller
 {
-    private $category;
     private $categoryRecursive;
+    private $categoryRepo;
+    private $categoriesShared;
 
-    public function __construct(Category $category, CategoryRecursive $categoryRecursive)
+    public function __construct(CategoryRecursive $categoryRecursive, ICategoryRepository $categoryRepo)
     {
-        $this->category = $category;
         $this->categoryRecursive = $categoryRecursive;
+        $this->categoryRepo = $categoryRepo;
+        $this->categoriesShared = app('shared')->get('categories');
     }
 
     public function index()
     {
-        $categories = $this->category->latest()->paginate(15);
-        $htmlOption = $this->categoryRecursive->categoryRecursive('');
+        $categories = $this->categoryRepo->pagination($this->categoriesShared, 15);
+        $htmlOption = $this->categoryRecursive->categoryRecursive();
         return view('admin.categories.index', compact('htmlOption', 'categories'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreCategoryRequest $request): RedirectResponse
     {
-        $this->category->create([
+        $this->categoryRepo->create([
             'cate_name' => $request->cate_name,
             'parent_id' => $request->parent_id,
             'slug' => Str::of($request->cate_name)->slug('-')
@@ -40,15 +43,15 @@ class AdminCategoryController extends Controller
 
     public function edit($id)
     {
-        $categories = $this->category->latest()->paginate(15);
-        $category = $this->category->find($id);
+        $categories = $this->categoryRepo->pagination($this->categoriesShared, 15);
+        $category = $categories->find($id);
         $htmlOption = $this->categoryRecursive->categoryRecursive($category->parent_id);
         return view('admin.categories.edit', compact('htmlOption', 'categories', 'category'));
     }
 
     public function update(Request $request, $id): RedirectResponse
     {
-        $this->category->find($id)->update([
+        $this->categoryRepo->update($id, [
             'cate_name' => $request->cate_name,
             'parent_id' => $request->parent_id,
             'slug' => Str::of($request->cate_name)->slug('-')
@@ -59,7 +62,7 @@ class AdminCategoryController extends Controller
     public function delete(Request $request): JsonResponse
     {
         try {
-            $this->category->find($request->id)->delete();
+            $this->categoryRepo->delete($request->id);
             return response()->json([
                 'code' => 200,
                 'message' => 'Success'
