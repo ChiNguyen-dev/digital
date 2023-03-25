@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Permission;
-use App\Models\Role;
+use App\Repositories\Interfaces\IPermissionRepository;
+use App\Repositories\Interfaces\IRoleRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,28 +11,28 @@ use Illuminate\Support\Facades\Log;
 
 class AdminRoleController extends Controller
 {
-    private $role;
-    private $permission;
+    private $roleRepo;
+    private $permissionRepo;
 
-    public function __construct(Role $role, Permission $permission)
+    public function __construct(IRoleRepository $iRoleRepository, IPermissionRepository $iPermissionRepository)
     {
-        $this->role = $role;
-        $this->permission = $permission;
+        $this->roleRepo = $iRoleRepository;
+        $this->permissionRepo = $iPermissionRepository;
     }
 
     public function index()
     {
-        $roles = $this->role->latest()->paginate(15);
+        $roles = $this->roleRepo->getAllPaginateLatest(15);
         $status = (object)[
-            'roleQty' => count($roles),
-            'deletedQty' => $this->role->onlyTrashed()->count()
+            'roleQty' => $this->roleRepo->count(),
+            'deletedQty' => $this->roleRepo->countSoftDelete(),
         ];
         return view('admin.roles.index', compact('roles', 'status'));
     }
 
     public function create()
     {
-        $permissionsParent = $this->permission->where('parent_id', 0)->get();
+        $permissionsParent = $this->permissionRepo->getAllByWhere('parent_id', 0)->load('permissions');
         return view('admin.roles.add', compact('permissionsParent'));
     }
 
@@ -40,8 +40,8 @@ class AdminRoleController extends Controller
     {
         try {
             DB::beginTransaction();
-            $insertedRole = $this->role->create(['name' => $request->name, 'display_name' => $request->display_name]);
-            if (!empty($request->action_role)) $insertedRole->permissions()->attach($request->action_role);
+            $insertedRole = $this->roleRepo->create(['name' => $request->name, 'display_name' => $request->display_name]);
+            if (!empty($request->action_role)) $this->roleRepo->addPermissionToRole($insertedRole->id, $request->action_role);
             DB::commit();
             return redirect()->route('roles.index');
         } catch (\Exception $exception) {
@@ -52,8 +52,8 @@ class AdminRoleController extends Controller
 
     public function edit($id)
     {
-        $role = $this->role->find($id);
-        $permissionsParent = $this->permission->where('parent_id', 0)->get();
+        $role = $this->roleRepo->find($id);
+        $permissionsParent = $this->permissionRepo->getAllByWhere('parent_id', 0)->load('permissions');
         return view('admin.roles.edit', compact('permissionsParent', 'role'));
     }
 
@@ -61,9 +61,8 @@ class AdminRoleController extends Controller
     {
         try {
             DB::beginTransaction();
-            $role = $this->role->find($id);
-            $role->update(['name' => $request->name, 'display_name' => $request->display_name]);
-            if (!empty($request->action_role)) $role->permissions()->sync($request->action_role);
+            $this->roleRepo->update($id, ['name' => $request->name, 'display_name' => $request->display_name]);
+            $this->roleRepo->updatePermissionToRole($id, $request->action_role);
             DB::commit();
             return redirect()->route('roles.index');
         } catch (\Exception $exception) {
@@ -75,8 +74,8 @@ class AdminRoleController extends Controller
     public function delete($id): JsonResponse
     {
         try {
-            $this->role->find($id)->delete();
-            $deletedQty = $this->role->onlyTrashed()->count();
+            $this->roleRepo->delete($id);
+            $deletedQty = $this->roleRepo->countSoftDelete();
             return response()->json([
                 'code' => 200,
                 'message' => 'deleted success',

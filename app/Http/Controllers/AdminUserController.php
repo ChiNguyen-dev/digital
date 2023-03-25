@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UserRequest;
-use App\Models\Role;
-use App\Models\User;
+use App\Repositories\Interfaces\IRoleRepository;
 use App\Repositories\Interfaces\IUserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -18,36 +17,30 @@ use Illuminate\View\View;
 
 class AdminUserController extends Controller
 {
-    private $user;
-    private $role;
+    private $roleRepo;
     private $userRepo;
 
-    public function __construct(User $user, Role $role, IUserRepository $userRepo)
+    public function __construct(IRoleRepository $iRoleRepositorye, IUserRepository $userRepo)
     {
-        $this->user = $user;
-        $this->role = $role;
+        $this->roleRepo = $iRoleRepositorye;
         $this->userRepo = $userRepo;
     }
 
     public function index(Request $request)
     {
-        if ($request->has('search')) {
-            $users = $this->user->where('name', 'Like', "%{$request->search}%")
-                ->orWhere('email', 'Like', "%{$request->search}%")
-                ->latest()->paginate(15);
-        } else {
-            $users = $this->user->latest()->paginate(15);
-        }
+        $users = $request->has('search') ?
+            $this->userRepo->searchUsers($request->search) :
+            $this->userRepo->getAllPaginateLatest(15);
         $status = (object)[
-            'quantity' => $this->user->where('deleted_at', '=', null)->count(),
-            'deleted' => $this->user->onlyTrashed()->count(),
+            'quantity' =>  $this->userRepo->count(),
+            'deleted' =>  $this->userRepo->countSoftDelete(),
         ];
         return view('admin.users.index', compact('users', 'status'));
     }
 
     public function create(): View
     {
-        $roles = $this->role->all();
+        $roles = $this->roleRepo->getAll();
         return view('admin.users.add', compact('roles'));
     }
 
@@ -55,12 +48,12 @@ class AdminUserController extends Controller
     {
         try {
             DB::beginTransaction();
-            $insertedUser = $this->user->create([
+            $insertedUser = $this->userRepo->create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password)
             ]);
-            $insertedUser->roles()->attach($request->role_id);
+            $this->userRepo->addRoleToUser($insertedUser->id, $request->role_id);
             DB::commit();
             return redirect()->route('users.index');
         } catch (\Exception $exception) {
@@ -71,24 +64,23 @@ class AdminUserController extends Controller
 
     public function edit($id): View
     {
-        $user = $this->user->find($id);
-        $roles = $this->role->all();
+        $user = $this->userRepo->find($id);
+        $roles = $this->roleRepo->getAll();
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, $id): RedirectResponse
     {
-        $user = $this->user->find($id);
-        $user->update(['name' => $request->name, 'email' => $request->email,]);
-        $user->roles()->sync($request->role_id);
+        $this->userRepo->update($id, ['name' => $request->name, 'email' => $request->email,]);
+        $this->userRepo->updateRoleToUser($id, $request->role_id);
         return redirect()->route('users.index');
     }
 
     public function delete($id): JsonResponse
     {
         try {
-            $this->user->find($id)->delete();
-            $countUserDeleted = $this->user->onlyTrashed()->count();
+            $this->userRepo->delete($id);
+            $countUserDeleted = $this->userRepo->countSoftDeletedUsers();
             return response()->json([
                 'code' => 200,
                 'message' => 'Delete success',
@@ -105,14 +97,13 @@ class AdminUserController extends Controller
 
     public function account(): View
     {
-        $user = $this->user->find(Auth::id());
+        $user = $this->userRepo->find(Auth::id());
         return view('admin.users.account', compact('user'));
     }
 
     public function accountUpdate(Request $request, $id): RedirectResponse
     {
-        $user = $this->user->find($id);
-        $user->update([
+        $user = $this->userRepo->update($id, [
             'name' => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
@@ -124,11 +115,11 @@ class AdminUserController extends Controller
 
     public function changePassword(UserRequest $request, $id): RedirectResponse
     {
-        $user = $this->user->find($id);
+        $user = $this->userRepo->find($id);
         $oldPass = $request->passCurrent;
         if (Hash::check($oldPass, $user->password)) {
             if ($request->password == $request->passConfirm) {
-                $this->user->find($id)->update(['password' => bcrypt($request->password)]);
+                $this->userRepo->update($id, ['password' => bcrypt($request->password)]);
                 return redirect()->route('admin.logout');
             }
         }

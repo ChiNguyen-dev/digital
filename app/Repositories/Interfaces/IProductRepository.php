@@ -13,4 +13,8 @@ interface IProductRepository extends IBaseRepository
     public function getItemBySlug($slug);
 
     public function getItemsRelated($cateId);
+
+    public function orderByStatus($type = 'desc');
+
+    public function updateStatus($ids, $option);
 }

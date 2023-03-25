@@ -7,9 +7,9 @@
 @section('content')
     <div id="content" class="container-fluid pt-4">
         <div class="card">
-            @include('partials.admin.title-form',['name'=>'Chỉnh sửa thông tin'])
+            @include('partials.admin.title-form', ['name' => 'Chỉnh sửa thông tin'])
             <div class="card-body">
-                <form method="POST" action="{{ route('users.update',['id' => $user->id]) }}">
+                <form method="POST" action="{{ route('users.update', ['id' => $user->id]) }}">
                     @csrf
                     <div class="form-group">
                         <label for="name">Họ và tên:</label>
@@ -17,14 +17,16 @@
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input class="form-control" type="text" name="email" id="email" value="{{ $user->email }}">
+                        <input class="form-control" type="text" name="email" id="email"
+                            value="{{ $user->email }}">
                     </div>
                     <div class="form-group">
                         <label for="password">Vai trò:</label>
                         <select class="form-control select2-role" name="role_id[]" multiple>
-                            @foreach($roles as $role)
-                                <option
-                                    {{ $user->roles->contains('id',$role->id) ? 'selected' : '' }} value="{{ $role->id }}">{{ $role->name }}</option>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}" {{ $user->roles->contains('id', $role->id) ? 'selected' : '' }}>
+                                    {{ $role->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>

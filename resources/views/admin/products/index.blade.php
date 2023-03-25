@@ -13,7 +13,7 @@
                     <form action="{{ route('product.search') }}" class="d-flex" method="POST">
                         @csrf
                         <input type="text" class="form-control form-search" placeholder="Tìm kiếm" name="search"
-                               value="{{ request()->search }}">
+                            value="{{ request()->search }}">
                         <input type="submit" name="btn-search" value="Tìm kiếm" class="btn btn-primary ml-2">
                     </form>
                 </div>
@@ -37,7 +37,7 @@
                     </div>
                     @can(config('permissions.modules.products.add'))
                         <div class="analytic__add mr-0">
-                            <a href="{{route('product.create')}}" class="btn btn-primary text-white text-center">
+                            <a href="{{ route('product.create') }}" class="btn btn-primary text-white text-center">
                                 Thêm sản mới
                             </a>
                         </div>
@@ -58,72 +58,72 @@
                     </div>
                     <table class="table table-striped table-checkall mb-3">
                         <thead>
-                        <tr>
-                            @can(config('permissions.guards.isAdmin'))
-                                <th scope="col"><input name="check" type="checkbox" class="checkAll"></th>
-                            @endcan
-                            <th scope="col">#</th>
-                            <th scope="col">Ảnh</th>
-                            <th scope="col">Tên sản phẩm</th>
-                            <th scope="col">Giá</th>
-                            <th scope="col">Danh mục</th>
-                            <th scope="col">Ngày tạo</th>
-                            <th scope="col">Trạng thái</th>
-                            @canany([config('permissions.guards.isPermissionEdit'),config('permissions.guards.isPermissionDelete')])
-                                <th scope="col">Tác vụ</th>
-                            @endcanany
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($products as $key => $item)
                             <tr>
                                 @can(config('permissions.guards.isAdmin'))
-                                    <td>
-                                        <input type="checkbox" value="{{ $item->id }}" class="checkBox" name="check[]">
-                                    </td>
+                                    <th scope="col"><input name="check" type="checkbox" class="checkAll"></th>
                                 @endcan
-                                <td>{{ $key + 1 }}</td>
-                                <td>
-                                    <div class="image-item">
-                                        <img src="{{ asset( $item->feature_image_path )}}"
-                                             alt="{{ $item->feature_image_name }}" title="{{ $item->name }}">
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="{{ route('product.edit',['id'=> $item->id]) }}" title="{{ $item->name }}"
-                                       class="text-item">
-                                        {{ $item->name }}
-                                    </a>
-                                </td>
-                                <td>{{ number_format($item->price) }}đ</td>
-                                <td>{{ optional($item->category)->cate_name }}</td>
-                                <td>{{ $item->created_at }}</td>
-                                <td class="text-center">
+                                <th scope="col">#</th>
+                                <th scope="col">Ảnh</th>
+                                <th scope="col">Tên sản phẩm</th>
+                                <th scope="col">Giá</th>
+                                <th scope="col">Danh mục</th>
+                                <th scope="col">Ngày tạo</th>
+                                <th scope="col">Trạng thái</th>
+                                @canany([config('permissions.guards.isPermissionEdit'),config('permissions.guards.isPermissionDelete')])
+                                    <th scope="col">Tác vụ</th>
+                                @endcanany
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($products as $key => $item)
+                                <tr>
+                                    @can(config('permissions.guards.isAdmin'))
+                                        <td>
+                                            <input type="checkbox" value="{{ $item->id }}" class="checkBox" name="check[]">
+                                        </td>
+                                    @endcan
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>
+                                        <div class="image-item">
+                                            <img src="{{ asset($item->feature_image_path) }}"
+                                                alt="{{ $item->feature_image_name }}" title="{{ $item->name }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('product.edit', ['id' => $item->id]) }}"
+                                            title="{{ $item->name }}" class="text-item">
+                                            {{ $item->name }}
+                                        </a>
+                                    </td>
+                                    <td>{{ number_format($item->price) }}đ</td>
+                                    <td>{{ optional($item->category)->cate_name }}</td>
+                                    <td>{{ $item->created_at }}</td>
+                                    <td class="text-center">
                                         <span
                                             class="{{ $item->status === 0 ? 'badge bg-warning' : 'badge bg-success text-white' }}">
-                                         {{ $item->status === 0 ? 'đang xử lý' : 'công khai' }}
+                                            {{ $item->status === 0 ? 'đang xử lý' : 'công khai' }}
                                         </span>
-                                </td>
-                                <td class="text-center">
-                                    @can(config('permissions.modules.products.edit'),[$item->id])
-                                        <a href="{{ route('product.edit',['id'=> $item->id]) }}"
-                                           class="btn-edit text-success" title="Edit">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                    @endcan
-                                    @can(config('permissions.modules.products.delete'),[$item->id])
-                                        <a href="#" data-url="{{ route('product.delete',['id'=> $item->id]) }}"
-                                           class="btn-delete text-danger" title="Delete">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                    @endcan
-                                </td>
-                            </tr>
-                        @endforeach
+                                    </td>
+                                    <td class="text-center">
+                                        @can(config('permissions.modules.products.edit'), [$item])
+                                            <a href="{{ route('product.edit', ['id' => $item->id]) }}"
+                                                class="btn-edit text-success" title="Edit">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        @endcan
+                                        @can(config('permissions.modules.products.delete'), [$item])
+                                            <a href="#" data-url="{{ route('product.delete', ['id' => $item->id]) }}"
+                                                class="btn-delete text-danger" title="Delete">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </a>
+                                        @endcan
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </form>
-                {{ $products->appends(['search'=>request()->search])->links() }}
+                {{ $products->appends(['search' => request()->search])->links() }}
             </div>
         </div>
     </div>

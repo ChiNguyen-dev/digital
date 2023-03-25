@@ -45,9 +45,19 @@ class ProductRepositoryImp extends BaseRepository implements IProductRepository
     public function getItemsRelated($cateId)
     {
         $data = $this->model->where('status', 1)
-                            ->where('category_id', $cateId)
-                            ->take(2)
-                            ->get();
+            ->where('category_id', $cateId)
+            ->take(2)
+            ->get();
         return !empty($data) ? $data : null;
+    }
+
+    public function orderByStatus($type = 'desc')
+    {
+        return $this->model->orderBy('status', $type)->get();
+    }
+
+    public function updateStatus($ids, $option)
+    {
+        return $this->model->whereIn('id', $ids)->update(['status' => $option]);
     }
 }

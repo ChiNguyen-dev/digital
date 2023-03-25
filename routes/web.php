@@ -27,8 +27,6 @@ Route::prefix('/')->group(function () {
         'as' => 'Client.logout',
         'uses' => 'Authen\Client\AuthenController@logout'
     ]);
-
-
     Route::get('/register', [
         'as' => 'Client.register',
         'uses' => 'Authen\Client\AuthenController@register'

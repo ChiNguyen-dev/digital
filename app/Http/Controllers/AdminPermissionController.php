@@ -3,28 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Recursive;
-use App\Models\Permission;
+use App\Repositories\Interfaces\IPermissionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class AdminPermissionController extends Controller
 {
-    private $permission;
+    private $permissionRepo;
     private $recursive;
 
-    public function __construct(Permission $permission, Recursive $recursive)
+    public function __construct(IPermissionRepository $iPermissionRepository, Recursive $recursive)
     {
-        $this->permission = $permission;
+        $this->permissionRepo = $iPermissionRepository;
         $this->recursive = $recursive;
     }
 
     public function index()
     {
-        $permissions = $this->permission->latest()->paginate(15);
+        $permissions = $this->permissionRepo->getAllPaginateLatest(15);
         $status = (object)[
-            'permissionQty' => $this->permission->all()->count(),
-            'deletedQty' => $this->permission->onlyTrashed()->count()
+            'permissionQty' => $this->permissionRepo->count(),
+            'deletedQty' => $this->permissionRepo->countSoftDelete(),
         ];
         return view('admin.permissions.index', compact('permissions', 'status'));
     }
@@ -39,7 +39,7 @@ class AdminPermissionController extends Controller
     {
         try {
             DB::beginTransaction();
-            $this->permission->create([
+            $this->permissionRepo->create([
                 'name' => $request->name,
                 'display_name' => $request->display_name,
                 'parent_id' => $request->parent_id,
@@ -55,14 +55,14 @@ class AdminPermissionController extends Controller
 
     public function edit($id)
     {
-        $permission = $this->permission->find($id);
+        $permission = $this->permissionRepo->find($id);
         $htmlOptions = $this->recursive->permissionRecursive($permission->parent_id);
         return view('admin.permissions.edit', compact('permission', 'htmlOptions'));
     }
 
     public function update(Request $request, $id)
     {
-        $this->permission->find($id)->update([
+        $this->permissionRepo->update($id, [
             'name' => $request->name,
             'display_name' => $request->display_name,
             'parent_id' => $request->parent_id,
@@ -74,8 +74,8 @@ class AdminPermissionController extends Controller
     public function delete($id)
     {
         try {
-            $this->permission->find($id)->delete();
-            $quantityDeleted = $this->permission->onlyTrashed()->count();
+            $this->permissionRepo->delete($id);
+            $quantityDeleted = $this->permissionRepo->countSoftDelete();
             return response()->json([
                 'code' => 200,
                 'message' => 'delete success',

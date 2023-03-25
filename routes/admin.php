@@ -112,8 +112,7 @@ Route::prefix('product')->group(function () {
     ]);
     Route::get('/edit/{id}', [
         'as' => 'product.edit',
-        'uses' => 'adminProductController@edit',
-        'middleware' => 'can:product-edit,id'
+        'uses' => 'adminProductController@edit'
     ]);
     Route::post('/update/{id}', [
         'as' => 'product.update',
@@ -122,7 +121,6 @@ Route::prefix('product')->group(function () {
     Route::get('/delete/{id}', [
         'as' => 'product.delete',
         'uses' => 'adminProductController@delete',
-        'middleware' => 'can:product-delete,id'
     ]);
     Route::post('/updateAll', [
         'as' => 'product.updateAll',

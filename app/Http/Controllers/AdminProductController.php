@@ -6,9 +6,9 @@ use App\Helpers\CategoryRecursive;
 use App\Http\Requests\ProductAddRequest;
 use App\Models\Category;
 use App\Models\Color;
-use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Tag;
+use App\Repositories\Interfaces\IProductRepository;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +24,7 @@ class AdminProductController extends Controller
     use StorageImageTrait;
 
     private $category;
-    private $product;
+    private $productRepo;
     private $tag;
     private $productImage;
     private $color;
@@ -33,15 +33,14 @@ class AdminProductController extends Controller
 
     public function __construct(
         Category          $category,
-        Product           $product,
+        IProductRepository           $iProductRepository,
         Tag               $tag,
         ProductImage      $productImage,
         Color             $color,
         CategoryRecursive $categoryRecursive
-    )
-    {
+    ) {
         $this->category = $category;
-        $this->product = $product;
+        $this->productRepo = $iProductRepository;
         $this->tag = $tag;
         $this->productImage = $productImage;
         $this->color = $color;
@@ -50,22 +49,17 @@ class AdminProductController extends Controller
 
     public function index(Request $request)
     {
+        $data = $this->productRepo->orderByStatus('ASC');
         $status = (object)[
-            'success' => $this->product->where('status', 1)->count(),
-            'processing' => $this->product->where('status', 0)->count(),
-            'quantity' => $this->product->where('deleted_at', '=', null)->count(),
-            'deleted' => $this->product->onlyTrashed()->count(),
+            'success' =>  $data->where('status', 1)->count(),
+            'processing' => $data->where('status', 0)->count(),
+            'quantity' => $data->count(),
+            'deleted' => $this->productRepo->countSoftDelete(),
         ];
-        if ($request->has('search')) {
-            $products = $this->product->with('category')
-                ->where('name', 'LIKE', "%{$request->search}%")
-                ->orderBy('status', 'ASC')
-                ->latest()->paginate($this->numberOfPage);
-        } else {
-            $products = $this->product->with('category')
-                ->orderBy('status', 'ASC')
-                ->latest()->paginate($this->numberOfPage);
-        }
+        $products = $request->has('search') ?
+            $this->productRepo->search('name', $request->search) :
+            $products = $this->productRepo->pagination($data, 15);
+        $products->load('category');
         return view('admin.products.index', compact('products', 'status'));
     }
 
@@ -82,13 +76,10 @@ class AdminProductController extends Controller
             DB::beginTransaction();
 
             $dataInsertProduct = $this->getDataProduct($request);
-
             $dataImageUpload = $this->storageUploadImage($request->feature_image_path, 'products');
             $dataInsertProduct['feature_image_name'] = $dataImageUpload['file_name'];
             $dataInsertProduct['feature_image_path'] = $dataImageUpload['file_path'];
-
-            $insertedProduct = $this->product->create($dataInsertProduct);
-
+            $insertedProduct = $this->productRepo->create($dataInsertProduct);
             if (!empty($request->image_path)) {
                 foreach ($request->image_path as $file) {
                     $dataImageUploadMultiple = $this->storageUploadImage($file, 'products');
@@ -98,15 +89,12 @@ class AdminProductController extends Controller
                     ]);
                 }
             }
-
             $tagIds = [];
             foreach ($request->tags as $tag) {
                 $dataTag = $this->tag->firstOrCreate(['name' => $tag]);
                 $tagIds[] = $dataTag->id;
             }
-
             $insertedProduct->tags()->attach($tagIds);
-
             if ($request->has('colors')) {
                 $insertedProduct->colors()->attach($request->colors);
             }
@@ -120,14 +108,11 @@ class AdminProductController extends Controller
 
     public function edit($id)
     {
-        try {
-            $product = $this->product->find($id);
-            $htmlOption = $this->categoryRecursive->categoryRecursive($product->category_id);
-            $colors = $this->color->all();
-            return view('admin.products.edit', compact('product', 'htmlOption', 'colors'));
-        } catch (\Exception $exception) {
-            Log::error('message: ' . $exception->getMessage() . ' Line: ' . $exception->getLine());
-        }
+        $product = $this->productRepo->find($id);
+        if (!$this->authorize(config('permissions.modules.products.edit'), $product)) abort(403);
+        $htmlOption = $this->categoryRecursive->categoryRecursive($product->category_id);
+        $colors = $this->color->all();
+        return view('admin.products.edit', compact('product', 'htmlOption', 'colors'));
     }
 
     public function update(Request $request, $id)
@@ -135,7 +120,7 @@ class AdminProductController extends Controller
         try {
             DB::beginTransaction();
 
-            $product = $this->product->find($id);
+            $product = $this->productRepo->find($id);
 
             $dataUpdateProduct = $this->getDataProduct($request);
 
@@ -187,8 +172,8 @@ class AdminProductController extends Controller
     public function delete($id): JsonResponse
     {
         try {
-            $product = $this->product->find($id)->delete();
-            $quantity = $this->product->onlyTrashed()->count();
+            $product = $this->productRepo->delete($id);
+            $quantity = $this->productRepo->countSoftDelete();
             return response()->json(['code' => 200, 'message' => 'Delete Success!', 'quantityDeleted' => $quantity], 200);
         } catch (\Exception $exception) {
             Log::error('message: ' . $exception->getMessage() . ' Line: ' . $exception->getLine());
@@ -213,7 +198,7 @@ class AdminProductController extends Controller
     {
         if ($request->option != null) {
             if ($request->has('check'))
-                $this->product->whereIn('id', $request->check)->update(['status' => $request->option]);
+                $this->productRepo->updateStatus($request->check, $request->option);
         }
         return redirect()->route('product.index');
     }

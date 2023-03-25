@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SliderRequest;
 use App\Models\Slider;
+use App\Repositories\Interfaces\ISliderRepository;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,16 +16,16 @@ class AdminSliderController extends Controller
 {
     use StorageImageTrait;
 
-    private $slider;
+    private $sliderRepo;
 
-    public function __construct(Slider $slider)
+    public function __construct(ISliderRepository $iSliderRepository)
     {
-        $this->slider = $slider;
+        $this->sliderRepo = $iSliderRepository;
     }
 
     public function index()
     {
-        $sliders = $this->slider->latest()->paginate(8);
+        $sliders = $this->sliderRepo->getAllPaginateLatest(15);
         return view('admin.sliders.index', compact('sliders'));
     }
 
@@ -32,10 +33,10 @@ class AdminSliderController extends Controller
     {
         try {
             DB::beginTransaction();
-            $slider = $this->slider->where('image_name', $request->image_path->getClientOriginalName())->first();
+            $slider = $this->sliderRepo->getSliderByImageName($request->image_path->getClientOriginalName());
             if (empty($slider)) {
                 $dataUploadImage = $this->storageUploadImage($request->image_path, 'sliders');
-                $this->slider->create([
+                $this->sliderRepo->create([
                     'name' => $request->name,
                     'image_name' => $dataUploadImage['file_name'],
                     'image_path' => $dataUploadImage['file_path'],
@@ -52,7 +53,7 @@ class AdminSliderController extends Controller
     public function delete($id): JsonResponse
     {
         try {
-            $this->slider->find($id)->delete();
+            $this->sliderRepo->delete($id);
             return response()->json([
                 'code' => 200,
                 'message' => 'delete success',
@@ -68,8 +69,8 @@ class AdminSliderController extends Controller
 
     public function edit($id)
     {
-        $slider = $this->slider->find($id);
-        $sliders = $this->slider->latest()->paginate(8);
+        $sliders = $this->sliderRepo->getAllPaginateLatest(15);
+        $slider = $sliders->find($id);
         return view('admin.sliders.edit', compact('slider', 'sliders'));
     }
 
@@ -77,7 +78,7 @@ class AdminSliderController extends Controller
     {
         try {
             DB::beginTransaction();
-            $slider = $this->slider->find($id);
+            $slider = $this->sliderRepo->find($id);
             $dataUpdateSlider = ['name' => $request->name];
             if ($request->hasFile('image_path')) {
                 if (File::exists(public_path($slider->image_path))) File::delete(public_path($slider->image_path));

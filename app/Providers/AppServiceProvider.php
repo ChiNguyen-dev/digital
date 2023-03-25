@@ -6,7 +6,9 @@ use App\services\ICartService;
 use App\services\imp\CartServiceImp;
 use Illuminate\Support\ServiceProvider;
 use App\services\Sharing\SharingService;
+use App\Repositories\Imp\RoleRepositoryImp;
 use App\Repositories\Imp\UserRepositoryImp;
+use App\Repositories\Imp\ColorRepositoryImp;
 use App\Repositories\Imp\OrderRepositoryImp;
 use App\Repositories\Imp\SliderRepositoryImp;
 use App\services\imp\ProvinceDistrictWardImp;
@@ -14,12 +16,16 @@ use App\Repositories\Imp\ProductRepositoryImp;
 use App\services\IProvinceDistrictWardService;
 use App\Repositories\Imp\CategoryRepositoryImp;
 use App\Repositories\Imp\CustomerRepositoryImp;
+use App\Repositories\Interfaces\IRoleRepository;
 use App\Repositories\Interfaces\IUserRepository;
+use App\Repositories\Imp\PermissionRepositoryImp;
+use App\Repositories\Interfaces\IColorRepository;
 use App\Repositories\Interfaces\IOrderRepository;
 use App\Repositories\Interfaces\ISliderRepository;
 use App\Repositories\Interfaces\IProductRepository;
 use App\Repositories\Interfaces\ICategoryRepository;
 use App\Repositories\Interfaces\ICustomerRepository;
+use App\Repositories\Interfaces\IPermissionRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -68,6 +74,21 @@ class AppServiceProvider extends ServiceProvider
          * Dependency Injection User
          */
         $this->app->singleton(IUserRepository::class, UserRepositoryImp::class);
+
+        /**
+         * Dependency Injection Role
+         */
+        $this->app->singleton(IRoleRepository::class, RoleRepositoryImp::class);
+
+        /**
+         * Dependency Injection Color
+         */
+        $this->app->singleton(IColorRepository::class, ColorRepositoryImp::class);
+
+        /**
+         * Dependency Injection Permission
+         */
+        $this->app->singleton(IPermissionRepository::class, PermissionRepositoryImp::class);
 
         /**
          * Dependency Injection Share Data To Global Project

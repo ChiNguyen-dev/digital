@@ -14,7 +14,15 @@ interface IBaseRepository
 
     public function delete($id);
 
+    public function count();
+
+    public function countSoftDelete();
+
     public function pagination($data, $numberOnPage);
 
-    public function with(...$relations);
+    public function getAllByWhere($column, $condition);
+
+    public function getAllPaginateLatest($numberOnPage);
+
+    public function search($column, $condition);
 }

@@ -13,4 +13,9 @@ class SliderRepositoryImp extends BaseRepository implements ISliderRepository
     {
         return Slider::class;
     }
+
+    public function getSliderByImageName($imageName)
+    {
+        return $this->model->where('image_name', $imageName)->first();
+    }
 }

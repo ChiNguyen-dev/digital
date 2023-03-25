@@ -26,7 +26,7 @@ $(function () {
                     success: function (data) {
                         if (data.code === 200) {
                             that.parent('td').parent('tr').remove();
-                            $('.analytic__status__number-delete').text('(' + data.quantityDeleted + ')')
+                            $('.analytic__status__number-delete').text('(' + data.deletedQty + ')')
                         }
                         Swal.fire(
                             'Đã xóa!',

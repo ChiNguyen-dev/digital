@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ColorRequest;
-use App\Models\Color;
+use App\Repositories\Interfaces\IColorRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,46 +11,45 @@ use Illuminate\Support\Facades\Log;
 
 class AdminColorController extends Controller
 {
-    private $color;
+    private $colorRepo;
 
-    public function __construct(Color $color)
+    public function __construct(IColorRepository $iColorRepository)
     {
-        $this->color = $color;
+        $this->colorRepo = $iColorRepository;
     }
 
     public function index()
     {
-        $colors = $this->color->latest()->paginate(15);
+        $colors = $this->colorRepo->getAllPaginateLatest(15);
         return view('admin.colors.index', compact('colors'));
     }
 
     public function store(ColorRequest $request): RedirectResponse
     {
-        $this->color->firstOrCreate([
+        $this->colorRepo->create([
             'name' => $request->name,
-            'style' => $request->style
+            'style' => $request->style,
         ]);
         return redirect()->route('color.index');
     }
 
     public function edit($id)
     {
-        $colors = $this->color->paginate(8);
-        $color = $this->color->find($id);
+        $colors = $this->colorRepo->getAllPaginateLatest(15);
+        $color = $colors->find($id);
         return view('admin.colors.edit', compact('colors', 'color'));
     }
 
     public function update(ColorRequest $request, $id)
     {
-        $color = $this->color->find($id);
-        $color->update(['name' => $request->name, 'style' => $request->style]);
+        $this->colorRepo->update($id, ['name' => $request->name, 'style' => $request->style]);
         return redirect()->route('color.index');
     }
 
     public function delete(Request $request): JsonResponse
     {
         try {
-            $this->color->find($request->id)->delete();
+            $this->colorRepo->delete($request->id);
             return response()->json([
                 'code' => 200,
                 'message' => 'Success'

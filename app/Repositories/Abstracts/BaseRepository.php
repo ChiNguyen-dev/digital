@@ -73,8 +73,28 @@ abstract class BaseRepository implements IBaseRepository
         }
     }
 
-    public function with(...$relations)
+    public function getAllPaginateLatest($numberOnPage)
     {
-        return $this->model->with($relations);
+        return $this->model->latest()->paginate($numberOnPage);
+    }
+
+    public function countSoftDelete()
+    {
+        return $this->model->onlyTrashed()->count();
+    }
+
+    public function count()
+    {
+        return $this->model->count();
+    }
+
+    public function getAllByWhere($column, $condition)
+    {
+        return $this->model->where($column, $condition)->get();
+    }
+
+    public function search($column, $condition)
+    {
+        return $this->model->where($column, 'LIKE', "%{$condition}%")->latest()->paginate(15);
     }
 }
