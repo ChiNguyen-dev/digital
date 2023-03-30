@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Log;
 
 class AdminPermissionController extends Controller
 {
-    private $permissionRepo;
-    private $recursive;
+    private IPermissionRepository $permissionRepo;
+    private Recursive $recursive;
 
     public function __construct(IPermissionRepository $iPermissionRepository, Recursive $recursive)
     {

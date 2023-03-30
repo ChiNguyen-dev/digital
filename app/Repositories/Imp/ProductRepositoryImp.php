@@ -60,4 +60,19 @@ class ProductRepositoryImp extends BaseRepository implements IProductRepository
     {
         return $this->model->whereIn('id', $ids)->update(['status' => $option]);
     }
+
+    public function addImagesToProduct(Product $product, array $data)
+    {
+        return $product->images()->create($data);
+    }
+
+    public function addColorsToProduct(Product $product, array $data)
+    {
+        return $product->colors()->attach($data);
+    }
+
+    public function addTagsToProduct(Product $product, array $data)
+    {
+        return $product->tags()->attach($data);
+    }
 }

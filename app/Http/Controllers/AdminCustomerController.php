@@ -2,33 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Repositories\Interfaces\ICustomerRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class AdminCustomerController extends Controller
 {
-    private $customer;
+    private ICustomerRepository $customerRepo;
     private $numberOfPage = 15;
 
-    public function __construct(Customer $customer)
+    public function __construct(ICustomerRepository $iCustomerRepository)
     {
-        $this->customer = $customer;
+        $this->customerRepo = $iCustomerRepository;
     }
 
     public function index()
     {
-        $customers = $this->customer->latest()->paginate($this->numberOfPage);
-        $qtyDeleted = $this->customer->onlyTrashed()->count();
+        $customers = $this->customerRepo->getAllPaginateLatest($this->numberOfPage);
+        $qtyDeleted = $this->customerRepo->countSoftDelete();
         return view('admin.orders.customer', compact('customers', 'qtyDeleted'));
     }
 
     public function delete(Request $request): JsonResponse
     {
         try {
-            $this->customer->find($request->id)->delete();
-            $quantityDeleted = $this->customer->onlyTrashed()->count();
+            $this->customerRepo->delete($request->id);
+            $quantityDeleted = $this->customerRepo->countSoftDelete();
             return response()->json([
                 'code' => 200,
                 'message' => 'had deleted',

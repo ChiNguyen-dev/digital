@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Helpers\CategoryRecursive;
 use App\Http\Requests\ProductAddRequest;
 use App\Models\Category;
-use App\Models\Color;
 use App\Models\ProductImage;
 use App\Models\Tag;
+use App\Repositories\Interfaces\IColorRepository;
 use App\Repositories\Interfaces\IProductRepository;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\JsonResponse;
@@ -27,7 +27,7 @@ class AdminProductController extends Controller
     private $productRepo;
     private $tag;
     private $productImage;
-    private $color;
+    private $colorRepo;
     private $categoryRecursive;
     private $numberOfPage = 15;
 
@@ -36,17 +36,23 @@ class AdminProductController extends Controller
         IProductRepository           $iProductRepository,
         Tag               $tag,
         ProductImage      $productImage,
-        Color             $color,
+        IColorRepository             $iColorRepository,
         CategoryRecursive $categoryRecursive
     ) {
         $this->category = $category;
         $this->productRepo = $iProductRepository;
         $this->tag = $tag;
         $this->productImage = $productImage;
-        $this->color = $color;
+        $this->colorRepo = $iColorRepository;
         $this->categoryRecursive = $categoryRecursive;
     }
 
+    /**
+     * Undocumented function
+     * Done
+     * @param Request $request
+     * @return void
+     */
     public function index(Request $request)
     {
         $data = $this->productRepo->orderByStatus('ASC');
@@ -63,18 +69,28 @@ class AdminProductController extends Controller
         return view('admin.products.index', compact('products', 'status'));
     }
 
+    /**
+     * Undocumented function
+     * Done
+     * @return void
+     */
     public function create()
     {
         $htmlOption = $this->categoryRecursive->categoryRecursive();
-        $colors = $this->color->all();
+        $colors = $this->colorRepo->getAll();
         return view('admin.products.add', compact('htmlOption', 'colors'));
     }
 
+    /**
+     * Undocumented function
+     * Done
+     * @param ProductAddRequest $request
+     * @return void
+     */
     public function store(ProductAddRequest $request)
     {
         try {
             DB::beginTransaction();
-
             $dataInsertProduct = $this->getDataProduct($request);
             $dataImageUpload = $this->storageUploadImage($request->feature_image_path, 'products');
             $dataInsertProduct['feature_image_name'] = $dataImageUpload['file_name'];
@@ -83,7 +99,7 @@ class AdminProductController extends Controller
             if (!empty($request->image_path)) {
                 foreach ($request->image_path as $file) {
                     $dataImageUploadMultiple = $this->storageUploadImage($file, 'products');
-                    $insertedProduct->images()->create([
+                    $this->productRepo->addImagesToProduct($insertedProduct, [
                         'image_path' => $dataImageUploadMultiple['file_path'],
                         'image_name' => $dataImageUploadMultiple['file_name'],
                     ]);
@@ -94,10 +110,8 @@ class AdminProductController extends Controller
                 $dataTag = $this->tag->firstOrCreate(['name' => $tag]);
                 $tagIds[] = $dataTag->id;
             }
-            $insertedProduct->tags()->attach($tagIds);
-            if ($request->has('colors')) {
-                $insertedProduct->colors()->attach($request->colors);
-            }
+            $this->productRepo->addTagsToProduct($insertedProduct, $tagIds);
+            if ($request->has('colors')) $this->productRepo->addColorsToProduct($insertedProduct, $request->colors);
             DB::commit();
             return redirect()->route('product.index');
         } catch (\Exception $exception) {
@@ -105,13 +119,18 @@ class AdminProductController extends Controller
             Log::error('message: ' . $exception->getMessage() . ' Line: ' . $exception->getLine());
         }
     }
-
+    /**
+     * Undocumented function
+     * Done
+     * @param [type] $id
+     * @return void
+     */
     public function edit($id)
     {
         $product = $this->productRepo->find($id);
         if (!$this->authorize(config('permissions.modules.products.edit'), $product)) abort(403);
         $htmlOption = $this->categoryRecursive->categoryRecursive($product->category_id);
-        $colors = $this->color->all();
+        $colors = $this->colorRepo->getAll();
         return view('admin.products.edit', compact('product', 'htmlOption', 'colors'));
     }
 
@@ -169,6 +188,12 @@ class AdminProductController extends Controller
         }
     }
 
+    /**
+     * Undocumented function
+     * Done
+     * @param [type] $id
+     * @return JsonResponse
+     */
     public function delete($id): JsonResponse
     {
         try {
@@ -180,6 +205,13 @@ class AdminProductController extends Controller
             return response()->json(['code' => 500, 'message' => 'Delete fail'], 500);
         }
     }
+
+    /**
+     * Undocumented function
+     * Done
+     * @param Request $request
+     * @return array
+     */
     public function getDataProduct(Request $request): array
     {
         return [
@@ -194,6 +226,12 @@ class AdminProductController extends Controller
         ];
     }
 
+    /**
+     * Undocumented function
+     * Done
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function updateAll(Request $request): RedirectResponse
     {
         if ($request->option != null) {

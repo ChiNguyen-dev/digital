@@ -18,4 +18,14 @@ class OrderRepositoryImp extends BaseRepository implements IOrderRepository
     {
         return $this->model->with('customer')->orderBy('status', $type)->get();
     }
+
+    public function updateMany(string $column, array $ids, array $data)
+    {
+        $this->model->whereIn($column, $ids)->update($data);
+    }
+
+    public function deleteMany(string $column, array $ids)
+    {
+        $this->model->whereIn($column, $ids)->delete();
+    }
 }
