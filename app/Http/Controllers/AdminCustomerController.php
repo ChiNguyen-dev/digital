@@ -12,9 +12,15 @@ class AdminCustomerController extends Controller
     private ICustomerRepository $customerRepo;
     private $numberOfPage = 15;
 
-    public function __construct(ICustomerRepository $iCustomerRepository)
+    public function __construct(ICustomerRepository $CustomerRepository)
     {
-        $this->customerRepo = $iCustomerRepository;
+        $this->customerRepo = $CustomerRepository;
+        $this->middleware(function ($request, $next) {
+            session([
+                'active' => 'sell',
+            ]);
+            return $next($request);
+        });
     }
 
     public function index()

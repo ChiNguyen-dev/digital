@@ -34,7 +34,7 @@
             </div>
             <div class="form__group-bottom">
                 <div class="form__tos">
-                    <input type="checkbox" name="remember_me" class="" id="tos">
+                    <input type="checkbox" name="remember_me" id="tos">
                     <label for="tos" class="form__tos-text">remember me</label>
                 </div>
                 <a href="#" class="form__forget-text">quên mật khẩu?</a>

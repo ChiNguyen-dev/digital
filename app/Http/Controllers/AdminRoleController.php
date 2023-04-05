@@ -18,6 +18,12 @@ class AdminRoleController extends Controller
     {
         $this->roleRepo = $iRoleRepository;
         $this->permissionRepo = $iPermissionRepository;
+        $this->middleware(function ($request, $next) {
+            session([
+                'active' => 'role',
+            ]);
+            return $next($request);
+        });
     }
 
     public function index()

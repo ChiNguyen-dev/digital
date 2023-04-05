@@ -21,6 +21,12 @@ class AdminSliderController extends Controller
     public function __construct(ISliderRepository $iSliderRepository)
     {
         $this->sliderRepo = $iSliderRepository;
+        $this->middleware(function ($request, $next) {
+            session([
+                'active' => 'slider',
+            ]);
+            return $next($request);
+        });
     }
 
     public function index()

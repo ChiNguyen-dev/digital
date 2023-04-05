@@ -28,6 +28,12 @@ class AdminOrderController extends Controller
         $this->customerRepo = $iCustomerRepository;
         $this->productRepo = $iProductRepository;
         $this->colorRepo = $iColorRepository;
+        $this->middleware(function ($request, $next) {
+            session([
+                'active' => 'sell',
+            ]);
+            return $next($request);
+        });
     }
 
     public function index(Request $request)

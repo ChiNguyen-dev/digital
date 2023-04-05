@@ -31,6 +31,10 @@ Route::prefix('/')->group(function () {
         'as' => 'Client.register',
         'uses' => 'Authen\Client\AuthenController@register'
     ]);
+    Route::post('/register', [
+        'as' => 'Client.register',
+        'uses' => 'Authen\Client\AuthenController@addCustommer'
+    ]);
 
     Route::get('/', [
         'as' => 'client.home',
@@ -60,7 +64,7 @@ Route::prefix('/')->group(function () {
         Route::get('/', [
             'as' => 'carts.index',
             'uses' => 'CartController@index',
-            // 'middleware' => 'isLogin'
+            'middleware' => 'isLogin'
         ]);
         Route::get('/add/{id}', [
             'as' => 'carts.add',
@@ -99,6 +103,13 @@ Route::prefix('/')->group(function () {
         Route::post('/store', [
             'as' => 'orders.store',
             'uses' => 'OrderController@store'
+        ]);
+    });
+
+    Route::prefix('/tai-khoan')->group(function () {
+        Route::get('', [
+            'as' => 'account.index',
+            'uses' => 'AccountController@index',
         ]);
     });
 });

@@ -98,41 +98,41 @@ Route::prefix('sliders')->group(function () {
 Route::prefix('product')->group(function () {
     Route::get('/', [
         'as' => 'product.index',
-        'uses' => 'adminProductController@index',
+        'uses' => 'AdminProductController@index',
         'middleware' => 'can:product-show'
     ]);
     Route::get('/create', [
         'as' => 'product.create',
-        'uses' => 'adminProductController@create',
+        'uses' => 'AdminProductController@create',
         'middleware' => 'can:product-add'
     ]);
     Route::post('/store', [
         'as' => 'product.store',
-        'uses' => 'adminProductController@store'
+        'uses' => 'AdminProductController@store'
     ]);
     Route::get('/edit/{id}', [
         'as' => 'product.edit',
-        'uses' => 'adminProductController@edit'
+        'uses' => 'AdminProductController@edit'
     ]);
     Route::post('/update/{id}', [
         'as' => 'product.update',
-        'uses' => 'adminProductController@update'
+        'uses' => 'AdminProductController@update'
     ]);
     Route::get('/delete/{id}', [
         'as' => 'product.delete',
-        'uses' => 'adminProductController@delete',
+        'uses' => 'AdminProductController@delete',
     ]);
     Route::post('/updateAll', [
         'as' => 'product.updateAll',
-        'uses' => 'adminProductController@updateAll',
+        'uses' => 'AdminProductController@updateAll',
     ]);
     Route::post('/search', [
         'as' => 'product.search',
-        'uses' => 'adminProductController@index'
+        'uses' => 'AdminProductController@index'
     ]);
     Route::get('/search', [
         'as' => 'product.search',
-        'uses' => 'adminProductController@index'
+        'uses' => 'AdminProductController@index'
     ]);
 });
 
@@ -169,26 +169,26 @@ Route::prefix('colors')->group(function () {
 Route::prefix('categories')->group(function () {
     Route::get('/', [
         'as' => 'categories.index',
-        'uses' => 'adminCategoryController@index',
+        'uses' => 'AdminCategoryController@index',
         'middleware' => 'can:category-show'
     ]);
     Route::get('/edit/{id}', [
         'as' => 'categories.edit',
-        'uses' => 'adminCategoryController@edit',
+        'uses' => 'AdminCategoryController@edit',
         'middleware' => 'can:category-edit'
     ]);
     Route::post('/update/{id}', [
         'as' => 'categories.update',
-        'uses' => 'adminCategoryController@update'
+        'uses' => 'AdminCategoryController@update'
     ]);
     Route::post('/delete', [
         'as' => 'categories.delete',
-        'uses' => 'adminCategoryController@delete',
+        'uses' => 'AdminCategoryController@delete',
         'middleware' => 'can:category-delete'
     ]);
     Route::post('/store', [
         'as' => 'categories.store',
-        'uses' => 'adminCategoryController@store'
+        'uses' => 'AdminCategoryController@store'
     ]);
 });
 /**
@@ -270,11 +270,11 @@ Route::prefix('roles')->group(function () {
     ]);
     Route::post('/update/{id}', [
         'as' => 'roles.update',
-        'uses' => 'adminRoleController@update'
+        'uses' => 'AdminRoleController@update'
     ]);
     Route::get('/delete/{id}', [
         'as' => 'roles.delete',
-        'uses' => 'adminRoleController@delete'
+        'uses' => 'AdminRoleController@delete'
     ]);
 });
 

@@ -17,6 +17,12 @@ class AdminController extends Controller
     public function __construct(IOrderRepository $iOrderRepository)
     {
         $this->orderRepo =  $iOrderRepository;
+        $this->middleware(function ($request, $next) {
+            session([
+                'active' => 'dashboard',
+            ]);
+            return $next($request);
+        });
     }
 
     public function index()
@@ -40,7 +46,7 @@ class AdminController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->has('remember_me'))) {
             return redirect()->route('admin.dashboard');
         }
-        return view('admin.login');
+        return redirect()->back();
     }
 
     public function logout(Request $request): RedirectResponse

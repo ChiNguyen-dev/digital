@@ -17,6 +17,12 @@ class AdminPermissionController extends Controller
     {
         $this->permissionRepo = $iPermissionRepository;
         $this->recursive = $recursive;
+        $this->middleware(function ($request, $next) {
+            session([
+                'active' => 'permission',
+            ]);
+            return $next($request);
+        });
     }
 
     public function index()

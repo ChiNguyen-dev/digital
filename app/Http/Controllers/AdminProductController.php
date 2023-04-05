@@ -45,6 +45,12 @@ class AdminProductController extends Controller
         $this->productImage = $productImage;
         $this->colorRepo = $iColorRepository;
         $this->categoryRecursive = $categoryRecursive;
+        $this->middleware(function ($request, $next) {
+            session([
+                'active' => 'product',
+            ]);
+            return $next($request);
+        });
     }
 
     /**

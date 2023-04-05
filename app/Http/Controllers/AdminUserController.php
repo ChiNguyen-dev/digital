@@ -24,6 +24,12 @@ class AdminUserController extends Controller
     {
         $this->roleRepo = $iRoleRepositorye;
         $this->userRepo = $userRepo;
+        $this->middleware(function ($request, $next) {
+            session([
+                'active' => 'user',
+            ]);
+            return $next($request);
+        });
     }
 
     public function index(Request $request)

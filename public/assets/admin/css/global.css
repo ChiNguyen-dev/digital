@@ -24,6 +24,13 @@ a:hover {
     transition: all 0.4s ease;
 }
 
+.active-module > a,
+.active-module > i {
+    color: var(--color-hover) !important;
+    text-decoration: none;
+    transition: all 0.4s ease;
+}
+
 .nav-fixed .topnav {
     position: fixed;
     top: 0;

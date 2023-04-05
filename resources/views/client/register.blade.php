@@ -5,7 +5,8 @@
     <div class="content">
         Xin chào, vui lòng nhập thông tin đăng ký
     </div>
-    <form action="">
+    <form action="{{ route('Client.register') }}" method="POST">
+        @csrf
         <input type="text" name="name" placeholder="Họ và tên">
         <input type="email" name="email" placeholder="Địa chỉ email">
         <div class="phone-number">
@@ -13,7 +14,7 @@
                 <img src="https://cdn-icons-png.flaticon.com/512/555/555515.png" alt="">
                 <span>+ 84</span>
             </div>
-            <input type="text" name="name" placeholder="Số điện thoại">
+            <input type="text" name="phone_number" placeholder="Số điện thoại">
         </div>
         <input type="password" name="password" placeholder="Mật khẩu">
         <button type="submit" name="btn-submit">Đăng ký</button>

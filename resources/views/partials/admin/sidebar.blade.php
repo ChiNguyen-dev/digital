@@ -1,7 +1,11 @@
+@php
+    $active = session('active');
+@endphp
 <div id="sidebar" class="bg-white">
     <ul id="sidebar-menu">
         <li class="nav-link">
-            <div class="d-flex align-items-center justify-content-between">
+            <div
+                class="d-flex align-items-center justify-content-between {{ $active == 'dashboard' ? 'active-module' : '' }}">
                 <a href="{{ route('admin.dashboard') }}">
                     <div class="nav-link-icon d-inline-block"><i class="far fa-folder"></i></div>
                     Dashboard
@@ -10,7 +14,7 @@
         </li>
         @can(config('permissions.modules.sliders.show'))
             <li class="nav-link">
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center justify-content-between {{ $active == 'slider' ? 'active-module' : '' }}">
                     <a href="{{ route('sliders.index') }}">
                         <div class="nav-link-icon d-inline-block"><i class="far fa-folder"></i></div>
                         Slider
@@ -20,7 +24,7 @@
         @endcan
         @can(config('permissions.guards.isAdmin'))
             <li class="nav-link">
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center justify-content-between {{ $active == 'user' ? 'active-module' : '' }}">
                     <a href="{{ route('users.index') }}">
                         <div class="nav-link-icon d-inline-block"><i class="far fa-folder"></i></div>
                         Thành viên
@@ -28,9 +32,10 @@
                 </div>
             </li>
         @endcan
-        @canany([config('permissions.modules.colors.show'),config('permissions.modules.categories.show'),config('permissions.modules.products.show')])
+        @canany([config('permissions.modules.colors.show'), config('permissions.modules.categories.show'),
+            config('permissions.modules.products.show')])
             <li class="nav-link">
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center justify-content-between {{ $active == 'product' ? 'active-module' : '' }}">
                     <a href="{{ route('product.index') }}">
                         <div class="nav-link-icon d-inline-block"><i class="far fa-folder"></i></div>
                         Sản phẩm
@@ -48,9 +53,9 @@
             </li>
         @endcanany
         @can(config('permissions.guards.isAdmin'))
-            @canany([config('permissions.modules.customers.show'),config('permissions.modules.orders.show')])
+            @canany([config('permissions.modules.customers.show'), config('permissions.modules.orders.show')])
                 <li class="nav-link">
-                    <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center justify-content-between {{ $active == 'sell' ? 'active-module' : '' }}">
                         <a href="">
                             <div class="nav-link-icon d-inline-block"><i class="far fa-folder"></i></div>
                             Bán hàng
@@ -59,7 +64,7 @@
                     </div>
                     <ul class="sub-menu">
                         @can(config('permissions.modules.customers.show'))
-                            <li><a href="{{ route( 'customer.index') }}">Danh sách khách hàng</a></li>
+                            <li><a href="{{ route('customer.index') }}">Danh sách khách hàng</a></li>
                         @endcan
                         @can(config('permissions.modules.orders.show'))
                             <li><a href="{{ route('orders.index') }}">Danh sách đơn hàng</a></li>
@@ -68,7 +73,7 @@
                 </li>
             @endcanany
             <li class="nav-link">
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center justify-content-between {{ $active == 'role' ? 'active-module' : '' }}">
                     <a href="{{ route('roles.index') }}">
                         <div class="nav-link-icon d-inline-block"><i class="far fa-folder"></i></div>
                         Danh sách vai trò
@@ -76,7 +81,7 @@
                 </div>
             </li>
             <li class="nav-link">
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center justify-content-between {{ $active == 'permission' ? 'active-module' : '' }}">
                     <a href="{{ route('permissions.index') }}">
                         <div class="nav-link-icon d-inline-block"><i class="far fa-folder"></i></div>
                         Danh sách quyền

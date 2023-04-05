@@ -100,8 +100,8 @@
                                     <td>{{ $item->created_at }}</td>
                                     <td class="text-center">
                                         <span
-                                            class="{{ $item->status === 0 ? 'badge bg-warning' : 'badge bg-success text-white' }}">
-                                            {{ $item->status === 0 ? 'đang xử lý' : 'công khai' }}
+                                            class="{{ $item->status == 0 ? 'badge bg-warning' : 'badge bg-success text-white' }}">
+                                            {{ $item->status == 0 ? 'đang xử lý' : 'công khai' }}
                                         </span>
                                     </td>
                                     <td class="text-center">
