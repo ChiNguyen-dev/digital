@@ -31,9 +31,10 @@
             <nav class="header-under">
                 <div class="logo">
                     <div class="icon-respon"><i class="fa-solid fa-bars"></i></div>
-                    <a href="/"><img
-                            src="https://cdn.shopify.com/s/files/1/0099/8739/1539/files/logo_c9b7ac76-a46a-4f08-8efa-31116091c03e.png?v=1613544583"
-                            alt="logo"></a>
+                    <a href="/">
+                        <img src="https://cdn.shopify.com/s/files/1/0099/8739/1539/files/logo_c9b7ac76-a46a-4f08-8efa-31116091c03e.png?v=1613544583"
+                            alt="logo">
+                    </a>
                 </div>
                 <div class="mega-menu">
                     <ul class="list-menu">
@@ -42,43 +43,61 @@
                 </div>
                 <div class="child-content">
                     <div class="header-search">
-                        <img src="{{ asset('assets/images/search.svg') }}" alt="">
+                        <img src="https://cdn-user-icons.flaticon.com/98578/98578114/1680709233984.svg?token=exp=1680710135~hmac=2891e071db1398113196a0cbcbae05e5"
+                            alt="">
                     </div>
                     <div class="my-account">
                         <i class="fa-solid fa-user"></i>
                         <div class="list-infor">
                             <ul class="infor-menu">
-                                @if(!Auth::guard('client')->check())
+                                @if (!Auth::guard('client')->check())
                                     <li class="infor-item">
-                                        <a href="{{ route('Client.login') }}">Đăng nhập <i class="fa-solid fa-key"></i></a>
+                                        <a href="{{ route('Client.login') }}">
+                                            Đăng nhập
+                                            <i class="fa-solid fa-key"></i>
+                                        </a>
                                     </li>
                                     <li class="infor-item">
-                                        <a href="{{ route('Client.register') }}">Đăng ký <i class="fa-solid fa-user-plus"></i></a>
+                                        <a href="{{ route('Client.register') }}">
+                                            Đăng ký
+                                            <i class="fa-solid fa-user-plus"></i>
+                                        </a>
                                     </li>
                                     <li class="infor-item">
                                         <a href="">Yêu thích <i class="fa-regular fa-heart"></i></a>
                                     </li>
                                     <li class="infor-item">
-                                        <a href="">So sánh <i class="fa-solid fa-down-left-and-up-right-to-center"></i></a>
+                                        <a href="">
+                                            So sánh
+                                            <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
+                                        </a>
                                     </li>
                                 @else
                                     <li class="infor-item">
                                         <a>Chào, {{ Auth::guard('client')->user()->name }}</a>
                                     </li>
                                     <li class="infor-item">
-                                        <a href="{{ route('account.index') }}">Tài khoản <i class="fa-regular fa-address-book"></i></a>
+                                        <a href="{{ route('account.index') }}">
+                                            Tài khoản
+                                            <i class="fa-regular fa-address-book"></i>
+                                        </a>
                                     </li>
                                     <li class="infor-item">
                                         <a href="">Yêu thích <i class="fa-regular fa-heart"></i></a>
                                     </li>
                                     <li class="infor-item">
-                                        <a href="">So sánh <i class="fa-solid fa-down-left-and-up-right-to-center"></i></a>
+                                        <a href="">
+                                            So sánh
+                                            <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
+                                        </a>
                                     </li>
                                     <li class="infor-item">
-                                        <a href="{{ route('Client.logout') }}">Đăng xuất <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                                        <a href="{{ route('Client.logout') }}">
+                                            Đăng xuất
+                                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                        </a>
                                     </li>
                                 @endif
-                              
                             </ul>
                         </div>
                     </div>
@@ -102,21 +121,22 @@
                     </ul>
                     <div class="list-contact">
                         <div class="item-contact">
-                            <img src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/messages.svg?1678115195386" alt="">
+                            <img src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/messages.svg?1678115195386"
+                                alt="">
                             <a href="#">Tư vấn qua zalo</a>
                         </div>
                         <div class="item-contact">
-                            <img src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/vector_userui.svg?1678115195386" alt="">
+                            <img src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/vector_userui.svg?1678115195386"
+                                alt="">
                             <a href="#">Đăng nhập</a>
                         </div>
                         <div class="item-contact">
                             <img src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/car.svg?1678115195386"
-                                 alt="">
+                                alt="">
                             <a href="#">Đơn hàng của tôi</a>
                         </div>
                         <div class="item-contact">
-                            <img
-                                src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/location.svg?1678115195386"
+                            <img src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/location.svg?1678115195386"
                                 alt="">
                             <a href="#">Hệ thống cửa hàng</a>
                         </div>
@@ -135,4 +155,3 @@
         </div>
     </div>
 </div>
-

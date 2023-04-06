@@ -156,4 +156,7 @@ a:hover {
     font-weight: 500;
 }
 
+.btn:focus {
+    box-shadow: none;
+}
 
