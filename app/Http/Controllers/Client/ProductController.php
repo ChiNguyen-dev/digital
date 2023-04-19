@@ -79,7 +79,7 @@ class ProductController extends Controller
     public function detailItem($slug)
     {
         ['megaMenuHeader' => $megaMenuHeader, 'menuResponse' => $menuResponse]
-            = $this->categoryRecursive->menu('megaMenuHeader', 'menuResponse');
+         = $this->categoryRecursive->menu('megaMenuHeader', 'menuResponse');
         $product = $this->productService->getItemBySlug($slug);
         $itemsRelated = $this->productService->getItemsRelated($product->category_id);
         $stracePath = $this->stracePath->stracePath($product->category_id, $product->name);

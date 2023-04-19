@@ -28,7 +28,6 @@ class AdminProductController extends Controller
     private IColorService $colorService;
     private CategoryRecursive $categoryRecursive;
     private ITagService $tagService;
-    private $numberOfPage = 15;
 
     public function __construct(
         IProductService           $productService,

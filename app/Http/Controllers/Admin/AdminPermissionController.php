@@ -11,13 +11,12 @@ use App\Services\Interfaces\IPermissionService;
 
 class AdminPermissionController extends Controller
 {
-    private IPermissionService $permissionService;
     private Recursive $recursive;
-
-    public function __construct(IPermissionService $permissionService, Recursive $recursive)
+    private IPermissionService $permissionService;
+    public function __construct(Recursive $recursive, IPermissionService $permissionService)
     {
-        $this->permissionService = $permissionService;
         $this->recursive = $recursive;
+        $this->permissionService = $permissionService;
         $this->middleware(function ($request, $next) {
             session([
                 'active' => 'permission',

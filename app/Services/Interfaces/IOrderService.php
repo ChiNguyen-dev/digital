@@ -10,6 +10,4 @@ interface IOrderService extends IBaseService
     public function orderByStatus($type = 'desc');
 
     public function updateMany(string $column, array $ids, array $data);
-
-    public function deleteMany(string $column, array $ids);
 }

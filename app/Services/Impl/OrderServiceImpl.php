@@ -23,9 +23,4 @@ class OrderServiceImpl extends BaseService implements IOrderService
     {
         $this->model->whereIn($column, $ids)->update($data);
     }
-
-    public function deleteMany(string $column, array $ids)
-    {
-        $this->model->whereIn($column, $ids)->delete();
-    }
 }

@@ -2,22 +2,21 @@
 
 namespace App\Helpers;
 
-
-use App\Repositories\Interfaces\IPermissionRepository;
+use App\Services\Interfaces\IPermissionService;
 
 class Recursive
 {
-    private $permissionRepo;
+    private IPermissionService $permissionService;
 
-    public function __construct(IPermissionRepository $iPermissionRepository)
+    public function __construct(IPermissionService $permissionService)
     {
-        $this->permissionRepo = $iPermissionRepository;
+        $this->permissionService = $permissionService;
     }
 
     public function permissionRecursive($parent_id = null): string
     {
         $data = '';
-        $permissionsParent = $this->permissionRepo->getAllByWhere('parent_id', 0)->load('permissions');
+        $permissionsParent = $this->permissionService->getAllByWhere('parent_id', 0)->load('permissions');
         foreach ($permissionsParent as $permissionParent) {
             if ($permissionParent->id == $parent_id) {
                 $data .= '<option selected value="' . $permissionParent->id . '">' . '|--' . $permissionParent->name . '</option>';

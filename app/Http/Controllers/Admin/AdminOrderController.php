@@ -69,7 +69,7 @@ class AdminOrderController extends Controller
             if ($option < 2) {
                 $this->orderService->updateMany('id', $ids, ['status' => $option]);
             } else {
-                $this->orderService->deleteMany('id', $ids);
+                $this->orderService->deleteMany($ids);
             }
         }
         return redirect()->route('orders.index');
