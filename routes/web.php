@@ -15,101 +15,124 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/')->group(function () {
 
+    /**
+     * Authentication.
+     * Login and Logout, Register.
+     */
     Route::get('/login', [
         'as' => 'Client.login',
-        'uses' => 'Authen\Client\AuthenController@index'
+        'uses' => 'Authentication\Client\AuthenController@index'
     ]);
     Route::post('/login', [
         'as' => 'Client.login',
-        'uses' => 'Authen\Client\AuthenController@store'
+        'uses' => 'Authentication\Client\AuthenController@store'
     ]);
     Route::get('/logout', [
         'as' => 'Client.logout',
-        'uses' => 'Authen\Client\AuthenController@logout'
+        'uses' => 'Authentication\Client\AuthenController@logout'
     ]);
     Route::get('/register', [
         'as' => 'Client.register',
-        'uses' => 'Authen\Client\AuthenController@register'
+        'uses' => 'Authentication\Client\AuthenController@register'
     ]);
     Route::post('/register', [
         'as' => 'Client.register',
-        'uses' => 'Authen\Client\AuthenController@addCustommer'
+        'uses' => 'Authentication\Client\AuthenController@addCustommer'
     ]);
 
+    /**
+     * Home Route
+     */
     Route::get('/', [
         'as' => 'client.home',
-        'uses' => 'HomeController@index'
+        'uses' => 'Client\HomeController@index'
     ]);
-
     Route::post('/search', [
         'as' => 'home.search',
-        'uses' => 'HomeController@search'
+        'uses' => 'Client\HomeController@search'
     ]);
 
-    Route::prefix('/danh-muc')->group(function () {
-        Route::get('/{cateSlug}', [
-            'as' => 'products.category',
-            'uses' => 'ProductController@index'
-        ]);
-    });
-
-    Route::prefix('/san-pham')->group(function () {
-        Route::get('/{slug}', [
-            'as' => 'products.detail',
-            'uses' => 'ProductController@detailItem'
-        ]);
-    });
-
+    /**
+     * Category Route
+     */
+    Route::get('/danh-muc/{cateSlug}', [
+        'as' => 'products.category',
+        'uses' => 'Client\ProductController@index'
+    ]);
+    /**
+     * Product Route
+     */
+    Route::get('/san-pham/{slug}', [
+        'as' => 'products.detail',
+        'uses' => 'Client\ProductController@detailItem'
+    ]);
+    /**
+     * Shopping Route
+     */
     Route::prefix('/gio-hang')->group(function () {
         Route::get('/', [
             'as' => 'carts.index',
-            'uses' => 'CartController@index',
+            'uses' => 'Client\CartController@index',
             'middleware' => 'isLogin'
         ]);
-        Route::get('/add/{id}', [
+        Route::post('/add/{id}', [
             'as' => 'carts.add',
-            'uses' => 'CartController@add'
+            'uses' => 'Client\CartController@add'
         ]);
         Route::get('/delete', [
             'as' => 'carts.delete',
-            'uses' => 'CartController@delete'
+            'uses' => 'Client\CartController@delete',
+            'middleware' => 'isLogin'
         ]);
-        Route::get('/update/{id}', [
-            'as' => 'carts.updateQty',
-            'uses' => 'CartController@updateQty'
-        ]);
-        Route::get('/delete-item/{id}', [
+        Route::post('/delete/{id}', [
             'as' => 'carts.deleteItem',
-            'uses' => 'CartController@deleteItem'
+            'uses' => 'Client\CartController@deleteItem'
         ]);
-        Route::get('/update-color/{id}', [
+        Route::post('/update/{id}', [
+            'as' => 'carts.updateQty',
+            'uses' => 'Client\CartController@updateQty'
+        ]);
+        Route::post('/update/{id}/color', [
             'as' => 'carts.updateColor',
-            'uses' => 'CartController@updateColor'
+            'uses' => 'Client\CartController@updateColor'
         ]);
     });
+    /**
+     * Checkout Route
+     */
+    Route::get('/thanh-toan', [
+        'as' => 'checkout.index',
+        'uses' => 'Client\CheckoutController@index',
+        'middleware' => 'isLogin'
+    ]);
 
-    Route::prefix('/thanh-toan')->group(function () {
-        Route::get('/', [
-            'as' => 'checkout.index',
-            'uses' => 'CheckoutController@index'
-        ]);
-        Route::post('/changeAddress', [
-            'as' => 'checkout.changeAddress',
-            'uses' => 'CheckoutController@changeAddress'
-        ]);
-    });
-
-    Route::prefix('/dat-hang')->group(function () {
-        Route::post('/store', [
-            'as' => 'orders.store',
-            'uses' => 'OrderController@store'
-        ]);
-    });
-
+    /**
+     * Order Route
+     */
+    Route::post('/dat-hang', [
+        'as' => 'orders.store',
+        'uses' => 'Client\OrderController@store'
+    ]);
+    /**
+     * Account Route
+     */
     Route::prefix('/tai-khoan')->group(function () {
-        Route::get('', [
-            'as' => 'account.index',
-            'uses' => 'AccountController@index',
+        Route::get('/', [
+            'as' => 'account.account',
+            'uses' => 'Client\AccountController@account',
+            'middleware' => 'isLogin'
+        ]);
+        Route::post('/', [
+            'as' => 'account.account',
+            'uses' => 'Client\AccountController@updateAccount',
+        ]);
+        Route::post('/validate', [
+            'as' => 'account.validate',
+            'uses' => 'Client\AccountController@validation',
+        ]);
+        Route::post('/address', [
+            'as' => 'account.address',
+            'uses' => 'Client\AccountController@chooseAddress',
         ]);
     });
 });

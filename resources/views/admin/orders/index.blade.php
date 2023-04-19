@@ -13,7 +13,7 @@
                     <form action="{{ route('orders.index') }}" method="POST" class="d-flex">
                         @csrf
                         <input type="text" class="form-control form-search" name="search" placeholder="Tìm kiếm"
-                               value="{{ request()->search }}">
+                            value="{{ request()->search }}">
                         <input type="submit" name="btn-search" value="Tìm kiếm" class="btn btn-primary ml-2">
                     </form>
                 </div>
@@ -51,41 +51,42 @@
                     </div>
                     <table class="table table-striped table-checkall mb-3">
                         <thead>
-                        <tr>
-                            @can(config('permissions.modules.orders.update'))
-                                <th scope="col"><input name="check" type="checkbox" class="checkAll"></th>
-                            @endcan
-                            <th scope="col" class="text-center">#</th>
-                            <th scope="col" class="text-center">Mã đơn hàng</th>
-                            <th scope="col" class="text-center">Khách hàng</th>
-                            <th scope="col" class="text-center">Giá trị</th>
-                            <th scope="col" class="text-center">Trạng thái</th>
-                            <th scope="col" class="text-center">Thời gian</th>
-                            <th scope="col" class="text-center">Chi tiết</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($orders as $key => $value)
                             <tr>
                                 @can(config('permissions.modules.orders.update'))
-                                    <td><input type="checkbox" value="{{ $value->id }}" class="checkBox" name="check[]">
-                                    </td>
+                                    <th scope="col"><input name="check" type="checkbox" class="checkAll"></th>
                                 @endcan
-                                <th class="text-center align-middle" scope="row">{{ $key + 1 }}</th>
-                                <td class="text-center">#{{ $value->id }}</td>
-                                <td class="text-center">{{ $value->customer->name }}<br>{{ $value->phone_number }}</td>
-                                <td class="text-center">{{ number_format($value->total,0,',','.') }}₫</td>
-                                <td class="text-center">
-                                    <span class="badge {{ $value->status == 0 ? 'badge-warning' : 'badge-success' }}">
-                                        {{ $value->status == 0 ? 'Đang xử lý' : 'Thành công' }}
-                                    </span>
-                                </td>
-                                <td class="text-center">{{ $value->created_at }}</td>
-                                <td class="text-center">
-                                    <a href="{{ route('orders.detail',['id' => $value->id]) }}">Chi tiết</a>
-                                </td>
+                                <th scope="col" class="text-center">#</th>
+                                <th scope="col" class="text-center">Mã đơn hàng</th>
+                                <th scope="col" class="text-center">Khách hàng</th>
+                                <th scope="col" class="text-center">Giá trị</th>
+                                <th scope="col" class="text-center">Trạng thái</th>
+                                <th scope="col" class="text-center">Thời gian</th>
+                                <th scope="col" class="text-center">Chi tiết</th>
                             </tr>
-                        @endforeach
+                        </thead>
+                        <tbody>
+                            @foreach ($orders as $key => $value)
+                                <tr>
+                                    @can(config('permissions.modules.orders.update'))
+                                        <td><input type="checkbox" value="{{ $value->id }}" class="checkBox" name="check[]">
+                                        </td>
+                                    @endcan
+                                    <th class="text-center align-middle" scope="row">{{ $key + 1 }}</th>
+                                    <td class="text-center">#{{ $value->id }}</td>
+                                    <td class="text-center">{{ $value->customer->name }}<br>{{ $value->phone_number }}
+                                    </td>
+                                    <td class="text-center">{{ number_format($value->total, 0, ',', '.') }}₫</td>
+                                    <td class="text-center">
+                                        <span class="badge {{ $value->status == 0 ? 'badge-warning' : 'badge-success' }}">
+                                            {{ $value->status == 0 ? 'Đang xử lý' : 'Thành công' }}
+                                        </span>
+                                    </td>
+                                    <td class="text-center">{{ $value->created_at }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('orders.detail', ['id' => $value->id]) }}">Chi tiết</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </form>

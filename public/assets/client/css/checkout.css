@@ -18,17 +18,96 @@
     background-color: #c0392b;
 }
 
-form {
-    font-size: 1rem;
-    line-height: 18px;
+/* Form */
+.form_address .form-group {
+    position: relative;
+    margin-bottom: 15px;
+    padding: 0;
+    margin-right: 0px;
 }
 
-.form-group input:focus,
-#province:focus, #district:focus, #ward:focus {
-    outline: none;
-    box-shadow: none;
-    border-color: var(--bg-main);
+.form-group input {
+    height: 40px;
 }
+
+.form_address .form-group .form-control {
+    display: block;
+    width: 100%;
+    line-height: 1.5;
+    color: #000;
+    border: 1px solid #DDE1EF;
+    border-radius: 4px;
+    padding: 18px 10px 0px 12px;
+    margin: 0;
+    min-height: 48px;
+    position: relative;
+    z-index: 10;
+    background: transparent !important;
+    font-size: .9rem;
+    padding-right: 30px;
+    text-overflow: ellipsis;
+    box-shadow: none;
+}
+
+.form_address .form-group label {
+    font-size: 16px;
+    color: #7A7A9D;
+    margin: 0;
+    transform-origin: left top;
+    transition: .2s ease all;
+    position: absolute;
+    top: 14px;
+    left: 12px;
+    cursor: text;
+    z-index: 20;
+}
+
+.form_address .form-group .form-control:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.form_address .form-group .form-control:not(:placeholder-shown)+label,
+.form_address .form-group .form-control:focus+label {
+    top: 4px;
+    font-size: .8rem;
+    box-shadow: none;
+}
+
+.form_address .group-country fieldset {
+    width: calc(100% / 3);
+    margin-right: 10px;
+}
+
+.form_address .group-country fieldset:last-child {
+    margin-right: 0;
+}
+
+.form_address .form-group select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.form_address .form-group.select-field:after {
+    position: absolute;
+    content: '';
+    top: 17px;
+    right: 19px;
+    width: 16px;
+    height: 16px;
+    background-image: url(https://bizweb.dktcdn.net/100/438/408/themes/902941/assets/down_sort.svg);
+    z-index: 9;
+}
+
+.form_address .form-group.select-field select[disabled] {
+    background-color: #eee !important;
+    cursor: default;
+}
+
+/* End */
+
+
 
 .item-check {
     display: flex;
@@ -68,6 +147,10 @@ form {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: .9rem;
+}
+.item-check .item-detail-infor .box-quantity strong {
+    font-size: 1rem;
 }
 
 .box-total {
@@ -84,6 +167,7 @@ form {
 .type-checkout {
     padding-left: 10px;
     padding-top: 20px;
+    font-size: 1rem;
 }
 
 .btn-order {

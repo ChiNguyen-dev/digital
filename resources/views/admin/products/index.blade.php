@@ -10,7 +10,7 @@
             <div class="card-header font-weight-bold d-flex justify-content-between align-items-center">
                 <h5 class="m-0 ">Danh sách sản phẩm</h5>
                 <div class="form-search form-inline">
-                    <form action="{{ route('product.search') }}" class="d-flex" method="POST">
+                    <form action="{{ route('product.index') }}" class="d-flex" method="POST">
                         @csrf
                         <input type="text" class="form-control form-search" placeholder="Tìm kiếm" name="search"
                             value="{{ request()->search }}">
@@ -43,7 +43,7 @@
                         </div>
                     @endcan
                 </div>
-                <form action="{{ route('product.updateAll') }}" method="POST">
+                <form action="{{ route('product.updateStatus') }}" method="POST">
                     @csrf
                     <div class="form-action form-inline py-3">
                         @can(config('permissions.guards.isAdmin'))

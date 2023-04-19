@@ -1,6 +1,7 @@
 <?php
 
-namespace App\services;
+namespace App\Services;
+
 
 use App\Policies\CategoryPolicy;
 use App\Policies\ColorPolicy;
@@ -79,5 +80,4 @@ class GateAndPoliceService
         Gate::define(config('permissions.modules.customers.show'), [CustomerPolicy::class, 'viewAny']);
         Gate::define(config('permissions.modules.customers.delete'), [CustomerPolicy::class, 'delete']);
     }
-
 }

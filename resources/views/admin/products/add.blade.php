@@ -7,50 +7,48 @@
 @section('content')
     <div class="row container-fluid ml-0 pt-4">
         <div class="card w-100" id="add-product">
-            @include('partials.admin.title-form',['name'=>'Thêm sản phẩm'])
+            @include('partials.admin.title-form', ['name' => 'Thêm sản phẩm'])
             <div class="card-body">
                 <form method="post" action="{{ route('product.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="name">Tên sản phẩm :</label>
                         <input class="form-control @error('name') is-invalid @enderror" type="text" name="name"
-                               id="name" value="{{ old('name') }}">
+                            id="name" value="{{ old('name') }}">
                     </div>
                     <div class="form-group">
-                        @error("name")
-                        <small class="text-validate form-text text-danger">{{ $message }}</small>
+                        @error('name')
+                            <small class="text-validate form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="price">Giá :</label>
                         <input class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}"
-                               type="text" name="price" id="price">
+                            type="number" name="price" id="price">
                     </div>
                     <div class="form-group">
-                        @error("price")
-                        <small class="text-validate form-text text-danger">{{ $message }}</small>
+                        @error('price')
+                            <small class="text-validate form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="contents">Thông tin chi tiết:</label>
-                        <textarea name="short_desc" class="form-control tinymce_editor_init" id="content" cols="30"
-                                  rows="10">
+                        <textarea name="short_desc" class="form-control tinymce_editor_init" id="content" cols="30" rows="10">
                             {{ old('short_desc') }}
                         </textarea>
                     </div>
                     <div class="form-group">
-                        @error("short_desc")
-                        <small class="text-validate form-text text-danger">{{ $message }}</small>
+                        @error('short_desc')
+                            <small class="text-validate form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="contents">Mô tả sản phẩm :</label>
-                        <textarea name="contents" class="form-contro tinymce_editor_init" id="content" cols="30"
-                                  rows="10">{{ old('contents') }}</textarea>
+                        <textarea name="contents" class="form-contro tinymce_editor_init" id="content" cols="30" rows="10">{{ old('contents') }}</textarea>
                     </div>
                     <div class="form-group">
-                        @error("contents")
-                        <small class="text-validate form-text text-danger">{{ $message }}</small>
+                        @error('contents')
+                            <small class="text-validate form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -61,8 +59,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        @error("category_id")
-                        <small class="text-validate form-text text-danger">{{ $message }}</small>
+                        @error('category_id')
+                            <small class="text-validate form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -70,33 +68,33 @@
                         <select class="form-control tag-select2" multiple="multiple" name="tags[]" id="tags"></select>
                     </div>
                     <div class="form-group">
-                        @error("tags")
-                        <small class="text-validate form-text text-danger">{{ $message }}</small>
+                        @error('tags')
+                            <small class="text-validate form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="colors">Màu :</label>
                         <select class="form-control color-select2" multiple="multiple" name="colors[]" id="colors">
-                            @if(!empty($colors))
-                                @foreach($colors as $color)
+                            @if (!empty($colors))
+                                @foreach ($colors as $color)
                                     <option value="{{ $color->id }}">{{ $color->name }}</option>
                                 @endforeach
                             @endif
                         </select>
                     </div>
                     <div class="form-group">
-                        @error("colors")
-                        <small class="text-validate form-text text-danger">{{ $message }}</small>
+                        @error('colors')
+                            <small class="text-validate form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="feature_image_path">Ảnh đại diện :</label>
                         <input class="form-control-file" type="file" name="feature_image_path" id="feature_image_path"
-                               multiple>
+                            multiple>
                     </div>
                     <div class="form-group">
-                        @error("feature_image_path")
-                        <small class="text-validate form-text text-danger">{{ $message }}</small>
+                        @error('feature_image_path')
+                            <small class="text-validate form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -104,14 +102,10 @@
                         <input class="form-control-file" type="file" name="image_path[]" id="image_path" multiple>
                     </div>
                     <div class="form-group">
-                        @error("image_path")
-                        <small class="text-validate form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group">
                         <label for="">Trạng thái :</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="status" id="status-1" value="0" checked>
+                            <input class="form-check-input" type="radio" name="status" id="status-1" value="0"
+                                checked>
                             <label class="form-check-label" for="status-1">Chờ duyệt</label>
                         </div>
                         <div class="form-check">

@@ -43,7 +43,7 @@
                 </div>
                 <div class="child-content">
                     <div class="header-search">
-                        <img src="https://cdn-user-icons.flaticon.com/98578/98578114/1680709233984.svg?token=exp=1680710135~hmac=2891e071db1398113196a0cbcbae05e5"
+                        <img src="{{ asset('assets/images/search.png') }}"
                             alt="">
                     </div>
                     <div class="my-account">
@@ -77,7 +77,7 @@
                                         <a>Chào, {{ Auth::guard('client')->user()->name }}</a>
                                     </li>
                                     <li class="infor-item">
-                                        <a href="{{ route('account.index') }}">
+                                        <a href="{{ route('account.account') }}">
                                             Tài khoản
                                             <i class="fa-regular fa-address-book"></i>
                                         </a>

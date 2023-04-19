@@ -15,7 +15,7 @@
                             <span class="mr_lr">&nbsp;/&nbsp;</span>
                         </li>
                         <li>
-                            <a href="{{ route('account.index') }}">Tài khoản</a>
+                            <a href="{{ route('account.account') }}">Tài khoản</a>
                         </li>
                         <li class="last">
                             <h5>Tài khoản</h5>
@@ -68,7 +68,7 @@
             <i class="fa-solid fa-xmark"></i>
         </div>
         <h2 class="title_pop">Sửa thông tin địa chỉ</h2>
-        <form action="" method="POST">
+        <form action="{{ route('account.account') }}" method="POST">
             @csrf
             <div class="pop_bottom">
                 <div class="form_address">
@@ -82,7 +82,7 @@
                         </div>
                         <div class="fied col-md-6">
                             <fieldset class="form-group">
-                                <input type="text" class="form-control" name="name"
+                                <input type="number" class="form-control" name="phone_number"
                                     value="{{ Auth::guard('client')->user()->phone_number }}" placeholder=" ">
                                 <label>Số điện thoại</label>
                             </fieldset>
@@ -91,7 +91,18 @@
                     <div class="row">
                         <div class="fied col-md-12">
                             <fieldset class="form-group">
-                                <input type="text" class="form-control" name="name"
+                                <input type="email" class="form-control" name="email" id="email" placeholder=" "
+                                    data-url="{{ route('account.validate') }}"
+                                    value="{{ Auth::guard('client')->user()->email }}">
+                                <label>Email</label>
+                            </fieldset>
+                            <small id="error-email">Lỗi</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="fied col-md-12">
+                            <fieldset class="form-group">
+                                <input type="text" class="form-control" name="address"
                                     value="{{ Auth::guard('client')->user()->address }}" placeholder=" ">
                                 <label>Địa chỉ</label>
                             </fieldset>
@@ -99,20 +110,24 @@
                     </div>
                     <div class="group-country d-flex">
                         <fieldset class="form-group select-field">
-                            <select name="" id="" class="form-control">
+                            <select name="province" id="province" class="form-control"
+                                data-url="{{ route('account.address') }}" data-key='province'>
                                 <option value="">---</option>
-                                <option value="">TP Hồ Chí Minh</option>
+                                @foreach ($provinces as $province)
+                                    <option value="{{ $province->matp }}">{{ $province->name }}</option>
+                                @endforeach
                             </select>
                             <label>Tỉnh thành</label>
                         </fieldset>
                         <fieldset class="form-group select-field">
-                            <select name="" id="" class="form-control" disabled="disabled">
+                            <select name="district" id="district" class="form-control" disabled="disabled"
+                                data-url="{{ route('account.address') }}" data-key='district'>
                                 <option value="">---</option>
                             </select>
                             <label>Quận huyện</label>
                         </fieldset>
                         <fieldset class="form-group select-field">
-                            <select name="" id="" class="form-control" disabled="disabled">
+                            <select name="ward" id="ward" class="form-control" disabled="disabled">
                                 <option value="">---</option>
                             </select>
                             <label>Phường xã</label>
@@ -121,7 +136,7 @@
                 </div>
                 <div class="btn-row text-center">
                     <button type="button" class="btn btn-close">HỦY</button>
-                    <button type="button" class="btn btn-sm">LƯU</button>
+                    <button type="submit" class="btn btn-sm">LƯU</button>
                 </div>
             </div>
         </form>
@@ -129,5 +144,6 @@
 @endsection
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/client/js/account/index.js') }}"></script>
 @endsection

@@ -20,6 +20,7 @@ class isLogin
         if (Auth::guard('client')->check()) {
             return $next($request);
         }
+        session(['intended_url' => $request->url()]);
         return redirect()->route('Client.login');
     }
 }

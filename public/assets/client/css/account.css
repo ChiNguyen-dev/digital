@@ -112,19 +112,19 @@
 }
 
 .col-left-ac .block-account ul li:nth-child(1) .title-info {
-    background-image: url(https://cdn-icons-png.flaticon.com/128/1946/1946429.png);
+    background-image: url('../../images/user.png');
 }
 
 .col-left-ac .block-account ul li:nth-child(2) .title-info {
-    background-image: url(https://cdn-icons-png.flaticon.com/128/839/839860.png);
+    background-image: url('../../images/order.png');
 }
 
 .col-left-ac .block-account ul li:nth-child(3) .title-info {
-    background-image: url(https://cdn-icons-png.flaticon.com/128/3257/3257787.png);
+    background-image: url('../../images/pass.png');
 }
 
 .col-left-ac .block-account ul li:nth-child(4) .title-info {
-    background-image: url(https://cdn-icons-png.flaticon.com/128/3870/3870922.png);
+    background-image: url('../../images/heart.png');
 }
 
 
@@ -138,22 +138,22 @@
 
 .col-left-ac .block-account ul li:nth-child(1) .title-info:hover,
 .col-left-ac .block-account ul li:nth-child(1) .title-info.active {
-    background-image: url(https://cdn-user-icons.flaticon.com/98578/98578114/1680710921995.svg?token=exp=1680711823~hmac=5f0399e489bd2ea3adb50d367da3514c);
+    background-image: url('../../images/user-hover.png');
 }
 
 .col-left-ac .block-account ul li:nth-child(2) .title-info:hover,
 .col-left-ac .block-account ul li:nth-child(2) .title-info.active {
-    background-image: url(https://cdn-user-icons.flaticon.com/98578/98578114/1680711040476.svg?token=exp=1680711942~hmac=7de3f843f73a541e880b68b4a74c041c);
+    background-image: url('../../images/order-hover.png');
 }
 
 .col-left-ac .block-account ul li:nth-child(3) .title-info:hover,
 .col-left-ac .block-account ul li:nth-child(3) .title-info.active {
-    background-image: url(https://cdn-user-icons.flaticon.com/98578/98578114/1680711135503.svg?token=exp=1680712036~hmac=07978eef66277fd2c543136e9c23bc9a);
+    background-image: url('../../images/pass-hover.png');
 }
 
 .col-left-ac .block-account ul li:nth-child(4) .title-info:hover,
 .col-left-ac .block-account ul li:nth-child(4) .title-info.active {
-    background-image: url(https://cdn-user-icons.flaticon.com/98578/98578114/1680710851756.svg?token=exp=1680711753~hmac=dd7c7f9bca8ceb39e54e8b834ad40547);
+    background-image: url('../../images/heart-hover.png');
 }
 
 /* End hover*/
@@ -369,4 +369,11 @@
     border: none;
     padding: 0 16px;
     font-size: 1.1rem;
+}
+
+#error-email {
+    display: none;
+    padding-bottom: 15px;
+    color: red;
+    font-size: .8rem;
 }

@@ -18,10 +18,6 @@ $(document).ready(function () {
         event.preventDefault();
         $('.carousel-detail ul.thumbnail-main li.carousel__thumbnail-item.active').prev().click();
     });
-    // ZOOM IMAGE
-    // $('.slider__detail .thumbnail-item img').imagezoomsl(function () {
-    //     zoomrange:[3, 3];
-    // });
 
     // VIEW MORE DESCRIPTION PRODUCT
     $('.more').click(function () {

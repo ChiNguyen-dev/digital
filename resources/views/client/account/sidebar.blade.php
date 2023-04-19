@@ -1,7 +1,7 @@
 <div class="block-account">
     <div class="infor">
         <div class="thumbnail">
-            <img src="https://cdn-user-icons.flaticon.com/98578/98578114/1680694404780.svg?token=exp=1680695305~hmac=4538ed6f49608897a3fc0a061fbee4fc"
+            <img src="{{ asset('assets/images/avatar.png') }}"
                 alt="">
         </div>
         <p>{{ Auth::guard('client')->user()->name }}</p>
@@ -9,7 +9,7 @@
     </div>
     <ul>
         <li>
-            <a href="{{ route('account.index') }}" class="title-info {{ $active == 'my-account' ? 'active' : '' }}">Tài khoản của tôi</a>
+            <a href="{{ route('account.account') }}" class="title-info {{ $active == 'my-account' ? 'active' : '' }}">Tài khoản của tôi</a>
         </li>
         <li>
             <a href="" class="title-info {{ $active == 'my-order' ? 'active' : '' }}">Đơn hàng của tôi</a>

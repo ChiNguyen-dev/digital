@@ -1,97 +1,83 @@
-function handleAddToCart(event) {
-    // DISABLE TAG <a>
+function addToCart(event) {
     event.preventDefault();
-    const url = $(this).data('url');
-    const urlCart = $(this).data('cart');
-    const color = $('.color-box span.active_color').data('color');
+    const url = $(this).data("url");
+    const urlCart = $(this).data("cart");
+    const color = $(".color-box span.active_color").data("color");
+    const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
-        type: "GET",
+        type: "POST",
+        headers: { "X-CSRF-TOKEN": token },
         url: url,
-        data: {'color_id': color},
-        success: function (data) {
-            if (data.code === 200) window.location.href = urlCart;
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError)
-        }
+        data: { color_id: color },
+        success: (response) => (window.location.href = urlCart),
+        error: (xhr, status, thrownError) => console.log(status, thrownError),
     });
 }
 
-function handleDeleteItem() {
-    const url = $(this).parent().data('url');
+function deleteItem() {
+    const url = $(this).parent().data("url");
     const that = $(this);
+    const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
-        type: 'GET',
+        type: "POST",
+        headers: { "X-CSRF-TOKEN": token },
         url: url,
-        success: function (data) {
-            if (data.code === 200) {
-                that.parent().parent().remove();
-                $('.order .total span').text(data.total);
-                $('.header-cart .num-cart').text(data.qty);
-                if (data.qty === 0) {
-                    $('.cart-body').css('display', 'flex')
-                    $('#table-cart').css('display', 'none')
-                    $('.remind').css('display', 'none')
-                    $('.order').css('display', 'none')
-                }
+        success: (response) => {
+            that.parent().parent().remove();
+            $(".order .total span").text(response.total);
+            $(".header-cart .num-cart").text(response.qty);
+            if (response.qty === 0) {
+                $(".cart-body").css("display", "flex");
+                $("#table-cart").css("display", "none");
+                $(".remind").css("display", "none");
+                $(".order").css("display", "none");
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
-        }
-    })
+        error: (xhr, status, thrownError) => console.log(status, thrownError),
+    });
 }
 
-function handleDelete() {
+function updateQuantity() {
     const qty = $(this).val();
-    const url = $(this).data('url');
-    const data = {qty: qty};
+    const url = $(this).data("url");
+    const data = { qty: qty };
+    const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
-        type: 'GET',
+        type: "POST",
+        headers: { "X-CSRF-TOKEN": token },
         url: url,
         data: data,
-        success: function (data) {
-            if (data.code === 200) {
-                $('.order .total span').text(data.total);
-                $('.header-cart .num-cart').text(data.qty);
-            }
+        success: (response) => {
+            $(".order .total span").text(response.total);
+            $(".header-cart .num-cart").text(response.qty);
         },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
-        }
-    })
+        error: (xhr, status, thrownError) => console.log(status, thrownError),
+    });
 }
 
-function handleUpdateColor() {
-    const url = $(this).data('url');
-    const data = {id: $(this).val()};
+function updateColor() {
+    const url = $(this).data("url");
+    const data = { id: $(this).val() };
+    const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
-        type: 'GET',
+        type: "POST",
+        headers: { "X-CSRF-TOKEN": token },
         url: url,
         data: data,
-        success: function (data) {
-            if (data.code === 200) {
-                console.log(data);
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
-        }
+        success: (response) => console.log(response),
+        error: (xhr, status, thrownError) => console.log(status, thrownError),
     });
 }
 
 $(document).ready(function () {
-    // SHOPPING CART
-    $('.add-to-cart').on('click', handleAddToCart);
+    $(".add-to-cart").on("click", addToCart);
 
-    if ($('.cart-wp').find('#table-cart').length === 0) $('.cart-body').css('display', 'flex');
-    $('.col-remove > i').on('click', handleDeleteItem);
+    $(".col-remove > i").on("click", deleteItem);
 
-    $('.qty_in_cart').on('change', handleDelete);
+    $(".qty_in_cart").on("change", updateQuantity);
 
-    $('.color_in_cart').on('change', handleUpdateColor)
+    $(".color_in_cart").on("change", updateColor);
+
+    if ($(".cart-wp").find("#table-cart").length === 0)
+        $(".cart-body").css("display", "flex");
 });

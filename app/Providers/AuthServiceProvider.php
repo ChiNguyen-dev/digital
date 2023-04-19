@@ -2,22 +2,22 @@
 
 namespace App\Providers;
 
-use App\Models\Category;
-use App\Models\Color;
-use App\Models\Customer;
-use App\Models\Order;
-use App\Models\Product;
 use App\Models\Role;
+use App\Models\Color;
+use App\Models\Order;
 use App\Models\Slider;
-use App\Policies\ColorPolicy;
-use App\Policies\CustomerPolicy;
-use App\Policies\OrderPolicy;
-use App\Policies\ProductPolicy;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Customer;
 use App\Policies\RolePolicy;
+use App\Policies\ColorPolicy;
+use App\Policies\OrderPolicy;
 use App\Policies\SliderPolicy;
-use App\services\GateAndPoliceService;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Policies\ProductPolicy;
+use App\Policies\CustomerPolicy;
 use Illuminate\Pagination\Paginator;
+use App\Services\GateAndPoliceService;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {

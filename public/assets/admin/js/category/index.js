@@ -19,21 +19,16 @@ function handleDelete(event) {
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 url: urlRequest,
                 data: {id: id},
-                success: function (data) {
-                    if (data.code === 200) {
-                        console.log(data)
-                        that.parent('td').parent('tr').remove();
-                    }
+                success: (response) => {
+                    console.log(response);
+                    that.parent('td').parent('tr').remove();
                     Swal.fire(
                         'Đã xóa!',
                         'Your file has been deleted.',
                         'success'
-                    )
+                    );
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status);
-                    alert(thrownError)
-                }
+                error: (xhr, message, throwError)=> console.log(message, throwError)
             });
         }
     })
