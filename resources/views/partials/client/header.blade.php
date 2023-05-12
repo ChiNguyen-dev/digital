@@ -32,7 +32,8 @@
                 <div class="logo">
                     <div class="icon-respon"><i class="fa-solid fa-bars"></i></div>
                     <a href="/">
-                        <img src="https://cdn.shopify.com/s/files/1/0099/8739/1539/files/logo_c9b7ac76-a46a-4f08-8efa-31116091c03e.png?v=1613544583"
+                        <img
+                            src="https://cdn.shopify.com/s/files/1/0099/8739/1539/files/logo_c9b7ac76-a46a-4f08-8efa-31116091c03e.png?v=1613544583"
                             alt="logo">
                     </a>
                 </div>
@@ -44,7 +45,7 @@
                 <div class="child-content">
                     <div class="header-search">
                         <img src="{{ asset('assets/images/search.png') }}"
-                            alt="">
+                             alt="">
                     </div>
                     <div class="my-account">
                         <i class="fa-solid fa-user"></i>
@@ -106,7 +107,8 @@
                             <i class="fa-solid fa-cart-shopping"></i>
                         </a>
                         <span class="num-cart">
-                            {{ Cart::instance('shopping')->count() }}
+                            @php $qty = session()->has('qty') ? session('qty') : 0; @endphp
+                            {{ $qty }}
                         </span>
                     </div>
                 </div>
@@ -121,22 +123,25 @@
                     </ul>
                     <div class="list-contact">
                         <div class="item-contact">
-                            <img src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/messages.svg?1678115195386"
+                            <img
+                                src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/messages.svg?1678115195386"
                                 alt="">
                             <a href="#">Tư vấn qua zalo</a>
                         </div>
                         <div class="item-contact">
-                            <img src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/vector_userui.svg?1678115195386"
+                            <img
+                                src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/vector_userui.svg?1678115195386"
                                 alt="">
                             <a href="#">Đăng nhập</a>
                         </div>
                         <div class="item-contact">
                             <img src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/car.svg?1678115195386"
-                                alt="">
+                                 alt="">
                             <a href="#">Đơn hàng của tôi</a>
                         </div>
                         <div class="item-contact">
-                            <img src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/location.svg?1678115195386"
+                            <img
+                                src="https://bizweb.dktcdn.net/100/438/408/themes/897269/assets/location.svg?1678115195386"
                                 alt="">
                             <a href="#">Hệ thống cửa hàng</a>
                         </div>

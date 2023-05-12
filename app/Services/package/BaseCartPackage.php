@@ -1,9 +1,8 @@
 <?php
-namespace App\Services\Abstracts;
 
-use App\Services\Interfaces\IBaseCartService;
+namespace App\Services\package;
 
-abstract class BaseCartService implements IBaseCartService
+abstract class BaseCartPackage implements IBaseCartPackage
 {
     protected $instance;
 
@@ -25,9 +24,13 @@ abstract class BaseCartService implements IBaseCartService
         return $this->instance->content();
     }
 
-    public function getCarts()
+    public function getCarts(): array
     {
-        return $this->instance->content();
+        return [
+            'data' => $this->instance->content(),
+            'total' => $this->total(),
+            'count' => $this->count()
+        ];
     }
 
     public function destroy(): void

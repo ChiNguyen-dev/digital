@@ -2,13 +2,11 @@
 
 namespace App\Services\Interfaces;
 
-use App\Services\Interfaces\IBaseCartService;
+use App\Services\package\ICartPackage;
 
-interface ICartService extends IBaseCartService
+interface ICartService extends IBaseService
 {
-    public function updateQtyById($id, $qty): void;
+    public function addCart(ICartPackage $cartPackage, ICartItemService $cartItemService);
+    public function getCartsByUserId(int $id);
 
-    public function removeItemById($id): void;
-
-    public function updateColorById($id, $data);
 }

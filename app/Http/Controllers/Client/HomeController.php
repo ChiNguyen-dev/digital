@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Client;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
 use App\Helpers\CategoryRecursive;
-use App\Traits\HandleCategoryTrait;
 use App\Http\Controllers\Controller;
 use App\Services\Interfaces\IProductService;
 use App\Services\Interfaces\ISliderService;
+use App\Traits\HandleCategoryTrait;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -20,10 +20,11 @@ class HomeController extends Controller
     private CategoryRecursive $categoryRecursive;
 
     public function __construct(
-        ISliderService $sliderService,
-        IProductService $productService,
-        CategoryRecursive   $categoryRecursive
-    ) {
+        ISliderService    $sliderService,
+        IProductService   $productService,
+        CategoryRecursive $categoryRecursive
+    )
+    {
         $this->sliderService = $sliderService;
         $this->productService = $productService;
         $this->categoryRecursive = $categoryRecursive;
@@ -31,6 +32,7 @@ class HomeController extends Controller
 
     public function index()
     {
+
         $this->setDataCateTrait(app('shared')->get('categories'));
         ['apple-watch' => $appleWatchIds, 'macbook' => $macbookIds, 'iphone' => $iphoneIds]
             = $this->getIdBySlug('apple-watch', 'macbook', 'iphone');

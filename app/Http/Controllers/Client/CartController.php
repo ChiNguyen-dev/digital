@@ -2,36 +2,45 @@
 
 namespace App\Http\Controllers\Client;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Controllers\Controller;
 use App\Helpers\CategoryRecursive;
+use App\Http\Controllers\Controller;
+use App\Services\Interfaces\ICartItemService;
 use App\Services\Interfaces\ICartService;
 use App\Services\Interfaces\IProductService;
+use App\Services\package\ICartPackage;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
     private CategoryRecursive $categoryRecursive;
-    private ICartService $cartService;
     private IProductService $productService;
+    private ICartPackage $cartPackage;
+    private ICartService $cartService;
+    private ICartItemService $cartItemService;
 
     public function __construct(
         CategoryRecursive $categoryRecursive,
-        IProductService $productService,
-        ICartService $cartService
-    ) {
+        IProductService   $productService,
+        ICartService      $cartService,
+        ICartPackage      $cartPackage,
+        ICartItemService  $cartItemService
+    )
+    {
         $this->categoryRecursive = $categoryRecursive;
         $this->productService = $productService;
         $this->cartService = $cartService;
+        $this->cartPackage = $cartPackage;
+        $this->cartItemService = $cartItemService;
     }
 
     public function index()
     {
-        $count = $this->cartService->count();
-        $total = $this->cartService->total();
-        $shopping = $this->cartService->getCarts();
+        dd($this->cartService->getCartsByUserId(6));
+        $carts = $this->cartPackage->getCarts();
         ['megaMenuHeader' => $megaMenuHeader, 'menuResponse' => $menuResponse]
             = $this->categoryRecursive->menu('megaMenuHeader', 'menuResponse');
         return
@@ -39,9 +48,7 @@ class CartController extends Controller
                 'client.carts.index',
                 compact(
                     'megaMenuHeader',
-                    'count',
-                    'total',
-                    'shopping',
+                    'carts',
                     'menuResponse',
                 )
             );
@@ -51,19 +58,21 @@ class CartController extends Controller
     {
         try {
             $product = $this->productService->find($id);
-            $shopping = $this->cartService->addToCart([
+            $shopping = $this->cartPackage->addToCart([
                 'id' => $product->id,
                 'name' => $product->name,
                 'qty' => 1,
                 'price' => $product->price,
                 'options' => ['image' => $product->feature_image_path, 'color' => $request->color_id]
             ]);
-            $count = $this->cartService->count();
+            $count = $this->cartPackage->count();
+            $isLogin = Auth::guard("client")->check();
+            if ($isLogin) $this->cartService->addCart($this->cartPackage, $this->cartItemService);
             return response()->json([
                 'quantity' => $count,
                 'data' => $shopping,
-                'message' => 'ADD TO CARD SUCCESSFULLY',
-            ], 200);
+                'isLogin' => $isLogin,
+            ], 201);
         } catch (\Exception $exception) {
             Log::error('message:' . $exception->getMessage() . ' Line: ' . $exception->getLine());
             return response()->json([
@@ -75,16 +84,16 @@ class CartController extends Controller
 
     public function delete(): RedirectResponse
     {
-        $this->cartService->destroy();
+        $this->cartPackage->destroy();
         return redirect()->route('client.home');
     }
 
     public function updateQty(Request $request, $id): JsonResponse
     {
         try {
-            $this->cartService->updateQtyById($id, $request->qty);
-            $count = $this->cartService->count();
-            $total = $this->cartService->total();
+            $this->cartPackage->updateQtyById($id, $request->qty);
+            $count = $this->cartPackage->count();
+            $total = $this->cartPackage->total();
             return response()->json([
                 'total' => number_format($total, 0, ',', '.') . 'đ',
                 'qty' => $count,
@@ -101,9 +110,9 @@ class CartController extends Controller
     public function deleteItem($id): JsonResponse
     {
         try {
-            $this->cartService->removeItemById($id);
-            $count = $this->cartService->count();
-            $total = $this->cartService->total();
+            $this->cartPackage->removeItemById($id);
+            $count = $this->cartPackage->count();
+            $total = $this->cartPackage->total();
             return response()->json([
                 'total' => number_format($total, 0, ',', '.') . 'đ',
                 'qty' => $count,
@@ -120,10 +129,10 @@ class CartController extends Controller
     public function updateColor(Request $request, $id): JsonResponse
     {
         try {
-            $cart = $this->cartService->getCartByID($id);
-            $shopping = $this->cartService->updateColorById($id, ['options' => $cart->options->merge(['color' => $request->id])]);
+            $cart = $this->cartPackage->getCartByID($id);
+            $shopping = $this->cartPackage->updateColorById($id, ['options' => $cart->options->merge(['color' => $request->id])]);
             return response()->json([
-                'message' => 'Uploaded successfully'
+                'message' => 'Update successfully'
             ], 200);
         } catch (\Exception $exception) {
             Log::error('message: ' . $exception->getMessage() . ' line: ' . $exception->getLine());

@@ -2,30 +2,30 @@
 
 namespace App\Http\Controllers\Client;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ConfirmOrder;
-use App\Http\Requests\OrderRequest;
 use App\Http\Controllers\Controller;
-use App\Services\Interfaces\ICartService;
+use App\Mail\ConfirmOrder;
 use App\Services\Interfaces\ICustomerService;
 use App\Services\Interfaces\IOrderService;
 use App\Services\Interfaces\IProDisWardService;
+use App\Services\package\ICartPackage;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
     private ICustomerService $customerService;
     private IOrderService $orderService;
-    private ICartService $cartService;
+    private ICartPackage $cartService;
     private IProDisWardService $proDisWardService;
 
     public function __construct(
-        ICartService $cartService,
+        ICartPackage       $cartService,
         IProDisWardService $proDisWardService,
-        ICustomerService $customerService,
-        IOrderService $orderService
+        ICustomerService   $customerService,
+        IOrderService      $orderService
     ) {
         $this->proDisWardService = $proDisWardService;
         $this->cartService = $cartService;
@@ -33,8 +33,9 @@ class OrderController extends Controller
         $this->orderService = $orderService;
     }
 
-    public function store(OrderRequest $request)
+    public function store(Request $request)
     {
+        dd($request->all());
         try {
             DB::beginTransaction();
             $province = $this->proDisWardService->getProvinceByMatp($request->province);
