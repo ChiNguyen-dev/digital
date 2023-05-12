@@ -6,10 +6,13 @@ function addToCart(event) {
     const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
         type: "POST",
-        headers: { "X-CSRF-TOKEN": token },
+        headers: {"X-CSRF-TOKEN": token},
         url: url,
-        data: { color_id: color },
-        success: (response) => (window.location.href = urlCart),
+        data: {color_id: color},
+        success: (response) => {
+            $(".header-cart .num-cart").text(response.quantity);
+            if (response.isLogin) (window.location.href = urlCart)
+        },
         error: (xhr, status, thrownError) => console.log(status, thrownError),
     });
 }
@@ -20,7 +23,7 @@ function deleteItem() {
     const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
         type: "POST",
-        headers: { "X-CSRF-TOKEN": token },
+        headers: {"X-CSRF-TOKEN": token},
         url: url,
         success: (response) => {
             that.parent().parent().remove();
@@ -40,11 +43,11 @@ function deleteItem() {
 function updateQuantity() {
     const qty = $(this).val();
     const url = $(this).data("url");
-    const data = { qty: qty };
+    const data = {qty: qty};
     const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
         type: "POST",
-        headers: { "X-CSRF-TOKEN": token },
+        headers: {"X-CSRF-TOKEN": token},
         url: url,
         data: data,
         success: (response) => {
@@ -57,11 +60,11 @@ function updateQuantity() {
 
 function updateColor() {
     const url = $(this).data("url");
-    const data = { id: $(this).val() };
+    const data = {id: $(this).val()};
     const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
         type: "POST",
-        headers: { "X-CSRF-TOKEN": token },
+        headers: {"X-CSRF-TOKEN": token},
         url: url,
         data: data,
         success: (response) => console.log(response),

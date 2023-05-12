@@ -27,9 +27,7 @@ class OrderRequest extends FormRequest
             'name' => 'bail|required',
             'email' => 'bail|required',
             'phone' => 'bail|required',
-            'province' => 'bail|required',
-            'district' => 'bail|required',
-            'ward' => 'bail|required',
+            'address' => 'bail|required',
         ];
     }
 
@@ -39,9 +37,7 @@ class OrderRequest extends FormRequest
             'name.required' => 'Họ tên không được trống',
             'email.required' => 'Email không được trống',
             'phone.required' => 'Số điện thoại không được trống',
-            'province.required' => 'Vui lòng chọn tỉnh, thành phố',
-            'district.required' => 'Vui lòng chọn quận, huyện',
-            'ward.required' => 'Vui lòng chọn phường, xã',
+            'address.required' => 'Vui lòng chọn địa chỉ mua hàng',
         ];
     }
 }

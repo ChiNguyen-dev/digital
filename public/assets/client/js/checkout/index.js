@@ -9,8 +9,7 @@ function handleChange() {
         data: { id: id, key: key },
         url: url,
         success: (response) => {
-            console.log(response);
-            if (key == "province") {
+            if (key === "province") {
                 const district = $("#district");
                 district.attr("disabled", false);
                 response.data.map((value, index) =>
@@ -19,7 +18,7 @@ function handleChange() {
                     )
                 );
             }
-            if (key == "district") {
+            if (key === "district") {
                 const ward = $("#ward");
                 ward.attr("disabled", false);
                 response.data.map((value, index) =>

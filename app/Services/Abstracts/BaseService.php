@@ -11,7 +11,7 @@ abstract class BaseService implements IBaseService
 {
     protected $model;
 
-    protected $column = [];
+    protected array $column = [];
 
     public function __construct()
     {

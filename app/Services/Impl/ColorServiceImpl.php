@@ -9,7 +9,7 @@ use App\Services\Interfaces\IColorService;
 class ColorServiceImpl extends BaseService implements IColorService
 {
 
-    public function getModel()
+    public function getModel(): string
     {
         return Color::class;
     }

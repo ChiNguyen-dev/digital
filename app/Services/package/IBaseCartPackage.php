@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Interfaces;
+namespace App\Services\package;
 
-interface IBaseCartService
+interface IBaseCartPackage
 {
     public function addToCart($data);
 
-    public function getCarts();
+    public function getCarts(): array;
 
     public function getCartByID($id);
 
