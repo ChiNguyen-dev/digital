@@ -13,7 +13,7 @@
                         <div class="cart-title">
                             <h5>Giỏ hàng</h5>
                         </div>
-                        @if (!empty($carts['count']))
+                        @if (!empty($carts))
                             <table id="table-cart" class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -27,49 +27,46 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @php $index = 0; @endphp
-                                @if (!empty($carts['data']))
-                                    @foreach ($carts['data'] as $key => $item)
-                                        @php $index++ @endphp
-                                        <tr>
-                                            <th class="text-center col-stt" scope="row">{{ $index }}</th>
-                                            <td class="col-img col-img">
-                                                <img src="{{ $item->options->image }}" alt="">
-                                            </td>
-                                            <td class="col-name">
-                                                <a href="">{{ $item->name }}</a>
-                                            </td>
-                                            <td class="text-center col-qty">
-                                                <select class="qty_in_cart"
-                                                        data-url="{{ route('carts.updateQty', ['id' => $key]) }}">
-                                                    @for ($i = 1; $i <= 10; $i++)
-                                                        <option
-                                                            {{ $i == $item->qty ? 'selected' : '' }} value="{{ $i }}">
-                                                            {{ $i }}
-                                                        </option>
-                                                    @endfor
-                                                </select>
-                                            </td>
-                                            <td class="text-center">{{ number_format($item->price, 0, ',', '.') }}đ</td>
-                                            <td class="text-center">
-                                                @php $colors = \App\Models\Product::find($item->id)->colors; @endphp
-                                                <select class="color_in_cart"
-                                                        data-url="{{ route('carts.updateColor', ['id' => $key]) }}">
-                                                    @foreach ($colors as $color)
-                                                        <option
-                                                            {{ $color->id == $item->options->color ? 'selected' : '' }}
-                                                            value="{{ $color->id }}">{{ $color->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td class="text-center col-remove"
-                                                data-url="{{ route('carts.deleteItem', ['id' => $key]) }}">
-                                                <i class="fa-regular fa-trash-can"></i>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
+                                @php $total = 0; @endphp
+                                @foreach ($carts as $key => $item)
+                                    @php $total += $item->getOption('total'); @endphp
+                                    <tr>
+                                        <th class="text-center col-stt" scope="row">{{ $key + 1 }}</th>
+                                        <td class="col-img col-img">
+                                            <img src="{{ $item->getImage() }}" alt="">
+                                        </td>
+                                        <td class="col-name">
+                                            <a href="">{{ $item->getName() }}</a>
+                                        </td>
+                                        <td class="text-center col-qty">
+                                            <select class="qty_in_cart"
+                                                    data-url="{{ route('carts.updateQty', ['id' => $key]) }}">
+                                                @for ($i = 1; $i <= 10; $i++)
+                                                    <option
+                                                        {{ $i == $item->getQty() ? 'selected' : '' }} value="{{ $i }}">
+                                                        {{ $i }}
+                                                    </option>
+                                                @endfor
+                                            </select>
+                                        </td>
+                                        <td class="text-center">{{ number_format($item->getPrice(), 0, ',', '.') }}đ
+                                        </td>
+                                        <td class="text-center">
+                                            <select class="color_in_cart" data-url="{{ route('carts.updateColor', ['id' => $key]) }}">
+                                                @foreach ($item->getOption('colors') as $color)
+                                                    <option
+                                                        {{ $color->selected ? 'selected' : '' }}
+                                                        value="{{ $color->id }}">{{ $color->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td class="text-center col-remove"
+                                            data-url="{{ route('carts.deleteItem', ['id' => $key]) }}">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         @endif
@@ -84,7 +81,7 @@
                         </div>
                     </div>
                 </div>
-                @if (!empty($carts['count']))
+                @if (!empty($carts))
                     <div class="col-md-12">
                         <div class="d-flex justify-content-between pb-4 pt-3">
                             <div class="remind">
@@ -100,7 +97,7 @@
                             </div>
                             <div class="order">
                                 <div class="total">
-                                    Tổng thanh toán: <span>{{ number_format($carts['total'], 0, ',', '.') }}đ</span>
+                                    Tổng thanh toán: <span>{{ number_format($total, 0, ',', '.') }}đ</span>
                                 </div>
                                 <a href="{{ route('checkout.index') }}" class="btn btn-buy">Thanh toán</a>
                             </div>

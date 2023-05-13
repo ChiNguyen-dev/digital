@@ -2,7 +2,7 @@
 
 namespace App\Services\Impl;
 
-use App\Dtos\cart\CartDto;
+use App\Mappers\CartMapper;
 use App\Models\Cart;
 use App\Services\Abstracts\BaseService;
 use App\Services\Interfaces\ICartItemService;
@@ -50,9 +50,20 @@ class CartServiceImpl extends BaseService implements ICartService
     public function getCartsByUserId(int $id)
     {
         $cartByUser = $this->model->where('customer_id', $id)->first();
-        if ($cartByUser) {
-            return $cartByUser->cartItems;
+        if (!empty($cartByUser)) {
+            return $cartByUser->cartItems->map(function ($item, $index) use ($cartByUser) {
+                return CartMapper::toCartItemDTO($item, $cartByUser->total);
+            });
         }
-        return null;
+        return $cartByUser;
+    }
+
+    public function destroy(int $userId)
+    {
+        $cart = $this->model->where('customer_id', $userId)->first();
+        if (!empty($cart)) {
+            $cart->cartItems()->delete();
+            $cart->delete();
+        }
     }
 }

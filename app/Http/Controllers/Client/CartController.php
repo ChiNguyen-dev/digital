@@ -39,8 +39,8 @@ class CartController extends Controller
 
     public function index()
     {
-        dd($this->cartService->getCartsByUserId(6));
-        $carts = $this->cartPackage->getCarts();
+        $id = Auth::guard('client')->id();
+        $carts = $this->cartService->getCartsByUserId($id);
         ['megaMenuHeader' => $megaMenuHeader, 'menuResponse' => $menuResponse]
             = $this->categoryRecursive->menu('megaMenuHeader', 'menuResponse');
         return
@@ -84,7 +84,7 @@ class CartController extends Controller
 
     public function delete(): RedirectResponse
     {
-        $this->cartPackage->destroy();
+        $this->cartService->destroy(Auth::guard('client')->id());
         return redirect()->route('client.home');
     }
 
