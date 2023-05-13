@@ -7,7 +7,7 @@ use App\Models\CartItem;
 
 class CartMapper
 {
-    public static function toCartItemDTO(CartItem $cartItem, int $total): CartItemDto
+    public static function toCartItemDTO(CartItem $cartItem): CartItemDto
     {
         $cartItemDTO = new CartItemDto();
         $product = $cartItem->product;

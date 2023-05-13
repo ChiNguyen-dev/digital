@@ -8,8 +8,8 @@ interface ICartService extends IBaseService
 {
     public function addCart(ICartPackage $cartPackage, ICartItemService $cartItemService);
 
-    public function getCartsByUserId(int $id);
+    public function getCartsByUserId();
 
-    public function destroy(int $userId);
+    public function destroy():void;
 
 }

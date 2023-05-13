@@ -24,18 +24,19 @@ class CartServiceImpl extends BaseService implements ICartService
         try {
             DB::beginTransaction();
             $carts = $cartPackage->getCarts();
-            session(['qty' => $carts['count']]);
+            $customer = Auth::guard('client')->user();
             if (!$carts['data']->isEmpty()) {
-                $cart = $this->model->create([
-                    'customer_id' => Auth::guard('client')->id(),
-                    'total' => $carts['total']
-                ]);
-                foreach ($carts['data'] as $item) {
-                    $cart->cartItems()->create([
-                        'product_id' => $item->id,
-                        'color_id' => $item->options['color'],
-                        'qty' => $item->qty
+                $cartByCustomer = $customer->cart;
+                if (!empty($cartByCustomer)) {
+                    $cartByCustomer->update(['total' => $cartByCustomer->total + $carts['total']]);
+                    $cartItemService->addCartItem($cartByCustomer, $carts['data']);
+                } else {
+                    session(['qty' => $carts['count']]);
+                    $cart = $this->model->create([
+                        'customer_id' => $customer->id,
+                        'total' => $carts['total']
                     ]);
+                    $cartItemService->addCartItem($cart, $carts['data']);
                 }
             }
             DB::commit();
@@ -47,23 +48,25 @@ class CartServiceImpl extends BaseService implements ICartService
     }
 
 
-    public function getCartsByUserId(int $id)
+    public function getCartsByUserId()
     {
-        $cartByUser = $this->model->where('customer_id', $id)->first();
-        if (!empty($cartByUser)) {
-            return $cartByUser->cartItems->map(function ($item, $index) use ($cartByUser) {
-                return CartMapper::toCartItemDTO($item, $cartByUser->total);
+        $customer = Auth::guard('client')->user();
+        $cartByCustomer = $customer->cart;
+        if (!empty($cartByCustomer)) {
+            return $cartByCustomer->cartItems->map(function ($item, $index) use ($cartByCustomer) {
+                return CartMapper::toCartItemDTO($item);
             });
         }
-        return $cartByUser;
     }
 
-    public function destroy(int $userId)
+    public function destroy(): void
     {
-        $cart = $this->model->where('customer_id', $userId)->first();
-        if (!empty($cart)) {
-            $cart->cartItems()->delete();
-            $cart->delete();
+        $customer = Auth::guard('client')->user();
+        $cartByCustomer = $customer->cart;
+        if (!empty($cartByCustomer)) {
+            session()->forget('qty');
+            $cartByCustomer->cartItems()->delete();
+            $cartByCustomer->delete();
         }
     }
 }
