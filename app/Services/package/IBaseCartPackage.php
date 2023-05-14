@@ -2,9 +2,11 @@
 
 namespace App\Services\package;
 
+use App\Models\Product;
+
 interface IBaseCartPackage
 {
-    public function addToCart($data);
+    public function addToCart(Product $product, array $options);
 
     public function getCarts(): array;
 

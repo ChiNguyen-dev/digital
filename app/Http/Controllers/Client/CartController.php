@@ -39,7 +39,8 @@ class CartController extends Controller
 
     public function index()
     {
-        $carts = $this->cartService->getCartsByUserId();
+        $user = Auth::guard('client')->user();
+        $carts = $this->cartService->getCartsByUser($user);
         ['megaMenuHeader' => $megaMenuHeader, 'menuResponse' => $menuResponse]
             = $this->categoryRecursive->menu('megaMenuHeader', 'menuResponse');
         return
@@ -56,34 +57,34 @@ class CartController extends Controller
     public function add(Request $request, $id): JsonResponse
     {
         try {
-            $product = $this->productService->find($id);
-            $shopping = $this->cartPackage->addToCart([
-                'id' => $product->id,
-                'name' => $product->name,
-                'qty' => 1,
-                'price' => $product->price,
-                'options' => ['image' => $product->feature_image_path, 'color' => $request->color_id]
-            ]);
-            $count = $this->cartPackage->count();
             $isLogin = Auth::guard("client")->check();
-            if ($isLogin) $this->cartService->addCart($this->cartPackage, $this->cartItemService);
+            $product = $this->productService->find($id);
+            $options = ['color' => $request->color_id];
+            if ($isLogin) {
+                $total = 0;
+                $cartByUser = $this->cartService->addToCart($total);
+                $this->cartItemService->addCartItem($cartByUser, $product, $options);
+            } else {
+                $this->cartPackage->addToCart($product, $options);
+                session()->put('qty', $this->cartPackage->count());
+            }
+            $quantity = session('qty');
             return response()->json([
-                'quantity' => $count,
-                'data' => $shopping,
+                'quantity' => $quantity,
                 'isLogin' => $isLogin,
             ], 201);
         } catch (\Exception $exception) {
             Log::error('message:' . $exception->getMessage() . ' Line: ' . $exception->getLine());
             return response()->json([
-                'code' => 500,
-                'message' => 'ADD TO CARD ERROR',
+                'message' => 'Add to cart error.',
             ], 500);
         }
     }
 
     public function delete(): RedirectResponse
     {
-        $this->cartService->destroy();
+        $user = Auth::guard('client')->user();
+        $this->cartService->destroy($user);
         return redirect()->route('client.home');
     }
 

@@ -48,7 +48,7 @@ class ProductServiceImpl extends BaseService implements IProductService
         }
     }
 
-    public function updateProductById($id, object $dataRequest): object
+    public function updateProductById($id, object $dataRequest)
     {
         try {
             DB::beginTransaction();
@@ -151,4 +151,8 @@ class ProductServiceImpl extends BaseService implements IProductService
         return $product->colors()->sync($id);
     }
 
+    public function getProductByIds(array $ids)
+    {
+        return $this->model->whereIn('id', $ids)->get(['id', 'price']);
+    }
 }

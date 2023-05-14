@@ -4,10 +4,9 @@ namespace App\Services\Impl;
 
 use App\Mappers\CartMapper;
 use App\Models\Cart;
+use App\Models\Customer;
 use App\Services\Abstracts\BaseService;
-use App\Services\Interfaces\ICartItemService;
 use App\Services\Interfaces\ICartService;
-use App\Services\package\ICartPackage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -19,38 +18,29 @@ class CartServiceImpl extends BaseService implements ICartService
         return Cart::class;
     }
 
-    public function addCart(ICartPackage $cartPackage, ICartItemService $cartItemService)
+    public function addToCart(int $total = 0)
     {
         try {
             DB::beginTransaction();
-            $carts = $cartPackage->getCarts();
-            $customer = Auth::guard('client')->user();
-            if (!$carts['data']->isEmpty()) {
-                $cartByCustomer = $customer->cart;
-                if (!empty($cartByCustomer)) {
-                    $cartByCustomer->update(['total' => $cartByCustomer->total + $carts['total']]);
-                    $cartItemService->addCartItem($cartByCustomer, $carts['data']);
-                } else {
-                    session(['qty' => $carts['count']]);
-                    $cart = $this->model->create([
-                        'customer_id' => $customer->id,
-                        'total' => $carts['total']
-                    ]);
-                    $cartItemService->addCartItem($cart, $carts['data']);
-                }
-            }
+            $userId = Auth::guard('client')->id();
+            $cart = $this->model->updateOrCreate(
+                ['customer_id' => $userId],
+                [
+                    'customer_id' => $userId,
+                    'total' => $total
+                ]);
             DB::commit();
-            $cartPackage->destroy();
+            return $cart;
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('message:' . $exception->getMessage() . ' Line: ' . $exception->getLine());
+            return null;
         }
     }
 
 
-    public function getCartsByUserId()
+    public function getCartsByUser(Customer $customer)
     {
-        $customer = Auth::guard('client')->user();
         $cartByCustomer = $customer->cart;
         if (!empty($cartByCustomer)) {
             return $cartByCustomer->cartItems->map(function ($item, $index) use ($cartByCustomer) {
@@ -59,14 +49,17 @@ class CartServiceImpl extends BaseService implements ICartService
         }
     }
 
-    public function destroy(): void
+    public function destroy(Customer $customer): void
     {
-        $customer = Auth::guard('client')->user();
         $cartByCustomer = $customer->cart;
         if (!empty($cartByCustomer)) {
             session()->forget('qty');
             $cartByCustomer->cartItems()->delete();
             $cartByCustomer->delete();
         }
+    }
+
+    public function updateTotal(Customer $customer): void
+    {
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Services\package;
 
+use App\Models\Product;
+
 abstract class BaseCartPackage implements IBaseCartPackage
 {
     protected $instance;
@@ -18,9 +20,15 @@ abstract class BaseCartPackage implements IBaseCartPackage
         $this->instance = $this->getInstance();
     }
 
-    public function addToCart($data)
+    public function addToCart(Product $product, array $options)
     {
-        $this->instance->add($data);
+        $this->instance->add([
+            'id' => $product->id,
+            'name' => $product->name,
+            'qty' => 1,
+            'price' => $product->price,
+            'options' => ['image' => $product->feature_image_path, ...$options]
+        ]);
         return $this->instance->content();
     }
 

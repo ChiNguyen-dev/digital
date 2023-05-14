@@ -16,7 +16,7 @@ interface IProductService extends IBaseService
 
     public function addTagsToProduct(Product $product, array $id);
 
-    public function updateProductById($id, object $dataRequest): object;
+    public function updateProductById($id, object $dataRequest);
 
     public function updateTagsToProduct(Product $product, array $id);
 
@@ -35,4 +35,6 @@ interface IProductService extends IBaseService
     public function orderByStatus($type = 'desc');
 
     public function updateStatus($ids, $option);
+
+    public function getProductByIds(array $ids);
 }

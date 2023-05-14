@@ -2,14 +2,16 @@
 
 namespace App\Services\Interfaces;
 
-use App\Services\package\ICartPackage;
+use App\Models\Customer;
 
 interface ICartService extends IBaseService
 {
-    public function addCart(ICartPackage $cartPackage, ICartItemService $cartItemService);
+    public function addToCart(int $total = 0);
 
-    public function getCartsByUserId();
+    public function getCartsByUser(Customer $customer);
 
-    public function destroy():void;
+    public function destroy(Customer $customer): void;
+
+    public function updateTotal(Customer $customer): void;
 
 }
