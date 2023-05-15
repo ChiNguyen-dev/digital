@@ -30,8 +30,6 @@ use App\Services\Interfaces\IRoleService;
 use App\Services\Interfaces\ISliderService;
 use App\Services\Interfaces\ITagService;
 use App\Services\Interfaces\IUserService;
-use App\Services\package\CartPackageImpl;
-use App\Services\package\ICartPackage;
 use App\Services\SharingService;
 use Illuminate\Support\ServiceProvider;
 
@@ -57,12 +55,6 @@ class AppServiceProvider extends ServiceProvider
          * Dependency Injection Category
          */
         $this->app->singleton(ICategoryService::class, CategoryServiceImpl::class);
-
-        /**
-         * Dependency Injection Cart
-         */
-        $this->app->singleton(ICartPackage::class, CartPackageImpl::class);
-
         /**
          * Dependency Injection Province and District and Ward
          */

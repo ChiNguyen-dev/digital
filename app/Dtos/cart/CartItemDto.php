@@ -92,5 +92,4 @@ class CartItemDto extends AbstractDTO
         $this->option = $option;
     }
 
-
 }

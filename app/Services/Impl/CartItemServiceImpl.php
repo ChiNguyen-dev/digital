@@ -2,6 +2,7 @@
 
 namespace App\Services\Impl;
 
+use App\Dtos\cart\CartItemFormDTO;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Customer;
@@ -16,21 +17,6 @@ class CartItemServiceImpl extends BaseService implements ICartItemService
         return CartItem::class;
     }
 
-    public function addCartItem(Cart $cart, Product $product, array $option)
-    {
-        $data = ['cart_id' => $cart->id, 'product_id' => $product->id, 'color_id' => $option['color']];
-        $cartItem = $this->model->where('cart_id', $cart->id)
-            ->where('product_id', $product->id)
-            ->where('color_id', $option['color'])->first();
-        if (empty($cartItem)) {
-            $this->model->create(array_merge($data, ['qty' => 1]));
-        } else {
-            $cartItem->update(array_merge($option, ['qty' => $cartItem->qty + 1]));
-        }
-        $totalAmount = $this->model->where('cart_id', $cart->id)->sum('qty');
-        session(['qty' => $totalAmount]);
-    }
-
     public function getTotalAmountItem(Customer $customer): int
     {
         $totalAmount = 0;
@@ -39,5 +25,23 @@ class CartItemServiceImpl extends BaseService implements ICartItemService
             $totalAmount = $this->model->where('cart_id', $cartByUser->id)->sum('qty');
         }
         return $totalAmount;
+    }
+    public function addToCartItem(CartItemFormDTO $cartItemFormDTO)
+    {
+        $condition = [
+            'cart_id' => $cartItemFormDTO->getCartId(),
+            'product_id' => $cartItemFormDTO->getProductId(),
+            'color_id' => $cartItemFormDTO->getColorId()
+        ];
+        $cartItem = $this->model->where('cart_id', $cartItemFormDTO->getCartId())
+            ->where('product_id', $cartItemFormDTO->getProductId())
+            ->where('color_id', $cartItemFormDTO->getColorId())->first();
+        $quantity = empty($cartItem) ? $cartItemFormDTO->getQty() : $cartItem->qty + $cartItemFormDTO->getQty();
+        $this->model->updateOrCreate(
+            $condition,
+            array_merge($condition, ['qty' => $quantity])
+        );
+        $totalAmount = $this->model->where('cart_id', $cartItemFormDTO->getCartId())->sum('qty');
+        session(['qty' => $totalAmount]);
     }
 }

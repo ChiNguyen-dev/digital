@@ -2,13 +2,14 @@
 
 namespace App\Services\Interfaces;
 
-use App\Models\Cart;
+use App\Dtos\cart\CartItemFormDTO;
 use App\Models\Customer;
-use App\Models\Product;
 
 interface ICartItemService extends IBaseService
 {
-    public function addCartItem(Cart $cart, Product $product, array $option);
+    public function addToCartItem(CartItemFormDTO $cartItemFormDTO);
 
     public function getTotalAmountItem(Customer $customer);
+
+
 }

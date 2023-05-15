@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Authentication\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientLoginRequest;
 use App\Services\Interfaces\ICartItemService;
+use App\Services\Interfaces\ICartService;
 use App\Services\Interfaces\ICustomerService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,11 +15,13 @@ class AuthenController extends Controller
 {
     private ICustomerService $customerService;
     private ICartItemService $cartItemService;
+    private ICartService $cartService;
 
-    public function __construct(ICustomerService $customerService, ICartItemService $cartItemService)
+    public function __construct(ICustomerService $customerService, ICartItemService $cartItemService, ICartService $cartService)
     {
         $this->customerService = $customerService;
         $this->cartItemService = $cartItemService;
+        $this->cartService = $cartService;
     }
 
     public function index()
@@ -31,6 +34,7 @@ class AuthenController extends Controller
         if (Auth::guard('client')->attempt($request->only(['email', 'password']))) {
             $user = Auth::guard('client')->user();
             $totalAmountCartItem = $this->cartItemService->getTotalAmountItem($user);
+            $this->cartService->checkCartAfterAuthenticate($this->cartItemService);
             if ($totalAmountCartItem != 0) session()->put('qty', $totalAmountCartItem);
             $intendedUrl = session('intended_url');
             session()->forget('intended_url');
