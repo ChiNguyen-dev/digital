@@ -26,14 +26,15 @@ class CartServiceImpl extends BaseService implements ICartService
     {
         try {
             DB::beginTransaction();
-            $userId = Auth::guard('client')->id();
-            $cart = $this->model->updateOrCreate(
-                ['customer_id' => $userId],
-                ['customer_id' => $userId, 'total' => 0]
+            $user = Auth::guard('client')->user();
+            $cart = $this->model->firstOrCreate(
+                ['customer_id' => $user->id],
+                ['customer_id' => $user->id, 'total' => 0]
             );
             $cartItemService->addToCartItem(
                 new CartItemFormDTO($cart->id, $product->id, $options['color_id'], 1)
             );
+            $this->updateTotal($user);
             DB::commit();
             return $cart;
         } catch (\Exception $exception) {
@@ -42,7 +43,6 @@ class CartServiceImpl extends BaseService implements ICartService
             return null;
         }
     }
-
 
     public function getCartsByUser(Customer $customer)
     {
@@ -66,17 +66,33 @@ class CartServiceImpl extends BaseService implements ICartService
 
     public function updateTotal(Customer $customer): void
     {
+        $total = 0;
+        $totalAmount = 0;
+        $cart = $customer->cart;
+        $cartItems = $cart->cartItems;
+        if (!empty($cart) && !empty($cartItems)) {
+            foreach ($cartItems as $cartItem) {
+                $product = $cartItem->product;
+                $quantity = $cartItem->qty;
+                $total += $product->price * $quantity;
+                $totalAmount += $quantity;
+            }
+        }
+        if ($total != 0 && $totalAmount != 0) {
+            $cart->update(['total' => $total]);
+            session(['qty' => $totalAmount]);
+        }
     }
 
     public function checkCartAfterAuthenticate(ICartItemService $cartItemService)
     {
         try {
             $carts = ShoppingCart::getAll();
+            $user = Auth::guard('client')->user();
             if (!$carts->isEmpty()) {
-                $userId = Auth::guard('client')->id();
-                $cart = $this->model->updateOrCreate(
-                    ['customer_id' => $userId],
-                    ['customer_id' => $userId, 'total' => 0]
+                $cart = $this->model->firstOrCreate(
+                    ['customer_id' => $user->id],
+                    ['customer_id' => $user->id, 'total' => 0]
                 );
                 $carts->each(function ($item) use ($cart, $cartItemService) {
                     $cartItemService->addToCartItem(
@@ -85,6 +101,7 @@ class CartServiceImpl extends BaseService implements ICartService
                 });
                 ShoppingCart::destroy();
             }
+            $this->updateTotal($user);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('message:' . $exception->getMessage() . ' Line: ' . $exception->getLine());

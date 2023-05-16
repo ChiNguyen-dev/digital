@@ -36,7 +36,9 @@
                                             <img src="{{ $item->getImage() }}" alt="">
                                         </td>
                                         <td class="col-name">
-                                            <a href="">{{ $item->getName() }}</a>
+                                            <a href="{{ route('products.detail', ['slug' => \Str::slug($item->getName())]) }}">
+                                                {{ $item->getName() }}
+                                            </a>
                                         </td>
                                         <td class="text-center col-qty">
                                             <select class="qty_in_cart"
@@ -52,7 +54,7 @@
                                         <td class="text-center">{{ number_format($item->getPrice(), 0, ',', '.') }}đ
                                         </td>
                                         <td class="text-center">
-                                            <select class="color_in_cart" data-url="{{ route('carts.updateColor', ['id' => $key]) }}">
+                                            <select class="color_in_cart" data-url="{{ route('carts.updateColor', ['id' => $item->getId()]) }}">
                                                 @foreach ($item->getOption('colors') as $color)
                                                     <option
                                                         {{ $color->selected ? 'selected' : '' }}
@@ -62,7 +64,7 @@
                                             </select>
                                         </td>
                                         <td class="text-center col-remove"
-                                            data-url="{{ route('carts.deleteItem', ['id' => $key]) }}">
+                                            data-url="{{ route('carts.deleteItem', ['id' => $item->getId()]) }}">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </td>
                                     </tr>

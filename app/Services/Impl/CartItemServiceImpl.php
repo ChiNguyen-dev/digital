@@ -9,6 +9,8 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Services\Abstracts\BaseService;
 use App\Services\Interfaces\ICartItemService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CartItemServiceImpl extends BaseService implements ICartItemService
 {
@@ -26,22 +28,28 @@ class CartItemServiceImpl extends BaseService implements ICartItemService
         }
         return $totalAmount;
     }
+
     public function addToCartItem(CartItemFormDTO $cartItemFormDTO)
     {
-        $condition = [
-            'cart_id' => $cartItemFormDTO->getCartId(),
-            'product_id' => $cartItemFormDTO->getProductId(),
-            'color_id' => $cartItemFormDTO->getColorId()
-        ];
-        $cartItem = $this->model->where('cart_id', $cartItemFormDTO->getCartId())
-            ->where('product_id', $cartItemFormDTO->getProductId())
-            ->where('color_id', $cartItemFormDTO->getColorId())->first();
-        $quantity = empty($cartItem) ? $cartItemFormDTO->getQty() : $cartItem->qty + $cartItemFormDTO->getQty();
-        $this->model->updateOrCreate(
-            $condition,
-            array_merge($condition, ['qty' => $quantity])
-        );
-        $totalAmount = $this->model->where('cart_id', $cartItemFormDTO->getCartId())->sum('qty');
-        session(['qty' => $totalAmount]);
+        try {
+            DB::beginTransaction();
+            $condition = [
+                'cart_id' => $cartItemFormDTO->getCartId(),
+                'product_id' => $cartItemFormDTO->getProductId(),
+                'color_id' => $cartItemFormDTO->getColorId()
+            ];
+            $cartItem = $this->model->where('cart_id', $cartItemFormDTO->getCartId())
+                ->where('product_id', $cartItemFormDTO->getProductId())
+                ->where('color_id', $cartItemFormDTO->getColorId())->first();
+            $quantity = empty($cartItem) ? $cartItemFormDTO->getQty() : $cartItem->qty + $cartItemFormDTO->getQty();
+            $this->model->updateOrCreate(
+                $condition,
+                array_merge($condition, ['qty' => $quantity])
+            );
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('message: ' . $exception->getMessage() . ' Line: ' . $exception->getLine());
+        }
     }
 }

@@ -32,7 +32,6 @@ class HomeController extends Controller
 
     public function index()
     {
-
         $this->setDataCateTrait(app('shared')->get('categories'));
         ['apple-watch' => $appleWatchIds, 'macbook' => $macbookIds, 'iphone' => $iphoneIds]
             = $this->getIdBySlug('apple-watch', 'macbook', 'iphone');

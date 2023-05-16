@@ -58,7 +58,7 @@ class CartController extends Controller
             $product = $this->productService->find($id);
             $options = $request->all();
             if ($isLogin) {
-                $this->cartService->addToCart($this->cartItemService,$product, $options);
+                $this->cartService->addToCart($this->cartItemService, $product, $options);
             } else {
                 ShoppingCart::addToCart($product, $options);
                 session()->put('qty', ShoppingCart::count());

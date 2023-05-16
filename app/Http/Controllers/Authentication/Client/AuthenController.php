@@ -32,10 +32,7 @@ class AuthenController extends Controller
     public function store(ClientLoginRequest $request): RedirectResponse
     {
         if (Auth::guard('client')->attempt($request->only(['email', 'password']))) {
-            $user = Auth::guard('client')->user();
-            $totalAmountCartItem = $this->cartItemService->getTotalAmountItem($user);
             $this->cartService->checkCartAfterAuthenticate($this->cartItemService);
-            if ($totalAmountCartItem != 0) session()->put('qty', $totalAmountCartItem);
             $intendedUrl = session('intended_url');
             session()->forget('intended_url');
             return redirect()->to($intendedUrl);
@@ -43,12 +40,12 @@ class AuthenController extends Controller
         return redirect()->back();
     }
 
-    public function register()
+    public function create()
     {
         return view('client.register');
     }
 
-    public function addCustommer(Request $request)
+    public function register(Request $request): RedirectResponse
     {
         $req = [
             'name' => $request->name,
@@ -63,10 +60,11 @@ class AuthenController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
+        $quantity = session('qty');
         Auth::guard('client')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        if (session()->has('qty')) session()->forget('qty');
+        if (!session()->has('qty')) session(['qty' => $quantity]);
         return redirect()->route('client.home');
     }
 }

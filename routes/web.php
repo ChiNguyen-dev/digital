@@ -33,11 +33,11 @@ Route::prefix('/')->group(function () {
     ]);
     Route::get('/register', [
         'as' => 'Client.register',
-        'uses' => 'Authentication\Client\AuthenController@register'
+        'uses' => 'Authentication\Client\AuthenController@create'
     ]);
     Route::post('/register', [
         'as' => 'Client.register',
-        'uses' => 'Authentication\Client\AuthenController@addCustommer'
+        'uses' => 'Authentication\Client\AuthenController@register'
     ]);
 
     /**
