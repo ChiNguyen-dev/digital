@@ -51,7 +51,7 @@ class CartController extends Controller
             );
     }
 
-    public function add(Request $request, $id): JsonResponse
+    public function store(Request $request, $id): JsonResponse
     {
         try {
             $isLogin = Auth::guard("client")->check();
@@ -76,37 +76,22 @@ class CartController extends Controller
         }
     }
 
-    public function delete(): RedirectResponse
+    public function destroy(): RedirectResponse
     {
         $user = Auth::guard('client')->user();
         $this->cartService->destroy($user);
         return redirect()->route('client.home');
     }
 
-    public function updateQty(Request $request, $id): JsonResponse
+    public function remove($id): JsonResponse
     {
         try {
-            ShoppingCart::updateQuantity($id, $request->qty);
-            $count = ShoppingCart::count();
-            $total = ShoppingCart::total();
-            return response()->json([
-                'total' => number_format($total, 0, ',', '.') . 'đ',
-                'qty' => $count,
-            ], 200);
-        } catch (\Exception $exception) {
-            Log::error('message: ' . $exception->getMessage() . ' line: ' . $exception->getLine());
-            return response()->json([
-                'message' => 'Updated failed'
-            ], 500);
-        }
-    }
-
-    public function deleteItem($id): JsonResponse
-    {
-        try {
-            ShoppingCart::destroy($id);
-            $count = ShoppingCart::count();
-            $total = ShoppingCart::total();
+            $this->cartItemService->delete($id);
+            $user = Auth::guard('client')->user();
+            $cart = $this->cartService->getCartsByUser($user);
+            $count = count($cart->getCartItems());
+            $total = $cart->getTotal();
+            session(['qty' => $count]);
             return response()->json([
                 'total' => number_format($total, 0, ',', '.') . 'đ',
                 'qty' => $count,
@@ -119,18 +104,40 @@ class CartController extends Controller
         }
     }
 
-    public function updateColor(Request $request, $id): JsonResponse
+    public function updateQuantity(Request $request, $id): JsonResponse
     {
         try {
-            $cart = ShoppingCart::findById($id);
-            ShoppingCart::update($id, ['options' => $cart->options->merge(['color' => $request->id])]);
+            $this->cartItemService->find($id)->update($request->all());
+            $user = Auth::guard('client')->user();
+            $this->cartService->updateTotal($user);
+            $cart = $this->cartService->getCartsByUser($user);
+            $count = count($cart->getCartItems());
+            $total = $cart->getTotal();
             return response()->json([
-                'message' => 'Update successfully'
-            ], 200);
+                'total' => number_format($total, 0, ',', '.') . 'đ',
+                'qty' => $count,
+            ]);
         } catch (\Exception $exception) {
             Log::error('message: ' . $exception->getMessage() . ' line: ' . $exception->getLine());
             return response()->json([
-                'statusText' => 'Updated Fail'
+                'message' => 'Updated failed'
+            ], 500);
+        }
+    }
+
+    public function updateColor(Request $request, $id): JsonResponse
+    {
+        try {
+            $cartItem = $this->cartItemService->find($id);
+            $cartItem->update($request->all());
+            return response()->json([
+                'data' => $cartItem,
+                'message' => 'Update successfully.'
+            ]);
+        } catch (\Exception $exception) {
+            Log::error('message: ' . $exception->getMessage() . ' line: ' . $exception->getLine());
+            return response()->json([
+                'message' => 'Update error.'
             ], 500);
         }
     }

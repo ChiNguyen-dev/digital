@@ -2,6 +2,7 @@
 
 namespace App\Services\Interfaces;
 
+use App\Dtos\Cart\CartDTO;
 use App\Models\Customer;
 use App\Models\Product;
 
@@ -9,7 +10,7 @@ interface ICartService extends IBaseService
 {
     public function addToCart(ICartItemService $cartItemService, Product $product, array $options);
 
-    public function getCartsByUser(Customer $customer);
+    public function getCartsByUser(Customer $customer): CartDTO;
 
     public function destroy(Customer $customer): void;
 

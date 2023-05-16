@@ -77,22 +77,22 @@ Route::prefix('/')->group(function () {
         ]);
         Route::post('/add/{id}', [
             'as' => 'carts.add',
-            'uses' => 'Client\CartController@add'
+            'uses' => 'Client\CartController@store'
         ]);
         Route::get('/delete', [
-            'as' => 'carts.delete',
-            'uses' => 'Client\CartController@delete',
+            'as' => 'carts.destroy',
+            'uses' => 'Client\CartController@destroy',
             'middleware' => 'isLogin'
         ]);
-        Route::post('/delete/{id}', [
-            'as' => 'carts.deleteItem',
-            'uses' => 'Client\CartController@deleteItem'
+        Route::delete('/delete/{id}', [
+            'as' => 'carts.remove',
+            'uses' => 'Client\CartController@remove'
         ]);
-        Route::post('/update/{id}', [
-            'as' => 'carts.updateQty',
-            'uses' => 'Client\CartController@updateQty'
+        Route::put('/update/{id}', [
+            'as' => 'carts.updateQuantity',
+            'uses' => 'Client\CartController@updateQuantity'
         ]);
-        Route::post('/update/{id}/color', [
+        Route::put('/update/{id}/color', [
             'as' => 'carts.updateColor',
             'uses' => 'Client\CartController@updateColor'
         ]);

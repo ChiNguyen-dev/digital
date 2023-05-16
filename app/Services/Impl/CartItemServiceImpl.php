@@ -2,7 +2,7 @@
 
 namespace App\Services\Impl;
 
-use App\Dtos\cart\CartItemFormDTO;
+use App\Dtos\CartItem\CartItemFormDTO;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Customer;

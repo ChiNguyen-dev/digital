@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dtos\cart;
+namespace App\Dtos\CartItem;
 
 class CartItemFormDTO
 {

@@ -17,12 +17,12 @@ function addToCart(event) {
     });
 }
 
-function deleteItem() {
+function remove() {
     const url = $(this).parent().data("url");
     const that = $(this);
     const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
-        type: "POST",
+        type: "DELETE",
         headers: {"X-CSRF-TOKEN": token},
         url: url,
         success: (response) => {
@@ -40,17 +40,18 @@ function deleteItem() {
     });
 }
 
-function updateQuantity() {
+function changeQuantity() {
     const qty = $(this).val();
     const url = $(this).data("url");
-    const data = {qty: qty};
+    const data = {qty: parseInt(qty)};
     const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
-        type: "POST",
+        type: "PUT",
         headers: {"X-CSRF-TOKEN": token},
         url: url,
         data: data,
         success: (response) => {
+            console.log(response)
             $(".order .total span").text(response.total);
             $(".header-cart .num-cart").text(response.qty);
         },
@@ -58,12 +59,12 @@ function updateQuantity() {
     });
 }
 
-function updateColor() {
+function changeColor() {
     const url = $(this).data("url");
-    const data = {id: $(this).val()};
+    const data = {color_id: parseInt($(this).val())};
     const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
-        type: "POST",
+        type: "PUT",
         headers: {"X-CSRF-TOKEN": token},
         url: url,
         data: data,
@@ -75,12 +76,11 @@ function updateColor() {
 $(document).ready(function () {
     $(".add-to-cart").on("click", addToCart);
 
-    $(".col-remove > i").on("click", deleteItem);
+    $(".col-remove > i").on("click", remove);
 
-    $(".qty_in_cart").on("change", updateQuantity);
+    $(".qty_in_cart").on("change", changeQuantity);
 
-    $(".color_in_cart").on("change", updateColor);
+    $(".color_in_cart").on("change", changeColor);
 
-    if ($(".cart-wp").find("#table-cart").length === 0)
-        $(".cart-body").css("display", "flex");
+    if ($(".cart-wp").find("#table-cart").length === 0) $(".cart-body").css("display", "flex");
 });
