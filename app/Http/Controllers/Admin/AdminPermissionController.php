@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Recursive;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -11,11 +10,9 @@ use App\Services\Interfaces\IPermissionService;
 
 class AdminPermissionController extends Controller
 {
-    private Recursive $recursive;
     private IPermissionService $permissionService;
-    public function __construct(Recursive $recursive, IPermissionService $permissionService)
+    public function __construct(IPermissionService $permissionService)
     {
-        $this->recursive = $recursive;
         $this->permissionService = $permissionService;
         $this->middleware(function ($request, $next) {
             session([
@@ -37,7 +34,7 @@ class AdminPermissionController extends Controller
 
     public function create()
     {
-        $htmlOptions = $this->recursive->permissionRecursive();
+        $htmlOptions = $this->permissionService->getSelectionPermission();
         return view('admin.permissions.add', compact('htmlOptions'));
     }
 
@@ -62,7 +59,7 @@ class AdminPermissionController extends Controller
     public function edit($id)
     {
         $permission = $this->permissionService->find($id);
-        $htmlOptions = $this->recursive->permissionRecursive($permission->parent_id);
+        $htmlOptions = $this->permissionService->getSelectionPermission($permission->parent_id);
         return view('admin.permissions.edit', compact('permission', 'htmlOptions'));
     }
 
