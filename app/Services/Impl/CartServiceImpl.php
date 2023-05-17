@@ -86,8 +86,8 @@ class CartServiceImpl extends BaseService implements ICartService
                 $totalAmount += $quantity;
             }
         }
-        if ($total != 0 && $totalAmount != 0) {
-            $cart->update(['total' => $total]);
+        $cart->update(['total' => $total]);
+        if ($totalAmount != 0) {
             session(['qty' => $totalAmount]);
         }
     }

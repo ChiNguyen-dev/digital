@@ -88,6 +88,7 @@ class CartController extends Controller
         try {
             $this->cartItemService->delete($id);
             $user = Auth::guard('client')->user();
+            $this->cartService->updateTotal($user);
             $cart = $this->cartService->getCartsByUser($user);
             $count = count($cart->getCartItems());
             $total = $cart->getTotal();
