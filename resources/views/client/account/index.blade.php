@@ -29,7 +29,7 @@
         <div class="wp-container">
             <div class="row">
                 <div class="col-left-ac">
-                    @include('Client.account.sidebar', ['active' => 'my-account'])
+                    @include('client.account.sidebar', ['active' => 'my-account'])
                 </div>
                 <div class="col-right-ac">
                     <h1 class="title-head">
