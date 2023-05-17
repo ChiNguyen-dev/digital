@@ -8,7 +8,7 @@ use App\Services\Interfaces\IPermissionService;
 
 class PermissionServiceImpl extends BaseService implements IPermissionService
 {
-    public function getModel()
+    public function getModel(): string
     {
         return Permission::class;
     }
