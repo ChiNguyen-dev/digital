@@ -4,7 +4,6 @@ namespace App\Mappers;
 
 use App\Dtos\Cart\CartDTO;
 use App\Dtos\CartItem\CartItemDto;
-use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Customer;
 
@@ -15,7 +14,7 @@ class CartMapper
         $cartItemDTO = new CartItemDto();
         $product = $cartItem->product;
         $colors = $product->colors->map(function ($item) use ($cartItem) {
-            return (object)['id' => $item->id, 'name' => $item->name, 'selected' => $item->id === $cartItem->color_id];
+            return (object)['id' => $item->id, 'name' => $item->name, 'selected' => $item->id == $cartItem->color_id];
         });
         $cartItemDTO->setId($cartItem->id);
         $cartItemDTO->setName($product->name);
