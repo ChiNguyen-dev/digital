@@ -4,6 +4,10 @@
     <title>Admin | Đơn Hàng</title>
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/detailOrder.css') }}">
+@endsection
+
 @section('content')
     <div class="row container-fluid ml-0 pt-2">
         <div class="card w-100" id="list-product">

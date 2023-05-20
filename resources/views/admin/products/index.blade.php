@@ -4,6 +4,9 @@
     <title>Admin | Sản phẩm</title>
 @endsection
 
+@section('style')
+@endsection
+
 @section('content')
     <div class="row container-fluid ml-0 pt-2">
         <div class="card w-100" id="list-product">
@@ -12,9 +15,8 @@
                 <div class="form-search form-inline">
                     <form action="{{ route('product.index') }}" class="d-flex" method="POST">
                         @csrf
-                        <input type="text" class="form-control form-search" placeholder="Tìm kiếm" name="search"
-                            value="{{ request()->search }}">
-                        <input type="submit" name="btn-search" value="Tìm kiếm" class="btn btn-primary ml-2">
+                        <input type="text" class="form-control form-search shadow-none" placeholder="Tìm kiếm" name="search" value="{{ request()->search }}">
+                        <input type="submit" name="btn-search" value="Tìm kiếm" class="btn btn-primary shadow-none ml-2">
                     </form>
                 </div>
             </div>
@@ -47,13 +49,13 @@
                     @csrf
                     <div class="form-action form-inline py-3">
                         @can(config('permissions.guards.isAdmin'))
-                            <select class="form-control mr-1" name="option">
+                            <select class="form-control mr-1 shadow-none" name="option">
                                 <option value="">Chọn</option>
                                 <option value="1">Công khai</option>
                                 <option value="0">Đang xử lý</option>
                                 <option value="2">Bỏ vào thùng rác</option>
                             </select>
-                            <input type="submit" name="btn-search" value="Áp dụng" class="btn btn-primary">
+                            <input type="submit" name="btn-search" value="Áp dụng" class="btn btn-primary shadow-none">
                         @endcan
                     </div>
                     <table class="table table-striped table-checkall mb-3">

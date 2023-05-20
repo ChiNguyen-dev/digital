@@ -4,6 +4,10 @@
     <title>Admin | Thành viên</title>
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
+@endsection
+
 @section('content')
     <div id="content" class="container-fluid pt-4">
         <div class="card">
@@ -38,5 +42,6 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('assets/admin/js/user/index.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('assets/admin/js/user/select2.js') }}"></script>
 @endsection

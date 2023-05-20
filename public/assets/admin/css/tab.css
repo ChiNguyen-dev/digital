@@ -1,0 +1,67 @@
+.root {
+    width: 100%;
+    border-bottom: 2px solid rgba(229, 229, 229);
+}
+
+.tab_box {
+    position: relative;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.tab_box .tab_button {
+    margin: 0 10px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: none;
+    color: #919191;
+    background-color: #FFFFFF;
+    padding: 18px;
+    outline: none;
+}
+
+.tab_box .tab_button:first-child {
+    margin-left: 20px;
+}
+
+.tab_box .tab_button.active {
+    color: #5a4bde;
+}
+
+.content_box {
+    padding: 0 8px;
+}
+
+.content_box .content {
+    display: none;
+    animation: moving .5s ease;
+}
+
+@keyframes moving {
+    from {
+        transform: translate(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translate(0);
+        opacity: 1;
+    }
+}
+
+.content_box .content.active {
+    display: block;
+}
+
+.line {
+    position: absolute;
+    top: 62px;
+    left: 20px;
+    width: 192px;
+    height: 5px;
+    border-radius: 10px;
+    background-color: #5a4bde;
+    transition: all .3s ease;
+}

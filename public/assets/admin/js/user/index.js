@@ -38,6 +38,5 @@ function handleDelete(event) {
 
 $(document).ready(function () {
     $(this).on('click', '.btn-delete', handleDelete);
-
 });
 

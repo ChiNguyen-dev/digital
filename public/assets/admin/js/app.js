@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // sidebar
-    let sidebar_menu = $('#sidebar-menu > .nav-link > div > i');
+    const sidebar_menu = $('#sidebar-menu > .nav-link > div > i');
     sidebar_menu.on('click', function () {
         if (!$(this).parent().parent().hasClass('active')) {
             $('.sub-menu').slideUp();
@@ -17,10 +17,7 @@ $(document).ready(function () {
             return false;
         }
     });
-    $('.select2-role').select2({
-        allowClear: true,
-        placeholder: 'Chọn vai trò',
-        tags: true,
-        tokenSeparators: [',']
-    });
+    const submenu_wrap = $('.sub-menu-wrap');
+    $('.dropdown-menu-user > img.logo').click(() => submenu_wrap.toggleClass('open-menu'));
+    $('.dropdown-menu-user > .arrow-user').click(() => submenu_wrap.toggleClass('open-menu'));
 })

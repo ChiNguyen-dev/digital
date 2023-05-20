@@ -24,60 +24,9 @@ a:hover {
     transition: all 0.4s ease;
 }
 
-.active-module > a,
-.active-module > i {
-    color: var(--color-hover) !important;
-    text-decoration: none;
-    transition: all 0.4s ease;
-}
-
-.nav-fixed .topnav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1030;
-    padding: 10px 0;
-}
-
-.nav-fixed .topnav .navbar-brand {
-    padding-left: 20px;
-    padding-right: 40px;
-}
-
-.nav-fixed .topnav .navbar-brand img {
-    display: block;
-    height: 35px;
-}
-
-
-#sidebar-toggle {
-    outline: none;
-    border: 0;
-    background-color: transparent;
-}
-
 .plus-icon {
     font-size: 1.4rem;
     color: #8f8f8f;
-}
-
-.nav-right {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex: 1;
-}
-
-#sidebar {
-    width: 280px;
-    height: 100vh;
-    z-index: 500;
-    padding-top: 60px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    font-size: 1.1rem;
 }
 
 #wp-content {
@@ -85,52 +34,6 @@ a:hover {
     min-height: 100vh;
     padding-top: 70px;
     padding-left: 280px;
-}
-
-ul#sidebar-menu * {
-    list-style: none;
-    padding-left: 0;
-}
-
-#sidebar-menu {
-    padding: 20px 10px 20px 24px;
-}
-
-.nav-link {
-    display: block;
-}
-
-.nav-link:hover > div > i, .nav-link:hover > div > a {
-    color: var(--color-hover);
-    transition: all 0.4s ease;
-}
-
-.nav-link > div > i {
-    color: #787272;
-    font-size: 1.1rem;
-}
-
-.nav-link .arrow {
-    cursor: pointer;
-    transition: all 0.4s linear;
-}
-
-.nav-link .arrow.active {
-    transform: rotate(90deg);
-    transition: all 0.4s linear;
-}
-
-#sidebar-menu .sub-menu {
-    display: none;
-    padding-left: 22px;
-    border-left: 1px dashed #b8b8b8;
-    margin-left: 6px;
-    font-size: 1.04rem;
-}
-
-#sidebar-menu .sub-menu li a {
-    display: block;
-    padding: 5px 0;
 }
 
 #page-body {
@@ -207,10 +110,6 @@ ul#sidebar-menu * {
     font-weight: 400;
 }
 
-.btn-group > .btn.dropdown {
-    box-shadow: none;
-}
-
 form label, form input {
     font-size: 1rem;
     font-weight: 400;
@@ -269,8 +168,5 @@ a.text-success:hover, a.text-danger:hover {
     box-shadow: 0 2px 4px rgb(0 0 0 / 30%) inset;
 }
 
-.dropdown-menu .dropdown-item:active {
-    background: white;
-}
 
 

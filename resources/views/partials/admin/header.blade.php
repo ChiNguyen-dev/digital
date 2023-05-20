@@ -18,16 +18,38 @@
                 <a class="dropdown-item" href="#">Thêm đơn hàng</a>
             </div>
         </div>
-        <div class="btn-group">
-            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                {{ Auth::user()->name }}
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="{{ route('users.editPassword') }}">Đổi mật khẩu</a>
-                <a class="dropdown-item" href="{{ route('users.account') }}">Cập nhật thông tin</a>
-                <a class="dropdown-item" href="{{ route('admin.logout') }}">Thoát</a>
+        <div class="dropdown-menu-user">
+            <img src="{{ asset('assets/images/avatar-default.png') }}" alt="avatar user default" class="logo">
+            <div class="sub-menu-wrap">
+                <div class="sub-menu">
+                    <div class="user-infor">
+                        <img src="{{ asset('assets/images/avatar-default.png') }}" alt="avatar user default">
+                        <h3>{{ auth()->user()->name }}</h3>
+                    </div>
+                    <hr>
+                    <a href="{{ route('users.account') }}" class="sub-menu-link">
+                        <img src="{{ asset('assets/images/profile.png') }}" alt="avatar user default">
+                        <p>Edit profile</p>
+                        <span>></span>
+                    </a>
+                    <a href="" class="sub-menu-link">
+                        <img src="{{ asset('assets/images/setting.png') }}" alt="avatar user default">
+                        <p>Setting & Privacy</p>
+                       <span>></span>
+                    </a>
+                    <a href="" class="sub-menu-link">
+                        <img src="{{ asset('assets/images/help.png') }}" alt="avatar user default">
+                        <p>Help & Support</p>
+                       <span>></span>
+                    </a>
+                    <a href="{{ route('admin.logout') }}" class="sub-menu-link">
+                        <img src="{{ asset('assets/images/logout.png') }}" alt="avatar user default">
+                        <p>Logout</p>
+                       <span>></span>
+                    </a>
+                </div>
             </div>
+            <img src="{{ asset('assets/images/arrow.png') }}" class="arrow-user">
         </div>
     </div>
 </nav>

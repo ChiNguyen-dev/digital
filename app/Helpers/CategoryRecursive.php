@@ -4,9 +4,9 @@ namespace App\Helpers;
 
 class CategoryRecursive
 {
-    private $index;
+    private int $index;
     private $categories;
-    private $htmlOption;
+    private string $htmlOption;
     public function __construct()
     {
         $this->init();

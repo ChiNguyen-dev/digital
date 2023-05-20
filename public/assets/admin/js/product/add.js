@@ -7,14 +7,11 @@ $(".color-select2").select2({
     tags: true,
     placeholder: "Chọn màu",
 })
-$('.select2-init').select2({
-    placeholder: "Chọn danh mục",
-    allowClear: true
-});
 
 let editor_config = {
     path_absolute: "/",
     selector: "textarea.tinymce_editor_init",
+    height: 300,
     plugins: [
         "advlist autolink lists link image charmap print preview hr anchor pagebreak",
         "searchreplace wordcount visualblocks visualchars code fullscreen",
@@ -44,5 +41,20 @@ let editor_config = {
         });
     }
 };
-
 tinymce.init(editor_config);
+
+const tabs = $('.tab_button');
+const contents = $('.content');
+const line = $('.line');
+$.each(tabs, (index, tab) => {
+    $(tab).on('click', (e) => {
+        $.each(tabs, (index, tab) => $(tab).removeClass('active'));
+        $(tab).addClass('active');
+        line.css({
+            "width": e.target.offsetWidth,
+            "left": e.target.offsetLeft
+        })
+        $.each(contents, (index, content) => $(content).removeClass('active'));
+        $(contents[index]).addClass('active');
+    });
+})

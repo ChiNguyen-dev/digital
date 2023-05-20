@@ -1,0 +1,121 @@
+.nav-fixed .topnav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    padding: 10px 3%;
+}
+
+.nav-fixed .topnav .navbar-brand img {
+    display: block;
+    height: 35px;
+}
+
+.nav-fixed .topnav .nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.dropdown-menu-user {
+    position: relative;
+    color: #525252;
+}
+.dropdown-menu-user .arrow-user {
+    position: absolute;
+    width: 15px;
+    height: auto;
+    right: -25px;
+    top: 13px;
+}
+
+.dropdown-menu-user > img {
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 30px;
+}
+
+.sub-menu-wrap {
+    position: absolute;
+    top: 120%;
+    right: 10%;
+    width: 290px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+
+.sub-menu-wrap.open-menu {
+    max-height: 400px;
+}
+
+.sub-menu-wrap .sub-menu {
+    background-color: #FFFFFF;
+    padding: 20px;
+    margin: 10px;
+}
+
+.sub-menu-wrap .sub-menu .user-infor {
+    display: flex;
+    align-items: center;
+}
+
+.sub-menu-wrap .sub-menu .user-infor h3 {
+    font-weight: 500;
+    color: #525252;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.sub-menu-wrap .sub-menu .user-infor img {
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.sub-menu-wrap .sub-menu hr {
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background-color: #ccc;
+    margin: 15px 0 10px;
+}
+
+a.sub-menu-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #525252;
+    margin: 12px 0;
+}
+
+a.sub-menu-link p {
+    width: 100%;
+    font-size: 1rem;
+    margin: 0;
+}
+
+a.sub-menu-link img {
+    width: 38px;
+    background: #e5e5e5;
+    padding: 8px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+a.sub-menu-link span {
+    font-size: 1rem;
+    transition: transform 0.5s;
+}
+
+a.sub-menu-link:hover span {
+    transform: translateX(5px);
+}
+
+a.sub-menu-link:hover p, a.sub-menu-link:hover span {
+    font-weight: 500;
+    color: #525252;
+}
