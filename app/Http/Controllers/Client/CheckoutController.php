@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Http\Resources\CustomerResource;
+use App\Services\Interfaces\ICartService;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -14,23 +16,30 @@ use App\Services\Interfaces\IProDisWardService;
 class CheckoutController extends Controller
 {
     private CategoryRecursive $categoryRecursive;
-
+    private ICartService $cartService;
     private IProDisWardService $proDisWardService;
 
-    public function __construct(CategoryRecursive $categoryRecursive, IProDisWardService $proDisWardService)
+    public function __construct(
+        CategoryRecursive $categoryRecursive,
+        ICartService $cartService,
+        IProDisWardService $proDisWardService)
     {
         $this->categoryRecursive = $categoryRecursive;
         $this->proDisWardService = $proDisWardService;
+        $this->cartService = $cartService;
     }
 
     public function index(Request $request)
     {
-        $customer = Auth::guard('client')->user();
+        $user = Auth::guard('client')->user();
+        $carts = $this->cartService->getCartsByUser($user);
+        $customerVariants = $user->customerVariants;
         if ($request->expectsJson()) {
+            $variant = $customerVariants->find($request->id);
             return response()->json([
                 'message' => 'Success',
-                'data'  => $customer
-            ], 200);
+                'data'  => new CustomerResource($variant)
+            ]);
         }
         [
             'megaMenuHeader' => $megaMenuHeader, 'menuResponse' => $menuResponse
@@ -43,7 +52,8 @@ class CheckoutController extends Controller
                     'megaMenuHeader',
                     'provinces',
                     'menuResponse',
-                    'customer'
+                    'carts',
+                    'customerVariants',
                 )
             );
     }

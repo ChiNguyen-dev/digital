@@ -67,7 +67,6 @@ class CartServiceImpl extends BaseService implements ICartService
         $cartByCustomer = $customer->cart;
         if (!empty($cartByCustomer)) {
             session()->forget('qty');
-            $cartByCustomer->cartItems()->delete();
             $cartByCustomer->delete();
         }
     }

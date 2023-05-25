@@ -13,12 +13,6 @@ class CategoryServiceImpl extends BaseService implements ICategoryService
         return Category::class;
     }
 
-    public function findMultipleBySlug(...$data)
-    {
-        $this->setColumn('id', 'cate_name', 'slug');
-        return $this->model->whereIn('slug', $data)->get($this->getColumn());
-    }
-
     public function findBySlug($slug)
     {
         return $this->model->where('slug', $slug)->first();

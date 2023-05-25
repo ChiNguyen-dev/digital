@@ -11,7 +11,7 @@ class OrderRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,23 +21,24 @@ class OrderRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'bail|required',
             'email' => 'bail|required',
-            'phone' => 'bail|required',
+            'phone_number' => 'bail|required|numeric',
             'address' => 'bail|required',
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'name.required' => 'Họ tên không được trống',
             'email.required' => 'Email không được trống',
-            'phone.required' => 'Số điện thoại không được trống',
-            'address.required' => 'Vui lòng chọn địa chỉ mua hàng',
+            'address.required' => 'Địa chỉ không được trống',
+            'phone_number.required' => 'Số điện thoại không được trống',
+            'phone_number.numeric' => 'Số điện thoại phải là số',
         ];
     }
 }

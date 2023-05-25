@@ -63,7 +63,7 @@
                     @foreach($data as $key => $v)
                         <tr>
                             <th class="text-center align-middle" scope="row">{{ $key + 1 }}</th>
-                            <td class="text-center">#{{ $v->id }}</td>
+                            <td class="text-center">#{{ $v->code }}</td>
                             @php
                                 $customer = $v->customer;
                                 $classElement = $v->status == 0 ? 'badge-warning' : 'badge-success';
@@ -72,7 +72,7 @@
                             <td class="text-center">{{ $customer->name }} <br>{{ $customer->phone_number }}</td>
                             <td class="text-center">{{ number_format($v->total,0,',','.') }}₫</td>
                             <td class="text-center"><span class="badge {{ $classElement }}">{{ $valueElement }}</span></td>
-                            <td class="text-center">{{ $v->created_at->format('d-m-Y h:i')  }}</td>
+                            <td class="text-center">{{ $v->created_at->format('d/m/Y h:i:s')  }}</td>
                             <td class="text-center"><a href="{{ route('orders.detail',['id' => $v->id]) }}">Chi tiết</a></td>
                         </tr>
                     @endforeach

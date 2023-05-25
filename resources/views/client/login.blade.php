@@ -7,16 +7,22 @@
     </div>
     <form action="{{ route('Client.login') }}" method="POST">
         @csrf
-        <input type="email" name="email" placeholder="Địa chỉ email" value=" {{ old('email') }}">
+        <input type="email" name="email" class="@error("email") mb-0 @enderror" placeholder="Địa chỉ email" value=" {{ old('email') }}">
+        @error("email")
+        <div class="form-group">
+            <small class="text-validate form-text text-danger">{{ $message }}</small>
+        </div>
+        @enderror
         <input type="password" name="password" placeholder="Mật khẩu">
-        @if($errors->any())
-            <div class="box-error">
-                <small class="d-block text-validate text-danger">*Sai thông tin đăng nhập</small>
-                <a href="#" class="forgot-pass">Quên mật khẩu</a>
-            </div>
-        @else
+        <div class="form-group">
+            @error("password")
+            <small class="text-validate form-text text-danger">{{ $message }}</small>
+            @enderror
+            @error("invalid")
+            <small class="text-validate form-text text-danger">{{ $message }}</small>
+            @enderror
             <a href="#" class="forgot-pass">Quên mật khẩu</a>
-        @endif
+        </div>
         <button type="submit" name="btn-submit">Đăng nhập</button>
     </form>
     <p class="separator">Hoặc</p>

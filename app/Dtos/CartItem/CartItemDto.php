@@ -13,6 +13,24 @@ class CartItemDto extends AbstractDTO
     private $option;
 
     /**
+     * @param string $name
+     * @param string $image
+     * @param string $price
+     * @param int $qty
+     * @param $option
+     */
+    public function __construct(int $id = 0, string $name = '', string $image = '', string $price = '', int $qty = 0, $option = null)
+    {
+        parent::__construct($id);
+        $this->name = $name;
+        $this->image = $image;
+        $this->price = $price;
+        $this->qty = $qty;
+        $this->option = $option;
+    }
+
+
+    /**
      * @return string
      */
     public function getName(): string

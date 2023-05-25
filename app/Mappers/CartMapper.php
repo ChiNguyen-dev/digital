@@ -11,18 +11,21 @@ class CartMapper
 {
     public static function toCartItemDTO(CartItem $cartItem): CartItemDto
     {
-        $cartItemDTO = new CartItemDto();
         $product = $cartItem->product;
         $colors = $product->colors->map(function ($item) use ($cartItem) {
-            return (object)['id' => $item->id, 'name' => $item->name, 'selected' => $item->id == $cartItem->color_id];
+            return (object)[
+                'id' => $item->id,
+                'name' => $item->name,
+                'style' => $item->style,
+                'selected' => $item->id == $cartItem->color_id];
         });
-        $cartItemDTO->setId($cartItem->id);
-        $cartItemDTO->setName($product->name);
-        $cartItemDTO->setImage($product->feature_image_path);
-        $cartItemDTO->setQty($cartItem->qty);
-        $cartItemDTO->setPrice($product->price);
-        $cartItemDTO->setOption(['colors' => $colors, 'total' => $cartItem->qty * $product->price]);
-        return $cartItemDTO;
+        return new CartItemDto(
+            $cartItem->id,
+            $product->name,
+            $product->feature_image_path,
+            $product->price, $cartItem->qty,
+            ['colors' => $colors, 'total' => $cartItem->qty * $product->price]
+        );
     }
 
     public static function toCart(Customer $customer, int $total, array $cartItems): CartDTO

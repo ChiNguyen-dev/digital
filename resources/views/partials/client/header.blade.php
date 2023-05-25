@@ -75,9 +75,6 @@
                                     </li>
                                 @else
                                     <li class="infor-item">
-                                        <a>Chào, {{ Auth::guard('client')->user()->name }}</a>
-                                    </li>
-                                    <li class="infor-item">
                                         <a href="{{ route('account.account') }}">
                                             Tài khoản
                                             <i class="fa-regular fa-address-book"></i>

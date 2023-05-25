@@ -10,6 +10,8 @@ interface IBaseService
 
     public function create($data);
 
+    public function firstOrCreate(array $condition, array $data);
+
     public function update($id, $data);
 
     public function delete($id);

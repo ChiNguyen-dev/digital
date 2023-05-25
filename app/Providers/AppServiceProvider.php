@@ -7,6 +7,7 @@ use App\Services\Impl\CartServiceImpl;
 use App\Services\Impl\CategoryServiceImpl;
 use App\Services\Impl\ColorServiceImpl;
 use App\Services\Impl\CustomerServiceImpl;
+use App\Services\Impl\CustomerVariantServiceImpl;
 use App\Services\Impl\OrderServiceImpl;
 use App\Services\Impl\PermissionServiceImpl;
 use App\Services\Impl\ProDisWardServiceImpl;
@@ -21,6 +22,7 @@ use App\Services\Interfaces\ICartService;
 use App\Services\Interfaces\ICategoryService;
 use App\Services\Interfaces\IColorService;
 use App\Services\Interfaces\ICustomerService;
+use App\Services\Interfaces\ICustomerVariantService;
 use App\Services\Interfaces\IOrderService;
 use App\Services\Interfaces\IPermissionService;
 use App\Services\Interfaces\IProDisWardService;
@@ -64,6 +66,11 @@ class AppServiceProvider extends ServiceProvider
          * Dependency Injection Customer
          */
         $this->app->singleton(ICustomerService::class, CustomerServiceImpl::class);
+
+        /**
+         * Dependency Injection Customer Variant
+         */
+        $this->app->singleton(ICustomerVariantService::class, CustomerVariantServiceImpl::class);
 
         /**
          * Dependency Injection Order

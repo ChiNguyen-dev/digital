@@ -8,15 +8,15 @@ use App\Services\Interfaces\ITagService;
 
 class TagServiceImpl extends BaseService implements ITagService
 {
-    public function getModel()
+    public function getModel(): string
     {
         return Tag::class;
     }
 
-    public function firstOrCreate(array $tags): array
-    {
-        return collect($tags)
-                ->map(fn ($tag) => $this->model->firstOrCreate(['name' => $tag])->id)
-                ->toArray();
-    }
+//    public function firstOrCreate(array $tags): array
+//    {
+//        return collect($tags)
+//                ->map(fn ($tag) => $this->model->firstOrCreate(['name' => $tag])->id)
+//                ->toArray();
+//    }
 }

@@ -11,7 +11,7 @@ class ClientLoginRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,19 +21,20 @@ class ClientLoginRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'email' => 'bail|required',
-            'password' => 'bail|required',
+            'password' => 'bail|required|min:6',
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'email.required' => 'Vui lòng nhập địa chỉ email',
-            'password.required' => 'Vui lòng nhập mật khẩu',
+            'email.required' => 'Email không được để trống',
+            'password.required' => 'Mật khẩu không được để trống',
+            'password.min' => 'Mật khẩu phải 6 kí tự trở lên',
         ];
     }
 }

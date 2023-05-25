@@ -40,6 +40,11 @@ abstract class BaseService implements IBaseService
         return $this->model->create($data);
     }
 
+    public function firstOrCreate(array $condition, array $data)
+    {
+        return $this->model->firstOrCreate($condition, $data);
+    }
+
     public function update($id, $data)
     {
         $this->model->find($id)->update($data);
@@ -53,16 +58,6 @@ abstract class BaseService implements IBaseService
     public function deleteMany(array $id)
     {
         return $this->model->whereIn('id', $id)->delete();
-    }
-
-    public function getColumn()
-    {
-        return $this->column;
-    }
-
-    public function setColumn(...$column)
-    {
-        $this->column = $column;
     }
 
     public function pagination($data, $numberOnPage)

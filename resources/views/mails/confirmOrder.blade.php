@@ -112,24 +112,22 @@
                                     </thead>
                                     <tbody
                                         style="background-color: #eee ;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#444;line-height:18px">
-                                    @php $total = 0; @endphp
-                                    @foreach($shopping as $item)
+                                    @foreach($cartItems as $cartItem)
                                         <tr>
                                             <td style="padding:3px 9px; vertical-align: top; text-align: left;">
-                                                <span>{{ $item->name }}</span><br>
+                                                <span>{{ $cartItem->getName() }}</span><br>
                                             </td>
                                             <td style="padding:3px 9px; vertical-align: top; text-align: left;">
-                                                <span>{{ number_format($item->price,0,',','.') }}đ</span>
+                                                <span>{{ number_format($cartItem->getPrice(),0,',','.') }}đ</span>
                                             </td>
                                             <td style="padding:3px 9px; vertical-align: top; text-align: left;">
-                                                {{ $item->qty }}
+                                                {{ $cartItem->getQty() }}
                                             </td>
                                             <td style="padding:3px 9px; vertical-align: top; text-align: left;">
                                                 <span>0đ</span>
                                             </td>
                                             <td style="padding:3px 9px; vertical-align: top; text-align: right;">
-                                                @php $total += $item->price* $item->qty; @endphp
-                                                <span>{{ number_format($item->price* $item->qty,0,',','.')  }}đ</span>
+                                                <span>{{ number_format($cartItem->getPrice() * $cartItem->getQty(),0,',','.')  }}đ</span>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -138,7 +136,7 @@
                                         style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#444;line-height:18px">
                                     <tr>
                                         <td colspan="4" style="padding:5px 9px; text-align: right;">Tạm tính</td>
-                                        <td style="padding:5px 9px; text-align: right;"><span>{{ $subTotal }}đ</span>
+                                        <td style="padding:5px 9px; text-align: right;"><span>{{ number_format($subTotal,0,',','.') }}đ</span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -152,7 +150,7 @@
                                         </td>
                                         <td style="padding:7px 9px; text-align: right;">
                                             <strong>
-                                                <big><span>{{ number_format($total + 2000,0,',','.') }}đ</span></big>
+                                                <big><span>{{ number_format($subTotal + 2000,0,',','.') }}đ</span></big>
                                             </strong>
                                         </td>
                                     </tr>

@@ -5,8 +5,8 @@ function handleChange() {
     const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
         type: "POST",
-        headers: { "X-CSRF-TOKEN": token },
-        data: { id: id, key: key },
+        headers: {"X-CSRF-TOKEN": token},
+        data: {id: id, key: key},
         url: url,
         success: (response) => {
             if (key === "province") {
@@ -42,15 +42,21 @@ $(document).ready(function () {
         const province = $("#province");
         const district = $("#district");
         const ward = $("#ward");
+        const name = $("#name");
+        const phoneNumber = $("#phone_number");
+        const email = $("#email");
+        const address = $("#address");
         $.ajax({
             type: "GET",
             url: url,
+            data: {id: value},
             success: (response) => {
+                console.log(response)
                 $(".append").remove();
-                $("#name").attr("value", "");
-                $("#phone_number").attr("value", "");
-                $("#email").attr("value", "");
-                $("#address").attr("value", "");
+                name.attr("value", "");
+                phoneNumber.attr("value", "");
+                email.attr("value", "");
+                address.attr("value", "");
                 province.attr("disabled", false);
                 if (value) {
                     province.attr("disabled", true);
@@ -61,14 +67,15 @@ $(document).ready(function () {
                     province.append(`<option selected class="append">---</option>`);
                     district.append(`<option selected>---</option>`);
                     ward.append(`<option selected>---</option>`);
-                    $("#name").attr("value", response.data.name);
-                    $("#phone_number").attr("value",response.data.phone_number);
-                    $("#email").attr("value", response.data.email);
-                    $("#address").attr("value", response.data.address);
+                    name.attr("value", response.data.name);
+                    phoneNumber.attr("value", response.data.phoneNumber);
+                    email.attr("value", response.data.email);
+                    address.attr("value", response.data.address);
                 }
             },
             error: (xhr, textStatus, thrownError) =>
                 console.log(textStatus, thrownError),
         });
+
     });
 });

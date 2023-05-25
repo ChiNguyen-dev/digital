@@ -23,7 +23,12 @@
     position: relative;
     margin-bottom: 15px;
     padding: 0;
-    margin-right: 0px;
+    margin-right: 0;
+}
+
+.form-group small {
+    font-size: .7rem;
+    padding-left: 10px;
 }
 
 .form-group input {
@@ -37,14 +42,13 @@
     color: #000;
     border: 1px solid #DDE1EF;
     border-radius: 4px;
-    padding: 18px 10px 0px 12px;
+    padding: 18px 30px 0 12px;
     margin: 0;
     min-height: 48px;
     position: relative;
     z-index: 10;
     background: transparent !important;
     font-size: .9rem;
-    padding-right: 30px;
     text-overflow: ellipsis;
     box-shadow: none;
 }
@@ -67,8 +71,8 @@
     outline: none;
 }
 
-.form_address .form-group .form-control:not(:placeholder-shown)+label,
-.form_address .form-group .form-control:focus+label {
+.form_address .form-group .form-control:not(:placeholder-shown) + label,
+.form_address .form-group .form-control:focus + label {
     top: 4px;
     font-size: .8rem;
     box-shadow: none;
@@ -106,7 +110,6 @@
 }
 
 /* End */
-
 
 
 .item-check {
@@ -149,6 +152,7 @@
     justify-content: space-between;
     font-size: .9rem;
 }
+
 .item-check .item-detail-infor .box-quantity strong {
     font-size: 1rem;
 }

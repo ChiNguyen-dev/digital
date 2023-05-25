@@ -2,7 +2,8 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\isLogin;
+use App\Http\Middleware\AdminAuthenticate;
+use App\Http\Middleware\SellAuthentication;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -63,6 +64,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'isLogin' => isLogin::class,
+        'sell.auth' => SellAuthentication::class,
+        'admin.auth' => AdminAuthenticate::class
     ];
 }

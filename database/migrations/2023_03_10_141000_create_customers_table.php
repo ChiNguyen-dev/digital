@@ -15,10 +15,10 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name',100);
-            $table->string('email');
-            $table->text('address');
-            $table->string('phone_number',12);
+            $table->string('name', 50)->nullable(false);
+            $table->string('email', 50)->unique()->nullable(false);
+            $table->string('password', 150)->nullable(false);
+            $table->string('phone_number', 12)->nullable(false);
             $table->softDeletes('deleted_at');
             $table->timestamps();
         });
@@ -31,6 +31,8 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::create('customers', function (Blueprint $table) {
+            $table->dropSoftDeletes('deleted_at');
+        });
     }
 }

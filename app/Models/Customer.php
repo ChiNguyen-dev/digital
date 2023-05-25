@@ -13,11 +13,11 @@ class Customer extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = ['name', 'email', 'password', 'phone_number'];
 
-    public function orders(): HasMany
+    public function customerVariants(): HasMany
     {
-        return $this->hasMany(Order::class, 'customer_id');
+        return $this->hasMany(CustomerVariant::class, 'customer_id');
     }
 
     public function cart(): HasOne
