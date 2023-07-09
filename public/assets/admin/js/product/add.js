@@ -1,16 +1,19 @@
 $(".tag-select2").select2({
     tags: true,
-    placeholder: "Chọn tag name",
-    tokenSeparators: [',']
+    placeholder: "Tạo thẻ mới",
+    tokenSeparators: [','],
+    selectionCssClass: ":all: custom-selection"
 })
 $(".color-select2").select2({
     tags: true,
-    placeholder: "Chọn màu",
+    placeholder: "Chọn màu sắc",
+    selectionCssClass: ":all: custom-selection"
 })
 
 let editor_config = {
     path_absolute: "/",
     selector: "textarea.tinymce_editor_init",
+    width: 1124,
     height: 300,
     plugins: [
         "advlist autolink lists link image charmap print preview hr anchor pagebreak",
@@ -58,3 +61,29 @@ $.each(tabs, (index, tab) => {
         $(contents[index]).addClass('active');
     });
 })
+$('#feature_image_path').on('change', (e) => {
+    const file = e.target.files[0];
+    const feature_image_path = $('.feature_image_path');
+    const feature_image_path_amount = $('.feature_image_path--amount');
+    if (file.type.match('image.*')) {
+        feature_image_path.empty();
+        feature_image_path_amount.text(1);
+        const reader = new FileReader();
+        reader.onload = (e) => feature_image_path.html('<img src="' + e.target.result + '">');
+        reader.readAsDataURL(file);
+    }
+});
+$('#image_path').on('change', (e) => {
+    const files = e.target.files;
+    const image_path = $('.image_path');
+    const image_path_amount = $('.image_path--amount');
+    image_path.empty();
+    image_path_amount.text(files.length);
+    $.each(files, (index, file) => {
+        if (file.type.match('image.*')) {
+            const reader = new FileReader();
+            reader.onload = (e) => image_path.append('<img src="' + e.target.result + '" alt="">');
+            reader.readAsDataURL(file);
+        }
+    });
+});

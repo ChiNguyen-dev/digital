@@ -4,6 +4,10 @@
     <title>Admin | Vai trò</title>
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/productForm.css') }}">
+@endsection
+
 @section('content')
     <div id="content" class="container-fluid pt-2">
         <div class="card">
@@ -11,16 +15,16 @@
             <div class="card-body">
                 <form method="POST" action="{{ route('roles.store') }}">
                     @csrf
-                    <div class="form-group">
+                    <div class="form-input-group d-flex align-items-center">
                         <label for="name">Tên vai trò:</label>
                         <input class="form-control" type="text" name="name" id="name" value="">
                     </div>
-                    <div class="form-group">
+                    <div class="form-input-group d-flex align-items-center">
                         <label for="display_name">Mô tả:</label>
                         <textarea class="form-control" name="display_name" id="display_name" cols="30" rows="3"></textarea>
                     </div>
-                    <div class="form-group mb-0">
-                        <label for="display_name">Chọn hành vi:</label>
+                    <div class="form-input-group d-flex align-items-center">
+                        <label for="display_name">Chọn quyền:</label>
                     </div>
                     @foreach($permissionsParent as $permissionParentItem)
                         <div class="row">
@@ -30,7 +34,7 @@
                                         <div class="d-flex align-items-center">
                                             <input type="checkbox" class="mr-2 choose-actions"
                                                    id="{{ Str::slug($permissionParentItem->name,'-') }}">
-                                            <label class="form-check-label font-weight-bold"
+                                            <label class="form-check-label" style="font-weight: 500;"
                                                    for="{{ Str::slug($permissionParentItem->name,'-') }}">
                                                 {{ $permissionParentItem->name }}
                                             </label>
@@ -45,7 +49,7 @@
                                                                name="action_role[]"
                                                                value="{{ $permissionChildrentItem->id }}"
                                                                id="{{ Str::slug($permissionChildrentItem->name,'-') }}">
-                                                        <label class="form-check-label"
+                                                        <label class="form-check-label" style="font-size: .94rem;"
                                                                for="{{ Str::slug($permissionChildrentItem->name,'-') }}">
                                                             {{ $permissionChildrentItem->name }}
                                                         </label>
@@ -58,7 +62,10 @@
                             </div>
                         </div>
                     @endforeach
-                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                    <div class="button-group">
+                        <a href="{{ route('roles.index') }}" class="button-cancel">Hủy</a>
+                        <button type="submit" class="button">Thêm mới</button>
+                    </div>
                 </form>
             </div>
         </div>

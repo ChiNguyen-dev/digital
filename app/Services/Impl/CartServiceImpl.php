@@ -2,8 +2,8 @@
 
 namespace App\Services\Impl;
 
-use App\Dtos\Cart\CartDTO;
-use App\Dtos\CartItem\CartItemFormDTO;
+use App\Dtos\cart\CartDTO;
+use App\Dtos\cartItem\CartItemFormDTO;
 use App\Mappers\CartMapper;
 use App\Models\Cart;
 use App\Models\Customer;

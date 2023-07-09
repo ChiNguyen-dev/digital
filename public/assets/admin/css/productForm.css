@@ -1,0 +1,83 @@
+.form-input-group {
+    margin-bottom: 18px;
+}
+
+.form-input-group label, .form-input-group input {
+    display: block;
+    font-size: 1rem;
+}
+
+.form-input-group label {
+    font-weight: 500;
+    flex-basis: 20%;
+    padding-left: 10px;
+    margin: 0;
+}
+
+.form-input-group .form-check {
+    flex-basis: 15%;
+}
+
+.form-input-group label.form-check-label {
+    font-weight: 400;
+    flex-grow: 1;
+}
+
+.form-input-group > input {
+    line-height: 1.5;
+    color: #000;
+}
+
+.form-input-group > input, .form-input-group select {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #DDE1EF;
+    border-radius: 4px;
+}
+
+.form-input-group > select {
+    font-size: .9rem;
+}
+
+.form-input-group > input:focus-visible, .form-input-group > select:focus-visible {
+    outline: none;
+}
+
+.form-input-group .box-thumbnail {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.form-input-group .box-thumbnail img {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 100px;
+    height: 100px;
+}
+
+.input-file-group > input[type="file"] {
+    display: none;
+}
+
+.input-file-group label {
+    width: 84px;
+    color: #5a4bde;
+    border: 2px solid #5a4bde;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: .9rem;
+    line-height: 18px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.input-file-group label:hover {
+    border-color: #5A4BDEC0;
+    color: #5A4BDEC0;
+}
+
+

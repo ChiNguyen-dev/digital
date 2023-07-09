@@ -11,7 +11,7 @@ class ProductAddRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,25 +21,30 @@ class ProductAddRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'bail|required|unique:products|max:255|min:10',
-            'price' => 'bail|required',
+            'price' => 'bail|required|numeric',
             'category_id' => 'bail|required',
             'feature_image_path' => 'bail|required',
+            'image_path[]' => 'bail|required',
             'tags' => 'bail|required',
+            'colors' => 'bail|required',
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'name.required' => 'Tên không được để trống',
-            'price.required' => 'Giá không được để trống',
-            'category_id.required' => 'Vui lòng chọn danh mục',
-            'feature_image_path.required' => 'Vui lòng chọn ảnh đại diện cho sản phẩm',
-            'tags.required' => 'Hãy tạo các thẻ tag cho sản phẩm',
+            'name.required' => 'Vui lòng nhập tên sản phẩm.',
+            'price.required' => 'Vui lòng nhập giá sản phẩm.',
+            'price.numeric' => 'Giá sản phẩm phải là chữ số.',
+            'category_id.required' => 'Vui lòng chọn danh mục sản phẩm.',
+            'feature_image_path.required' => 'Vui lòng chọn ảnh đại diện cho sản phẩm.',
+            'image_path[].required' => 'Vui lòng chọn ảnh chi tiết cho sản phẩm.',
+            'tags.required' => 'Hãy tạo các thẻ tag cho sản phẩm.',
+            'colors.required' => 'Vui lòng chọn màu sắc cho sản phẩm.',
         ];
     }
 }

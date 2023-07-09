@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Traits\StatisticTrait;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -18,6 +19,7 @@ use App\Services\Interfaces\IUserService;
 
 class AdminUserController extends Controller
 {
+    use StatisticTrait;
     private IRoleService $roleService;
     private IUserService $userService;
 
@@ -26,9 +28,7 @@ class AdminUserController extends Controller
         $this->roleService = $roleService;
         $this->userService = $userService;
         $this->middleware(function ($request, $next) {
-            session([
-                'active' => 'user',
-            ]);
+            session(['active' => 'user']);
             return $next($request);
         });
     }
@@ -37,12 +37,19 @@ class AdminUserController extends Controller
     {
         $users = $request->has('search') ?
             $this->userService->searchUsers($request->search) :
-            $this->userService->getAllPaginateLatest(15);
+            $this->userService->getUsers(15);
+        $statistic = $this->statistic('user');
         $status = (object)[
-            'quantity' =>  $this->userService->count(),
-            'deleted' =>  $this->userService->countSoftDelete(),
+            'quantity' => $statistic->user_amount,
+            'deleted' => $statistic->user_cancel,
         ];
-        return view('admin.users.index', compact('users', 'status'));
+        return view(
+            'admin.users.index',
+            compact(
+                'users',
+                'status'
+            )
+        );
     }
 
     public function create(): View
@@ -55,12 +62,12 @@ class AdminUserController extends Controller
     {
         try {
             DB::beginTransaction();
-            $insertedUser = $this->userService->create([
+            $user = $this->userService->create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password)
             ]);
-            $this->userService->addRoleToUser($insertedUser->id, $request->role_id);
+            $this->userService->addRoleToUser($user->id, $request->role_id);
             DB::commit();
             return redirect()->route('users.index');
         } catch (\Exception $exception) {
@@ -78,8 +85,7 @@ class AdminUserController extends Controller
 
     public function update(Request $request, $id): RedirectResponse
     {
-        $this->userService->update($id, ['name' => $request->name, 'email' => $request->email,]);
-        $this->userService->updateRoleToUser($id, $request->role_id);
+        $this->userService->update($id, $request->all());
         return redirect()->route('users.index');
     }
 
@@ -87,17 +93,17 @@ class AdminUserController extends Controller
     {
         try {
             $this->userService->delete($id);
-            $countUserDeleted = $this->userService->countSoftDeletedUsers();
+            $statistic = $this->statistic('user');
+            $countUserDeleted = $statistic->user_cancel;
             return response()->json([
                 'code' => 200,
-                'message' => 'Delete success',
+                'message' => 'Deleted successfully',
                 'quantity' => $countUserDeleted
-            ], 200);
+            ]);
         } catch (\Exception $exception) {
             Log::error('message: ' . $exception->getMessage() . ' Line: ' . $exception->getLine());
             return response()->json([
-                'code' => 500,
-                'message' => 'Delete fail'
+                'message' => 'Deleted failed'
             ], 500);
         }
     }

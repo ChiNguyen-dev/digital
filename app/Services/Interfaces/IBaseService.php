@@ -29,5 +29,4 @@ interface IBaseService
     public function getAllPaginateLatest($numberOnPage);
 
     public function search($column, $condition);
-
 }

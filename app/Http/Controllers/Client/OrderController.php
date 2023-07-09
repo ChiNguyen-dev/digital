@@ -10,6 +10,7 @@ use App\Services\Interfaces\ICartService;
 use App\Services\Interfaces\ICustomerVariantService;
 use App\Services\Interfaces\IOrderService;
 use App\Services\Interfaces\IProDisWardService;
+use App\Services\Interfaces\IStatisticService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -22,17 +23,19 @@ class OrderController extends Controller
     private IProDisWardService $proDisWardService;
     private ICartService $cartService;
     private ICustomerVariantService $customerVariantService;
-
+    private IStatisticService $statisticService;
     public function __construct(
         IProDisWardService      $proDisWardService,
         IOrderService           $orderService,
         ICartService            $cartService,
-        ICustomerVariantService $customerVariantService
+        ICustomerVariantService $customerVariantService,
+        IStatisticService $statisticService
     )
     {
         $this->proDisWardService = $proDisWardService;
         $this->orderService = $orderService;
         $this->cartService = $cartService;
+        $this->statisticService = $statisticService;
         $this->customerVariantService = $customerVariantService;
     }
 
@@ -72,6 +75,7 @@ class OrderController extends Controller
                 $ward = $this->proDisWardService->getWardByXaid($request->ward);
                 $address = "$request->address , $ward->name , $district->name ,$province->name .";
             }
+            $statistic = $this->statisticService->find(1);
             $customer = Auth::guard('client')->user();
             $cart = $customer->cart;
             $cartItems = $cart->cartItems;
@@ -95,6 +99,7 @@ class OrderController extends Controller
                 'color_id' => $cartItem->color_id,
                 'quantity' => $cartItem->qty
             ]));
+            $statistic->update(['processing' => $statistic->processing + 1]);
             $cartItems = $cartItems->map(fn($cartItem) => CartMapper::toCartItemDTO($cartItem));
             Mail::to($variant->email)->send(
                 new ConfirmOrder($order, $variant, $cartItems, $cart->total)

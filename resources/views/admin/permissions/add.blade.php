@@ -4,6 +4,10 @@
     <title>Admin | Quyền</title>
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/productForm.css') }}">
+@endsection
+
 @section('content')
     <div id="content" class="container-fluid pt-2">
         <div class="card">
@@ -11,26 +15,29 @@
             <div class="card-body">
                 <form method="POST" action="{{ route('permissions.store') }}">
                     @csrf
-                    <div class="form-group">
-                        <label for="name">Tên:</label>
-                        <input class="form-control" type="text" name="name" id="name" value="">
+                    <div class="form-input-group d-flex align-items-center">
+                        <label for="name">Tên (<span class="text-danger">*</span>):</label>
+                        <input type="text" name="name" id="name" value="">
                     </div>
-                    <div class="form-group">
-                        <label for="display_name">Mô tả:</label>
-                        <input class="form-control" type="text" name="display_name" id="display_name" value="">
+                    <div class="form-input-group d-flex align-items-center">
+                        <label for="display_name">Mô tả (<span class="text-danger">*</span>):</label>
+                        <input type="text" name="display_name" id="display_name" value="">
                     </div>
-                    <div class="form-group">
-                        <label for="parent_id">Chọn quyền:</label>
-                        <select class="form-control" name="parent_id" id="parent_id">
+                    <div class="form-input-group d-flex align-items-center">
+                        <label for="parent_id">Chọn quyền (<span class="text-danger">*</span>):</label>
+                        <select name="parent_id" id="parent_id">
                             <option value="0">Chọn quyền cha</option>
                             {!! $htmlOptions !!}
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="key_code">Key code:</label>
-                        <input class="form-control" type="text" name="key_code" id="key_code" value="">
+                    <div class="form-input-group d-flex align-items-center">
+                        <label for="key_code">Key code (<span class="text-danger">*</span>):</label>
+                        <input type="text" name="key_code" id="key_code" value="">
                     </div>
-                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                    <div class="button-group">
+                        <a href="{{ route('permissions.index') }}" class="button-cancel">Hủy</a>
+                        <button type="submit" class="button">Thêm mới</button>
+                    </div>
                 </form>
             </div>
         </div>

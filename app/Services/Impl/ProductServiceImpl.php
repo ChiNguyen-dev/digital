@@ -118,7 +118,7 @@ class ProductServiceImpl extends BaseService implements IProductService
 
     public function orderByStatus($type = 'desc')
     {
-        return $this->model->orderBy('status', $type)->get();
+        return $this->model->orderBy('status', $type)->latest()->paginate(15);
     }
 
     public function updateStatus($ids, $option)
@@ -133,26 +133,21 @@ class ProductServiceImpl extends BaseService implements IProductService
 
     public function addColorsToProduct(Product $product, array $id)
     {
-        return $product->colors()->attach($id);
+         $product->colors()->attach($id);
     }
 
     public function addTagsToProduct(Product $product, array $id)
     {
-        return $product->tags()->attach($id);
+         $product->tags()->attach($id);
     }
 
     public function updateTagsToProduct(Product $product, array $id)
     {
-        return $product->tags()->sync($id);
+         $product->tags()->sync($id);
     }
 
     public function updateColorsToProduct(Product $product, array $id)
     {
-        return $product->colors()->sync($id);
-    }
-
-    public function getProductByIds(array $ids)
-    {
-        return $this->model->whereIn('id', $ids)->get(['id', 'price']);
+         $product->colors()->sync($id);
     }
 }

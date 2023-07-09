@@ -11,8 +11,9 @@
                 <h5 class="m-0 ">Danh sách quyền</h5>
                 <div class="form-search form-inline">
                     <form action="#" class="d-flex">
-                        <input type="text" class="form-control form-search" placeholder="Tìm kiếm">
-                        <input type="submit" name="btn-search" value="Tìm kiếm" class="btn btn-primary ml-2">
+                        <input type="text" class="form-control form-search shadow-none" placeholder="Tìm kiếm"
+                               name="search" value="{{ request()->search }}">
+                        <button type="submit" class="button ml-3"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>
             </div>
@@ -27,8 +28,7 @@
                         </a>
                     </div>
                     <div class="analytic__add mr-0">
-                        <a href="{{ route('permissions.create') }}"
-                           class="btn btn-primary text-white text-center">Thêm</a>
+                        <a href="{{ route('permissions.create') }}" class="button">Thêm</a>
                     </div>
                 </div>
                 <table class="table table-striped mb-5">

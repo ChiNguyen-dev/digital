@@ -38,4 +38,15 @@ function handleDelete(event) {
 
 $(document).ready(function () {
     $(this).on('click', '.btn-delete', handleDelete);
+
+    $('#image_path').on('change', (e) => {
+        const file = e.target.files[0];
+        const image_path = $('.image_path');
+        image_path.empty();
+        if (file.type.match('image.*')) {
+            const reader = new FileReader();
+            reader.onload = (e) => image_path.html('<img style="max-width: 250px;height: auto;margin: 0 auto;" src="' + e.target.result + '" alt="">');
+            reader.readAsDataURL(file);
+        }
+    });
 })

@@ -60,25 +60,24 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($data as $key => $v)
+                    @foreach($orders as $key => $order)
                         <tr>
-                            <th class="text-center align-middle" scope="row">{{ $key + 1 }}</th>
-                            <td class="text-center">#{{ $v->code }}</td>
                             @php
-                                $customer = $v->customer;
-                                $classElement = $v->status == 0 ? 'badge-warning' : 'badge-success';
-                                $valueElement = $v->status == 0 ? 'Đang xử lý' : 'Thành công';
+                                $classElement = $order->isStatus() == 0 ? 'badge-warning' : 'badge-success';
+                                $valueElement = $order->isStatus() == 0 ? 'Đang xử lý' : 'Thành công';
                             @endphp
-                            <td class="text-center">{{ $customer->name }} <br>{{ $customer->phone_number }}</td>
-                            <td class="text-center">{{ number_format($v->total,0,',','.') }}₫</td>
+                            <th class="text-center align-middle" scope="row">{{  $key + 1 }}</th>
+                            <td class="text-center">#{{ $order->getOrderCode() }}</td>
+                            <td class="text-center">{{ $order->getCustomerName() }} <br> {{ $order->getPhoneNumber() }}</td>
+                            <td class="text-center">{{ number_format($order->getTotal(),0,',','.') }}₫</td>
                             <td class="text-center"><span class="badge {{ $classElement }}">{{ $valueElement }}</span></td>
-                            <td class="text-center">{{ $v->created_at->format('d/m/Y h:i:s')  }}</td>
-                            <td class="text-center"><a href="{{ route('orders.detail',['id' => $v->id]) }}">Chi tiết</a></td>
+                            <td class="text-center">{{ $order->getOrderDate()  }}</td>
+                            <td class="text-center"><a href="{{ route('orders.detail',['id' => $order->getId()]) }}">Chi tiết</a></td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-                {{ $data->links() }}
+                {{ $customer_variant_pagination->links() }}
             </div>
         </div>
     </div>

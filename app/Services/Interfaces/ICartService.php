@@ -2,7 +2,7 @@
 
 namespace App\Services\Interfaces;
 
-use App\Dtos\Cart\CartDTO;
+use App\Dtos\cart\CartDTO;
 use App\Models\Customer;
 use App\Models\Product;
 

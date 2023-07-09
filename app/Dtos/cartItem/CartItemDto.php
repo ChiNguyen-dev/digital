@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dtos\CartItem;
+namespace App\Dtos\cartItem;
 
 use App\Dtos\AbstractDTO;
 
@@ -10,7 +10,7 @@ class CartItemDto extends AbstractDTO
     private string $image;
     private string $price;
     private int $qty;
-    private $option;
+    private array $option;
 
     /**
      * @param string $name
@@ -19,7 +19,7 @@ class CartItemDto extends AbstractDTO
      * @param int $qty
      * @param $option
      */
-    public function __construct(int $id = 0, string $name = '', string $image = '', string $price = '', int $qty = 0, $option = null)
+    public function __construct(int $id = 0, string $name = '', string $image = '', string $price = '', int $qty = 0,array $option = null)
     {
         parent::__construct($id);
         $this->name = $name;

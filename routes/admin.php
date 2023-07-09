@@ -61,6 +61,11 @@ Route::group(['middleware' => ['admin.auth']], function () {
             'uses' => 'Admin\AdminOrderController@update',
             'middleware' => 'can:order-update'
         ]);
+        Route::post('/search', [
+            'as' => 'orders.search',
+            'uses' => 'Admin\AdminOrderController@search',
+            'middleware' => 'can:order-show'
+        ]);
     });
 
     /**

@@ -7,7 +7,6 @@ trait HandleCategoryTrait
     private $data;
     private $ids = [];
 
-
     public function getIdBySlug(...$slug): array
     {
         $listId = [];

@@ -17,4 +17,11 @@ class CustomerVariantServiceImpl extends BaseService implements ICustomerVariant
     {
         return parent::firstOrCreate($data, $data);
     }
+
+    public function getAll()
+    {
+        return $this->model->with('orders')->paginate(15);
+    }
+
+
 }

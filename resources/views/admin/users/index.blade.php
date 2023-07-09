@@ -12,9 +12,9 @@
                 <div class="form-search form-inline">
                     <form action="{{ route('users.search') }}" method="POST" class="d-flex">
                         @csrf
-                        <input type="text" class="form-control form-search" name="search" placeholder="Tìm kiếm"
-                               value="{{ request()->search }}">
-                        <input type="submit" name="btn-search" value="Tìm kiếm" class="btn btn-primary ml-2">
+                        <input type="text" class="form-control form-search shadow-none" placeholder="Tìm kiếm"
+                               name="search" value="{{ request()->search }}">
+                        <button type="submit" class="button ml-3"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>
             </div>
@@ -29,7 +29,11 @@
                         </a>
                     </div>
                     <div class="analytic__add mr-0">
-                        <a href="{{ route('users.create') }}" class="btn btn-primary text-white text-center">Thêm</a>
+                        <div class="analytic__add mr-0">
+                            <a href="{{ route('users.create') }}" class="button">
+                                Thêm mới
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <table class="table table-striped table-checkall mb-5">
@@ -38,7 +42,8 @@
                         <th scope="col">#</th>
                         <th scope="col">Họ và Tên</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Thời gian</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col" class="text-center">Thời gian</th>
                         <th scope="col" class="text-center">Tác vụ</th>
                     </tr>
                     </thead>
@@ -48,7 +53,8 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->created_at }}</td>
+                            <td>{{ empty($user->phone_number) ? 'Chưa có' : $user->phone_number }}</td>
+                            <td class="text-center">{{ $user->created_at }}</td>
                             <td class="d-flex align-items-center justify-content-center">
                                 <a href="{{ route('users.edit',['id' => $user->id]) }}" class="btn-edit text-success"
                                    title="Edit">

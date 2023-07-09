@@ -3,6 +3,7 @@ $(function () {
         allowClear: true,
         placeholder: 'Chọn vai trò',
         tags: true,
-        tokenSeparators: [',']
+        tokenSeparators: [','],
+        selectionCssClass: ":all: custom-selection"
     });
 });

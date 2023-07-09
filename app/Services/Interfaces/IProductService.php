@@ -3,8 +3,6 @@
 namespace App\Services\Interfaces;
 
 use App\Models\Product;
-use App\Services\Interfaces\IBaseService;
-use Illuminate\Database\Eloquent\Collection;
 
 interface IProductService extends IBaseService
 {
@@ -35,6 +33,4 @@ interface IProductService extends IBaseService
     public function orderByStatus($type = 'desc');
 
     public function updateStatus($ids, $option);
-
-    public function getProductByIds(array $ids);
 }

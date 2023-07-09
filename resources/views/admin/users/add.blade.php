@@ -5,7 +5,8 @@
 @endsection
 
 @section('style')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/productForm.css') }}">
 @endsection
 
 @section('content')
@@ -15,47 +16,50 @@
             <div class="card-body">
                 <form method="POST" action="{{ route('users.store') }}">
                     @csrf
-                    <div class="form-group">
-                        <label for="name">Họ và tên:</label>
+                    <div class="form-input-group d-flex align-items-center">
+                        <label for="name">Họ tên (<span class="text-danger">*</span>):</label>
                         <input class="form-control" type="text" name="name" id="name" value="">
                     </div>
-                    <div class="form-group">
-                        @error("name")
-                        <small class="text-validate form-text text-danger">{{$message}}</small>
+                    <div class="validate validate-user--customize">
+                        @error('name')
+                        <small class="text-validate form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
+                    <div class="form-input-group d-flex align-items-center">
+                        <label for="email">Email (<span class="text-danger">*</span>):</label>
                         <input class="form-control" type="text" name="email" id="email" value="">
                     </div>
-                    <div class="form-group">
+                    <div class="validate validate-user--customize">
                         @error("email")
                         <small class="text-validate form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="password">Mật khẩu:</label>
+                    <div class="form-input-group d-flex align-items-center">
+                        <label for="password">Mật khẩu (<span class="text-danger">*</span>):</label>
                         <input class="form-control" type="password" name="password" id="password" value="">
                     </div>
-                    <div class="form-group">
+                    <div class="validate validate-user--customize">
                         @error("password")
                         <small class="text-validate form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="password">Vai trò:</label>
-                        <select class="form-control select2-role" name="role_id[]" multiple>
+                    <div class="form-input-group d-flex align-items-center">
+                        <label for="password" style="flex-basis: 16.8%;">Vai trò (<span class="text-danger">*</span>):</label>
+                        <select class="select2-role custom-selection" name="role_id[]" multiple>
                             @foreach($roles as $role)
                                 <option value="{{ $role->id }}">{{ $role->name }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="validate validate-user--customize">
                         @error("role_id")
                         <small class="text-validate form-text text-danger">{{$message}}</small>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                    <div class="button-group">
+                        <a href="{{ route('users.index') }}" class="button-cancel">Hủy</a>
+                        <button type="submit" class="button">Thêm mới</button>
+                    </div>
                 </form>
             </div>
         </div>

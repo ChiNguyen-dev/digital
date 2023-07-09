@@ -40,10 +40,6 @@ a:hover {
     background-color: #e5e9f0;
 }
 
-.form-search {
-    width: 300px;
-}
-
 .table {
     font-size: 1rem;
     margin-bottom: 0;
@@ -110,13 +106,13 @@ a:hover {
     font-weight: 400;
 }
 
-form label, form input {
-    font-size: 1rem;
-    font-weight: 400;
+.validate {
+    transform: translateX(230px);
+    margin-bottom: 15px;
 }
 
-form select {
-    padding: 5px 20px !important;
+.validate.validate-user--customize {
+    transform: translateX(200px);
 }
 
 .text-validate {
@@ -168,5 +164,88 @@ a.text-success:hover, a.text-danger:hover {
     box-shadow: 0 2px 4px rgb(0 0 0 / 30%) inset;
 }
 
+/*
+    Button
+ */
+.button-group {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    margin-top: 18px;
+}
 
+button.button, a.button-cancel, a.button {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    height: 40px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background-color: #5a4bde;
+    transition: color 200ms ease;
+}
 
+button.button.button-slider {
+    font-size: .9rem;
+    font-weight: 500;
+    line-height: 18px;
+    height: auto;
+    padding: 7px 16px;
+    border-radius: 5px;
+}
+
+a.button-cancel {
+    background: #f3f3f4;
+    color: #0d0c22;
+    margin-right: 16px;
+}
+
+a.button-cancel:hover {
+    background-color: #e7e7e9;
+    color: #0d0c22 !important;
+}
+
+button.button:hover, a.button:hover {
+    background-color: #5A4BDEC0;
+}
+
+/*
+    Form Search
+ */
+.form-search input, .form-action select {
+    height: 40px;
+    padding: 10px 16px;
+    border: 1px solid #DDE1EF;
+    outline: none;
+}
+
+.form-search input:focus-visible, .form-action select:focus-visible {
+    outline: none;
+    border: 1px solid #DDE1EF;
+}
+
+/*
+    Customize Select 2
+ */
+.custom-selection {
+    flex-grow: 1;
+    border: 1px solid #DDE1EF !important;
+    padding: 8px !important;
+    font-size: 0.9rem !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    margin-top: 0 !important;
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+    margin-top: 0 !important;
+    height: 20px !important;
+}
+
+.select2-container {
+    flex-grow: 1;
+}

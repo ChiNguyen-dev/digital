@@ -13,10 +13,15 @@ class TagServiceImpl extends BaseService implements ITagService
         return Tag::class;
     }
 
-//    public function firstOrCreate(array $tags): array
-//    {
-//        return collect($tags)
-//                ->map(fn ($tag) => $this->model->firstOrCreate(['name' => $tag])->id)
-//                ->toArray();
-//    }
+    public function firstOrCreate(array $condition, array $data): array
+    {
+        $data_result = array();
+        foreach ($data as $tag) {
+            $model = $this->model->firstOrCreate(['name' => $tag]);
+            $data_result[] = $model->id;
+        }
+        return $data_result;
+    }
+
+
 }

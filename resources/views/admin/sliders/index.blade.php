@@ -4,41 +4,51 @@
     <title>Admin | Slider</title>
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/productForm.css') }}">
+@endsection
+
 @section('content')
     <div class="row container-fluid ml-0 pt-2">
         @can(config('permissions.modules.sliders.add'))
-            <div class="col-4">
+            <div class="col-5">
                 <div class="card">
                     @include('partials.admin.title-form',['name'=>'Thêm slider'])
                     <div class="card-body">
                         <form action="{{ route('sliders.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group">
-                                <label for="name">Tên slider :</label>
-                                <input class="form-control" type="text" name="name" id="name" placeholder="Nhập tên slider">
+                            <div class="form-input-group d-flex align-items-center">
+                                <input type="text" name="name" id="name" placeholder="Nhập tên slider">
                             </div>
-                            <div class="form-group">
+                            <div class="validate">
                                 @error("name")
                                 <small class="text-validate form-text text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="form-group mb-4">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="inputGroupFile03" name="image_path">
-                                    <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
+                            <div class="form-input-group">
+                                <div class="d-flex align-items-center">
+                                    <div class="input-file-group mr-3">
+                                        <input type="file" name="image_path" id="image_path">
+                                        <label for="image_path">Chọn ảnh</label>
+                                    </div>
+                                    <div class="button-group mt-0">
+                                        <button type="submit" class="button button-slider">Lưu</button>
+                                    </div>
+                                </div>
+                                <div class="box-thumbnail image_path pt-3">
+                                    <img style="max-width: 350px;height: 200px;margin: 0 auto;" src="{{ asset('assets/images/image-default.jpg') }}" alt="">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="validate">
                                 @error("image_path")
                                 <small class="text-validate form-text text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary">Thêm mới</button>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-7">
                 @else
                     <div class="col-12">
                         @endcan
@@ -64,7 +74,8 @@
                                             <td class="pl-0">
                                                 <div class="image-slider">
                                                     <img src="{{ asset($slider->image_path) }}"
-                                                         alt="{{ $slider->image_name }}" title="{{ $slider->image_name }}">
+                                                         alt="{{ $slider->image_name }}"
+                                                         title="{{ $slider->image_name }}">
                                                 </div>
                                             </td>
                                             <td class="pl-4">
@@ -75,7 +86,8 @@
                                                     </a>
                                                 @endcan
                                                 @can(config('permissions.modules.sliders.delete'))
-                                                    <a href="#" data-url="{{ route('sliders.delete',['id' => $slider['id']]) }}"
+                                                    <a href="#"
+                                                       data-url="{{ route('sliders.delete',['id' => $slider['id']]) }}"
                                                        class="btn-delete text-danger" type="button" title="Delete">
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </a>
@@ -92,8 +104,7 @@
                     </div>
             </div>
             @endsection
-
-@section('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('assets/admin/js/slider/index.js')  }}"></script>
+ @section('js')
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script src="{{ asset('assets/admin/js/slider/index.js')  }}"></script>
 @endsection

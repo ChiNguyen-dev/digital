@@ -2,7 +2,7 @@
 
 namespace App\Services\Interfaces;
 
-use App\Dtos\CartItem\CartItemFormDTO;
+use App\Dtos\cartItem\CartItemFormDTO;
 use App\Models\Customer;
 
 interface ICartItemService extends IBaseService

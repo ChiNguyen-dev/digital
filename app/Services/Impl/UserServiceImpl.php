@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\Impl;
 
 use App\Models\User;
@@ -20,9 +21,17 @@ class UserServiceImpl extends BaseService implements IUserService
             ->latest()->paginate(15);
     }
 
-    public function updateRoleToUser($id, $roles)
+    public function update($id, $data)
     {
-        return $this->model->find($id)->roles()->sync($roles);
+        $user = $this->model->find($id);
+        $user->update(
+            collect($data)
+                ->except('role_id')
+                ->toArray()
+        );
+        $user->roles()->sync(
+            $data['role_id']
+        );
     }
 
     public function addRoleToUser($id, $roles)
@@ -30,8 +39,8 @@ class UserServiceImpl extends BaseService implements IUserService
         return $this->model->find($id)->roles()->attach($roles);
     }
 
-    public function countSoftDeletedUsers()
+    public function getUsers(int $total)
     {
-        return $this->model->onlyTrashed()->count();
+        return $this->model->latest()->paginate($total);
     }
 }

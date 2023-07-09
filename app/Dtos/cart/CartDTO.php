@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dtos\Cart;
+namespace App\Dtos\cart;
 
 use App\Models\Customer;
 

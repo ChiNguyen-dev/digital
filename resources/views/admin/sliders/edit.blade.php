@@ -4,47 +4,54 @@
     <title>Admin | Slider</title>
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/productForm.css') }}">
+@endsection
+
 @section('content')
     <div class="row container-fluid ml-0 pt-2">
-        <div class="col-4">
+        <div class="col-5">
             <div class="card">
                 @include('partials.admin.title-form',['name'=>'Chỉnh sửa slider'])
                 <div class="card-body">
                     <form action="{{ route('sliders.update', ['id' => $slider->id]) }}" method="POST"
                           enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
-                            <label for="name">Tên slider :</label>
-                            <input class="form-control" type="text" name="name" id="name" value="{{ $slider->name }}">
+                        <div class="form-input-group d-flex align-items-center">
+                            <input type="text" name="name" id="name" value="{{ $slider->name }}">
                         </div>
-                        <div class="form-group">
+                        <div class="validate">
                             @error("name")
                             <small class="text-validate form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        <div class="form-group mb-4">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="inputGroupFile03" name="image_path">
-                                <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
+                        <div class="form-input-group">
+                            <div class="d-flex align-items-center">
+                                <div class="input-file-group mr-3">
+                                    <input type="file" name="image_path" id="image_path">
+                                    <label for="image_path">Chọn ảnh</label>
+                                </div>
+                                <div class="button-group mt-0">
+                                    <button type="submit" class="button button-slider">Lưu</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="image-slider">
-                                <img src="{{ asset($slider->image_path) }}" alt="{{ $slider->image_name }}"
+                            <div class="box-thumbnail image_path pt-3">
+                                <img style="max-width: 250px;height: auto;margin: 0 auto;"
+                                     src="{{ asset($slider->image_path) }}"
+                                     alt="{{ $slider->image_name }}"
                                      title="{{ $slider->image_name }}">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="validate">
                             @error("image_path")
                             <small class="text-validate form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        <button type="submit" class="btn btn-primary">Cập nhật</button>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-7">
             <div class="card">
                 <div class="card-header font-weight-bold">Danh sách slider</div>
                 <div class="card-body">
@@ -64,8 +71,8 @@
                                 <td>{{ $slider->name }}</td>
                                 <td class="pl-0">
                                     <div class="image-slider">
-                                        <img src="{{ asset($slider->image_path) }}"
-                                             alt="{{ $slider->image_name }}" title="{{ $slider->image_name }}">
+                                        <img src="{{ asset($slider->image_path) }}" alt="{{ $slider->image_name }}"
+                                             title="{{ $slider->image_name }}">
                                     </div>
                                 </td>
                                 <td class="pl-4">

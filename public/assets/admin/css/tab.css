@@ -14,7 +14,7 @@
 
 .tab_box .tab_button {
     margin: 0 10px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
     border: none;
     color: #919191;
@@ -57,10 +57,10 @@
 
 .line {
     position: absolute;
-    top: 62px;
+    top: 58px;
     left: 20px;
     width: 192px;
-    height: 5px;
+    height: 3px;
     border-radius: 10px;
     background-color: #5a4bde;
     transition: all .3s ease;

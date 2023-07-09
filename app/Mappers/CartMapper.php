@@ -2,8 +2,9 @@
 
 namespace App\Mappers;
 
-use App\Dtos\Cart\CartDTO;
-use App\Dtos\CartItem\CartItemDto;
+use App\Builders\cartItem\CartItemBuilder;
+use App\Dtos\cart\CartDTO;
+use App\Dtos\cartItem\CartItemDto;
 use App\Models\CartItem;
 use App\Models\Customer;
 
@@ -19,13 +20,13 @@ class CartMapper
                 'style' => $item->style,
                 'selected' => $item->id == $cartItem->color_id];
         });
-        return new CartItemDto(
-            $cartItem->id,
-            $product->name,
-            $product->feature_image_path,
-            $product->price, $cartItem->qty,
-            ['colors' => $colors, 'total' => $cartItem->qty * $product->price]
-        );
+        return (new CartItemBuilder($cartItem->id))
+            ->productName($product->name)
+            ->productImage($product->feature_image_path)
+            ->productPrice($product->price)
+            ->productQuantity($cartItem->qty)
+            ->option(['colors' => $colors, 'total' => $cartItem->qty * $product->price])
+            ->build();
     }
 
     public static function toCart(Customer $customer, int $total, array $cartItems): CartDTO

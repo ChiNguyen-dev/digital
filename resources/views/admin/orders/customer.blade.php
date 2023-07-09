@@ -11,8 +11,10 @@
                 <h5 class="m-0 ">Danh sách khách hàng</h5>
                 <div class="form-search form-inline">
                     <form action="#" class="d-flex">
-                        <input type="text" class="form-control form-search" placeholder="Tìm kiếm">
-                        <input type="submit" name="btn-search" value="Tìm kiếm" class="btn btn-primary ml-2">
+                        <input type="text" class="form-control form-search shadow-none" name="search"
+                               placeholder="Tìm kiếm"
+                               value="{{ request()->search }}">
+                        <button type="submit" class="button ml-3"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>
             </div>
